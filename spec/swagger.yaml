@@ -1,246 +1,1174 @@
-# This is an **example** API to demontstrate features of OpenAPI specification.
-# It doesn't cover all OpenAPI features. For more full example check out: https://github.com/APIs-guru/petstore_extended
-
-swagger: '2.0'
-# You should specify common part of your endpoints in the following format:
-#   <schemes>://<host><basepath>
-schemes:
-  - http # Remove if your API doesn't support HTTP
-  - https # Remove if your API donsn't support HTTPS
-host: example.com # Replace with your hostname. You can also specify port e.g. example.com:777
-basePath: /api/v1 # Replace with your basePath. Note: SHOULD begin with '/'.
+openapi: 3.0.1
 info:
-  # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
-  description: |
-    This is an **example** API to demontstrate features of OpenAPI specification
-    # Introduction
-    This specification is intended to to be a good starting point for describint your API in 
-    [OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
-    It also demonstrates features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) tool and 
-    [ReDoc](https://github.com/Rebilly/ReDoc) documentation engine. So beyond the standard OpenAPI syntax we use a few 
-    [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).
-    
-    # OpenAPI Specification
-    The goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which
-    allows both humans and computers to discover and understand the capabilities of the service without access to source
-    code, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can 
-    understand and interact with the remote service with a minimal amount of implementation logic. Similar to what
-    interfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.
+  title: TapClicks
+  description: |-
+  
+    This is the first version of the API Specification for TapClicks
 
-  version: '1.0.0' # Your API version
-  # It can be any string but it is better to use semantic versioning: http://semver.org/
-  # Warning: OpenAPI require version to be string, but without quotation YAML can recognize it as number.
-
-  title: Example.com # Replace with your API title
-  # Keep it simple. Don't add "API" or verison at the end of the string.
-
-  termsOfService: 'https://example.com/terms/' # [Optional] Replace with an URL to your ToS
-  contact:
-    email: contact@example.com # [Optional] Replace with your contact email
-    url: 'http://example.com/contact' # [Optional] Replace with link to your contact form
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  x-logo:
-    url: 'https://apis.guru/openapi-template/logo.png'
-externalDocs:
-  description: Find out how to create Github repo for your OpenAPI spec.
-  url: 'https://github.com/Rebilly/generator-openapi-repo'
-produces:
-  # List of mime types your API endpoins can return.
-  # This is a global default. You can OVERWRITE it in each specific operation.
-  # Remove the ones not used in your API
-  - application/json
-  - application/xml
-  - text/csv
-  # you can add any mime type your API produces to the list
-consumes:
-  # List of mime types your API endpoins consumes.
-  # This is a global default. You can OVERWRITE it in each specific operation.
-  # Remove the ones not supported by your API
-  - application/json
-  - application/xml
-  # you can add any mime type your API consumes to the list
-
-# A list of tags used by the specification with additional metadata.
-# The order of the tags can be used to reflect on their order by the parsing tools.
+  version: '0.1'
+  termsOfService: 'https://www.tapclicks.com/terms-of-use/'
+servers:
+  - url: 'https://api.tapclicks.com/v2'
+  
 tags:
-  - name: Echo
-    description: Example echo operations
-  - name: User
-    description: Operations about user
-# Security scheme definitions that can be used across the specification.
-securityDefinitions:
-  main_auth: # security definition name (you can name it as you want)
-    type: oauth2 # authorization type, one of: oauth2, basic, apiKey
-    # the following options are specific to oauth2 type
-    authorizationUrl: 'http://example.com/api/oauth/dialog'
-    flow: implicit
-    scopes:
-      'read:users': read users info
-      'write:users': modify or remove users
-  api_key: # security definition name (you can name it as you want)
-    type: apiKey
-    # The following options are specific to apiKey type
-    in: header # Where API key will be passed: header or query
-    name: api_key # API key paramteer name
-  basic_auth: # security definition name (you can name it as you want)
-    type: basic
+  - name: TapClicks
+    description: Welcome to Tap API
+  - name: Channels
+    description: Refers to the Channels in the instance
+  - name: Clients
+    description: Refers to the Clients in the instance
+  - name: Client's Categories
+    description: Categories that can be assigned to a Client
+  - name: Client Groups
+    description: Referes to the Client Groups in the instance
+  - name: Business Units
+    description: Refers to the Business Unit in the instance
+  - name: Data Profiles
+    description: Refers to the Data Profiles in the instance
+  - name: Data Types
+    description: All data types available for any field
+  - name: Services (Data Sources)
+    description: Refers to Data Source in the instance
+  - name: Users
+    description: Refers to a user or users in the instance
 
-# Holds the relative paths to the individual endpoints. The path is appended to the
-# basePath in order to construct the full URL. 
+
+
+
+
+
+  
 paths:
-  '/users/{username}': # path parameter in curly braces
-    # documentation for GET operation for this path
-    
-    # parameters list that are used with each operation for this path
-    parameters:
-      - name: pretty_print
-        in: query # place where paramter is passed: path, header, query or body, formData
-        description: Pretty print response
-        # type of the paramter: string, number, integer, boolean, array
-        type: boolean
+  /:
     get:
       tags:
-        - User
-      
-      # summary is up to 120 symbold but we recommend to be shortest as possible
-      summary: Get user by user name
-      
-      # you can use GFM in operation description too: https://guides.github.com/features/mastering-markdown
-      description: | 
-        Some description of the operation. 
-        You can use `markdown` here.
-      
-      # operationId should be unique across the whole specification
-      operationId: getUserByName
-      
-      # list of parameters for the operation
-      parameters:
-        - name: username
-          in: path
-          description: 'The name that needs to be fetched'
-          required: true
-          type: string
-        - name: with_email
-          in: query
-          description: Filter users without email
-          type: boolean
-      
-      # security schemas applied to this operation
+        - TapClicks API
+      summary: Returns a Welcome Message from TapClicks API
+      description: This call will simply return a "Welcome to TAP API" message
       security:
-        - main_auth:
-          - 'read:users' # for auth2 provide list of scopes here
-        - api_key: []
-      # overwriting default global produces
-      produces:
-        - application/json
-      responses: # list of responses
-        '200':
-          description: Success
-          schema: # response schema can be specified for each response
-            $ref: '#/definitions/User'
-          examples:
-          # repsonse samples for each type operation produces
-            application/json:
-              username: user1
-              email: user@example.com
-        '403':
-          description: Forbidden
-        '404':
-          description: User not found
-    # documentation for PUT operation for this path
-    put:
-      tags:
-        - User
-      summary: Updated user
-      description: This can only be done by the logged in user.
-      operationId: updateUser
-      produces:
-        - application/json
-      parameters:
-        - name: username
-          in: path
-          description: The name that needs to be updated
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: Updated user object
-          required: true
-          # for body parameter you should specify request schema instead of type
-          schema:
-            $ref: '#/definitions/User'
-      security:
-        - main_auth:
-          - 'write:users'
+        - oauth2: []
       responses:
         '200':
-          description: OK
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                  error:
+                    type: boolean
+                  warning:
+                    type: array
+                    items:
+                      type: integer
+                  status:
+                    type: integer
+                example:
+                  data: "Welcome to TAP API"
+                  error: false
+                  warning: []
+                  status: 200
         '400':
-          description: Invalid user supplied
-        '404':
-          description: User not found
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
   
-  '/echo':
+  /clientcategories:
+    get:
+      tags:
+        - Client's Categories
+      summary: Returns a list of all client's categories (Education, Automotive...)
+      description: This returns a list of all possible categories that can be assigned to a client.
+      
+      
+        For example --- Services, Automotive, Retailer, Restaurant...
+      security: 
+        - oauth2: []
+      responses: 
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200'
+              example:
+                data:
+                  id: 1
+                  name: General
+                error: false
+                warnings: []
+                status: 200   
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'       
+      
+                  
+  /clientgroup:
+    get:
+      tags:
+        - Client Groups
+      summary: Returns a list of all Groups of Clients
+      description: This returns a list of all Groups of Clients 
+      security:
+        - oauth2: []
+      responses:
+        '200':
+          description: OK Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200'
+              example:
+                data:
+                  id: "1"
+                  name: "Test Unit"
+                  cluster_id: null
+                  group_type: "group_of_clients"
+                  has_light_logo: false
+                  has_dark_logo: false
+                  created_at: 1540404023
+                  updated_at: 1540404023
+                  formatted_created_at: "Oct 24, 2018 6:00 PM"
+                  formatted_updated_at: "Oct 24, 2018 6:00 PM"
+                  client_ids: [1]
+                error: false
+                warnings: []
+                status: 200
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
+        
+  /clients:
     post:
       tags:
-        - Echo
-      summary: Echo test
-      description: Receive the exact message you've sent
-      operationId: echo
-      parameters:
-        - name: message
-          in: body
-          description: 'Echo payload'
-          required: true
-          schema:
-            type: string
-            example: 'Hello world!'
+        - Clients
+      summary: Creates a new Client
       security:
-        - api_key: []
+        - oauth2: []
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema:
+              $ref: "#/components/schemas/newClient"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
+
+                  {
+                  "company_name": "JP Marketing",
+                  "default_reporting_profile_id": 1,
+                  "reporting_status": "pending_mapping",
+                  "iotool_status": "presale"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
       responses:
         '200':
-          description: 'OK'
-          examples:
-            'application/json': 'Hello world!'
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                  error:
+                    type: boolean
+                  warnings:
+                    type: array
+                    items: 
+                      type: string
+                  status:
+                    type: integer
+              example:
+                data:
+                  id: 35
+                error: false
+                warnings: []
+                status: 200
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
+      
+        
+        
+  /clients/clientId:
+    get:
+      tags:
+        - Clients
+      summary: Returns all the Clients
+      description: This returns a specific Client or a list of all Clients if the clientId is omitted.
+      security:
+        - oauth2: []
+      parameters:
+        - in: query
+          name: clientId
           schema:
-            type: string
-          # docuemnt headers for this repsonse
-          headers:
-            X-Rate-Limit: # Header name
-              type: integer # Header value type
-              format: int32 # Header value format
-              description: calls per hour allowed by the user
-            X-Expires-After:
+            type: integer
+          required: false
+          description: numeric Id of the User to get
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/client'
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
+    post:
+      tags:
+        - Clients
+      summary: Edit an existing Client
+      description: This is to modify the information of an existing Client
+      security:
+        - oauth2: []
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema:
+              $ref: "#/components/schemas/client"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
+
+                  {
+                  "company_name": "JP Marketing",
+                  "default_reporting_profile_id": 1,
+                  "reporting_status": "pending_mapping",
+                  "iotool_status": "presale"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                  error:
+                    type: boolean
+                  warnings:
+                    type: array
+                    items: 
+                      type: string
+                  status:
+                    type: integer
+              example:
+                data:
+                  id: 35
+                error: false
+                warnings: []
+                status: 200
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
+                
+  /clusters:
+    get:
+      tags:
+        - Business Units
+      summary: Returns all the Business Units
+      description: Clusters are Business Units.
+        
+        
+        This returns a list of all the Business Units, active and inactive 
+      security:
+        - oauth2: []
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200'
+              example:
+                data:
+                  id: 1
+                  name: "West Coast Unit"
+                  has_light_logo: false
+                  has_dark_logo: false
+                  external_cluster_id: ""
+                  enable_inventory_group: false
+                  status: "active"
+                  status_display: "Active"
+                error: false
+                warnings: []
+                status: 200
+              
+                
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'                
+  
+  
+  /columns/datatypes:
+    get:
+      tags:
+        - Data Types
+      summary: Returns all the data types available
+      description: This returns all the data types that are available for any field
+      security:
+        - oauth2: []
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200'
+
+        
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'        
+                
+                
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Returns a list of all Users
+      description: This returns all the active and inactive Users
+      security:
+        - oauth2: []
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200'
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
+        '404':
+          description: API Route not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
+        
+                
+    # post:
+    #   summary: Creates a new User
+    #   security:
+    #     - oauth2: []
+    #   requestBody:
+    #     content:
+    #       'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+    #         schema:
+    #           $ref: "#/components/schemas/user"
+    #         examples:
+    #           '0':
+    #             value: |-
+    #               ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+    #               Content-Disposition: form-data; name="model"
+
+    #               {
+    #               "user_type": "agent",
+    #               "email": "TestingFromSwaggerInsp@email.com",
+    #               "password": "user1234",
+    #               "first_name": "John",
+    #               "last_name": "Doe",
+    #               "reporting_profile_id": 1,
+    #               "client_group_id": 1,
+    #               "role_id": 1,
+    #               "status": "active"
+    #               }
+    #               ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
+    #   responses:
+    #     '200':
+    #       description: Ok Successful Operation
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/response_200'
+                
+  /users/userId:
+    get:
+      tags:
+        - Users
+      summary: Returns a specific user
+      security:
+        - oauth2: []
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: integer
+          required: false
+          description: numeric Id of the User to get
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
+  /reportingprofiles:
+    get:
+      tags:
+        - Data Profiles
+      summary: Returns all the Data Profiles
+      description: This call will return all the Data Profiles that are available in the instance
+      security:
+        - oauth2: []
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/dataProfile'
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
+
+  /categories:
+    get:
+      tags:
+        - Channels
+      summary: Returns all the Channels
+      description: |
+        Categories are the Channels. 
+        
+        This returns all the Channels, even the pre-defined Channels that are not active.
+      security:
+        - oauth2: []
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/channel'
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
+  /services:
+    get:
+      tags:
+        - Services (Data Sources)
+      summary: Returns all the Data Sources
+      description: |
+        Services are the Data Sources that a client can connect to pull data into TapClicks.
+        
+        This returns ALL the Data Sources that are available in the instance, whether they are connected or not. 
+        
+        This includes also all the services that are connected with the Smart Connector.
+      security:
+        - oauth2: []
+      responses:
+        '200':
+          description: Ok Successful Response
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/service'
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
+
+  # /dash/widgets:
+  #   get:
+  #     summary: Returns all the widgets from all dashboards
+  #     description: |
+  #       This returns all the metadata of all the widgets created in the instance
+  #     security:
+  #       - oauth2: []
+  #     responses:
+  #       '200':
+  #         description: OK Successful Response
+  #       '401':
+  #         description: Invalid access token
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/error_401'
+
+  # /dash/widgets/widgetId:
+  #   delete:
+  #     summary: Deletes a specific widget
+  #     security:
+  #       - oauth2: []
+  #     parameters:
+  #       - in: query
+  #         name: widgetId
+  #         schema:
+  #           type: integer
+  #         required: true
+  #         description: numeric Id of the widget to delete
+  #     responses:
+  #       '200':
+  #         description: Ok
+  #         content:
+  #           application/json;charset=utf-8:
+  #             schema:
+  #               type: string
+  #             examples: {}
+  #       '401':
+  #         description: Invalid access token
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/error_401'
+              
+              
+components:
+  schemas:
+    user:
+      type: object
+      required: 
+        - first_name
+        - last_name
+        - user_type
+        - email
+        - password
+        - client_group_id
+        - status
+        - role_id
+        - reporting_profile_id
+      properties:
+        id:
+          type: integer
+        client_id: 
+          type: integer
+        user_type:
+          type: string
+          enum: [client, agent, superadmin, clusteradmin]
+          default: client
+        company_name: 
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        address_1:
+          type: string
+        address_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        cluster_id:
+          type: integer
+        external_user_id:
+          type: integer
+        additional_details_1:
+          type: string
+        additional_details_2:
+          type: string
+        additional_details_3:
+          type: string
+        enable_io_tool_module:
+          type: boolean
+        enable_lead_management_module:
+          type: boolean
+        has_light_logo:
+          type: boolean
+        has_dark_logo:
+          type: boolean
+        override_dashboard_pages_from_reporting_profile:
+          type: boolean
+        default_home_page:
+          type: string
+        io_tool_notification_frequency:
+          type: string
+          enum: [never, real_time, daily, weekly, monthly]
+          default: null
+        country:
+          type: string
+        timezone:
+          type: string # there could be a link to a different schema, instead of enum
+          default: default
+        status:
+          type: string
+          enum: [active, inactive]
+        hipaa_acknowledgement_timestamp:
+          type: string
+        creation_time:
+          type: integer
+        show_services_overview: 
+          type: string
+          default: default
+        show_categories_overview:
+          type: string
+          default: default
+        role_id:
+          type: integer
+        io_tool_role_id:
+          type: integer
+        client_group_id:
+          type: integer
+        reporting_profile_id:
+          type: integer
+          default: 1
+        user_type_display: 
+          type: string
+          enum: [Super Admin, Business Unit Admin, Agent, Client]
+        country_display:
+          type: string
+        timezone_display: 
+          type: string
+          description: default
+        status_display:
+          type: string
+          enum: [active, inactive]
+        formatted_creation_time:
+          type: string
+    dataProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        created_at:
+          type: integer
+        updated_at:
+          type: integer
+        enable_new_services_by_default:
+          type: boolean
+        enable_scores:
+          type: boolean
+        adwords_split_active:
+          type: boolean
+        hide_adwords_network:
+          type: boolean
+        cluster_id:
+          type: integer
+        
+    clientGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        cluster_id:
+          type: integer
+        group_type:
+          type: string
+          enum: [group_of_clients, group_of_client_group]
+        has_light_logo:
+          type: boolean
+        has_dark_logo:
+          type: boolean
+        created_at:
+          type: integer
+        updated at:
+          type: integer
+        formatted_created_at: 
+          type: string
+        formatted_updated_at:
+          type: string
+        client_ids:
+          type: array
+          items: 
+            type: integer
+      example:
+        data:
+          id: "1"
+          name: "Test Unit"
+          cluster_id: null
+          group_type: "group_of_clients"
+          has_light_logo: false
+          has_dark_logo: false
+          created_at: 1540404023
+          updated_at: 1540404023
+          formatted_created_at: "Oct 24, 2018 6:00 PM"
+          formatted_updated_at: "Oct 24, 2018 6:00 PM"
+          client_ids: [1]      
+
+    newClient:
+      type: object
+      required:
+      - company_name
+      - reporting_status
+      - iotool_status
+      - default_reporting_profile_id
+      properties:
+        company_name:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        address_1:
+          type: string
+        address_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+        phone:
+          type: string
+        fax:
+          type: string
+        website:
+          type: string
+        account_manager_user_id:
+          type: integer
+        crm_id:
+          type: integer
+        billing_id:
+          type: integer
+        additional_details_1:
+          type: string
+        additional_details_2:
+          type: string
+        additional_details_3:
+          type: string
+        enable_lead_management_module:
+          type: boolean
+          default: false
+        report_language:
+          type: string
+        source_service_id:
+          type: integer
+        cluster_id:
+          type: integer
+        default_reporting_profile_id:
+          type: integer
+        client_category_id:
+          type: integer
+        reporting_status:
+          type: string
+          enum: [pending_mapping, active, hold, terminated]
+          default: pending_mapping
+        iotool_status:
+          type: string
+          enum: [presale, active, inactive, terminated]
+          default: presale
+        has_hipaa_data:
+          type: boolean
+        client_group_ids:
+          type: array
+          items: 
+            type: integer
+        activate_tapleads:
+          type: boolean
+        reporting_status_display:
+          type: string
+          enum: [pending_mapping, active, hold, terminated]
+        iotool_status_display:
+          type: string
+          enum: [pending_mapping, active, hold, terminated]
+    client:
+      type: object
+      required:
+      - company_name
+      - reporting_status
+      - iotool_status
+      - default_reporting_profile_id
+      properties:
+        id:
+          type: integer
+        company_name:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        address_1:
+          type: string
+        address_2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+        phone:
+          type: string
+        fax:
+          type: string
+        website:
+          type: string
+        account_manager_user_id:
+          type: integer
+        has_light_logo:
+          type: boolean
+          default: false
+        has_dark_logo":
+          type: boolean
+          default: false
+        crm_id:
+          type: integer
+        billing_id:
+          type: integer
+        additional_details_1:
+          type: string
+        additional_details_2:
+          type: string
+        additional_details_3:
+          type: string
+        enable_lead_management_module:
+          type: boolean
+          default: false
+        created_by_user_id:
+          type: integer
+        created_by_user:
+          type: string
+        report_language:
+          type: string
+        source_service_id:
+          type: integer
+        creation_time:
+          type: integer
+        last_modification_time:
+          type: integer
+        cluster_id:
+          type: integer
+        default_reporting_profile_id:
+          type: integer
+        client_category_id:
+          type: integer
+        reporting_status:
+          type: string
+          enum: [pending_mapping, active, hold, terminated]
+          default: pending_mapping
+        iotool_status:
+          type: string
+          enum: [presale, active, inactive, terminated]
+          default: presale
+        has_hipaa_data:
+          type: boolean
+        formatted_creation_time:
+          type: string
+        formatted_last_modification_time:
+          type: string
+        client_group_ids:
+          type: array
+          items: 
+            type: integer
+        activate_tapleads:
+          type: boolean
+        reporting_status_display:
+          type: string
+          enum: [pending_mapping, active, hold, terminated]
+        iotool_status_display:
+          type: string
+          enum: [pending_mapping, active, hold, terminated]
+      example:
+        id: 1,
+        company_name: "JP Marketing"
+        first_name: "Jack"
+        last_name: "Smith"
+        email: "jsmith@JPmarketing.com"
+        address_1: "Rue Washington 66"
+        address_2: ""
+        city: "Minneapolis"
+        state: "Minnesota"
+        zip: "54201"
+        country: ""
+        phone: ""
+        fax: ""
+        website: "jpmark.com"
+        account_manager_user_id: null
+        has_light_logo: false
+        has_dark_logo: false
+        crm_id: ""
+        billing_id: ""
+        additional_details_1: ""
+        additional_details_2: ""
+        additional_details_3: ""
+        enable_lead_management_module: false
+        created_by_user_id: "1"
+        created_by_user: "jsmith@JPmarketing.com"
+        report_language: ""
+        source_service_id: null
+        creation_time: 1540478543
+        last_modification_time: 1540478543
+        cluster_id: null
+        default_reporting_profile_id: "1"
+        client_category_id: null
+        reporting_status: "active"
+        iotool_status: "presale"
+        has_hipaa_data: false
+        formatted_creation_time: "Oct 25, 2018 1:15 PM"
+        formatted_last_modification_time: "Oct 25, 2018 1:15 PM"
+        client_group_ids: []
+        activate_tapleads: false
+        reporting_status_display: "active"
+        iotool_status_display: "presale"
+          
+    clientCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    
+    
+    service:
+      type: object
+      properties:
+        service_id:
+          type: integer
+        name:
+          type: string
+        is_connected:
+          type: boolean
+          
+    channel:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        services_ids:
+          type: object
+          properties:
+            service_id:
+              type: object
+              properties:
+                icon:
+                  type: string
+                name:
+                  type: string
+                color:
+                  type: string
+                is_connected:
+                  type: boolean
+        color:
+          type: string
+        custom_icon:
+          type: string
+        is_predefined:
+          type: boolean
+        category_key:
+          type: string
+        unique_id:
+          type: string
+        is_connected:
+          type: boolean
+    
+    businessUnit:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        has_light_logo:
+          type: boolean
+        has_dark_logo:
+          type: boolean
+        external_cluster_id:
+          type: integer
+        enable_inventory_calendar:
+          type: boolean
+        is_cluster_group:
+          type: boolean
+        status:
+          type: string
+          enum: [active, inactive]
+        status_display:
+          type: string
+          enum: [Active, Inactive]
+          
+    dataType:
+      type: object
+      properties:
+        key:
+          type: string
+          enum: [integer, decimal, percent, currency, string, phonenumber, callback, date, time, link, url, image, datetime, id, bool]
+        value:
+          type: string
+          enum: [Number, Decimal, Percent, Currency, Text, Phone_Number, Date, Time, Link, URL, Image, Id, Boolean]
+        icon:
+          type: string
+        is_selectable:
+          type: boolean
+        is_numeric:
+          type: boolean
+        precision:
+          type: integer
+        
+    
+    
+    error_401:
+      type: object
+      properties:
+        fault:
+          type: object
+          properties:
+            faultstring:
               type: string
-              format: date-time
-              description: date in UTC when token expires
-# An object to hold data types that can be consumed and produced by operations.
-# These data types can be primitives, arrays or models.
-definitions:
-  Email:
-    description: User email address
-    type: string
-    format: email
-    example: john.smith@example.com
-  User:
-    type: object
-    properties:
-      username:
-        description: User supplied username
-        type: string
-        minLength: 4
-        example: John78
-      firstName:
-        description: User first name
-        type: string
-        minLength: 1
-        example: John
-      lastName:
-        description: User last name
-        type: string
-        minLength: 1
-        example: Smith
-      email:
-        $ref: '#/definitions/Email'
+            detail:
+              type: object
+              properties:
+                errorcode:
+                  type: string
+      example: 
+        fault:
+          faultstring: 'Invalid Access Token'
+          detail:
+            errorcode: 'keymanagement.service.invalid_access_token'
+    error_400:
+      type: object
+      properties:
+        fault:
+          type: object
+          properties:
+            faultstring:
+              type: string
+            detail:
+              type: object
+              properties:
+                errorcode:
+                  type: string
+      example: 
+        fault:
+          faultstring: 'Unable to identify proxy for host: https_vhost and url/: /v'
+          detail:
+            errorcode: 'keymanagement.service.invalid_access_token'
+    error_404:
+      type: object
+      properties:
+        error:
+          type: boolean
+        data: 
+          type: array
+          items:
+            type: string
+        warnings:
+          type: array
+          items:
+            type: string
+        status:
+          type: integer
+      example:
+        error: 'true'
+        data: ['API Route not found']
+        warnings: []
+        status: 404
+    response_200:
+      type: object
+      properties:
+        data:
+          type: object
+          # here there should be a $ref to a type of object, because this id type is too specific
+          oneOf: 
+            - $ref: '#/components/schemas/clientGroup'
+            - $ref: '#/components/schemas/user'
+            - $ref: '#/components/schemas/clientCategory'
+            - $ref: '#/components/schemas/client'
+            - $ref: '#/components/schemas/businessUnit'
+            - $ref: '#/components/schemas/dataType'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+        
+        
+
+  securitySchemes:
+    # bearerAuth:            # arbitrary name for the security scheme
+    #   type: http
+    #   scheme: bearer
+    #   bearerFormat: JWT 
+    oAuth2ClientCredentials:
+      type: oauth2
+      description: |
+        Get access to data while protecting your account credentials.
+        OAuth2 is also a safer and more secure way to give you access.
+      flows: 
+        clientCredentials: 
+          tokenUrl: https://api.tapclicks.com/oauth/accesstoken
+          refreshUrl: https://api.tapclicks.com/oauth/refresh_accesstoken
+          scopes: {}
+    
+# security:                   // It applies this type of security to all operations 
+#   - bearerAuth: []
