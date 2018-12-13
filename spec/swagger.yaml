@@ -36,6 +36,8 @@ tags:
     description: Supported languages
   - name: Leads
     description: Leads
+  - name: Roles
+    description: Roles
   - name: Services (Data Sources)
     description: Refers to Data Source in the instance
   - name: Users
@@ -250,7 +252,7 @@ paths:
     post:
       tags:
         - Clients
-      summary: Creates New Client
+      summary: Create a Client
       security:
         - oauth2: []
       requestBody:
@@ -732,7 +734,7 @@ paths:
       description: This returns a specific lead (lead_id). 
         
         
-        Note that if the query parameter "lead_id" is omitted, this will return all the leads in the instance.
+        Note that if the query parameter "lead_id" is omitted, this will return a list of all the leads in the instance.
       security: 
         - oauth2: []
       parameters:
@@ -807,7 +809,7 @@ paths:
       description: This returns a specific role (role_id) that can be assigned to a user who has the IO tool module enabled.
       
       
-        Note that if the query parameter "role_id" is omitted, this will return all the roles available to be assigned to the IOTool user.
+        Note that if the query parameter "role_id" is omitted, this will return a list of all the roles that can be assigned to the IOTool user.
       security:
         - oauth2: []
       parameters:
@@ -848,19 +850,28 @@ paths:
       
 # --------------------- Services (Data Sources) --------------------------        
 
-  /services:
+  /services/service_id:
     get:
       tags:
         - Services (Data Sources)
-      summary: All the Data Sources
-      description: |
-        Services are the Data Sources that a client can connect to pull data into TapClicks.
+      summary: All OR a specific service
+      description: 
+        Services are the Data Sources that a client can connect to pull data into TapClicks; these also include all the resources that were created with the Smart Connector
         
-        This returns ALL the Data Sources that are available in the instance, whether they are connected or not. 
         
-        This includes also all the services that are connected with the Smart Connector.
+        This API call returns a specific service ("service_id") in the instance. This can be helpful to find out if such is connected or not.
+        
+        
+        Note that if the query parameter "service_id" is omitted, this will return a list of all the services available in the instance, whether they're connected or not.        
       security:
         - oauth2: []
+      parameters:
+        - in: query
+          name: service_id
+          schema:
+            type: integer
+          required: false
+          description: numeric Id of the service to get. If omitted, it will return all services 
       responses:
         '200':
           description: Ok Successful Response
@@ -868,12 +879,193 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/response_200'
+              example:
+                data:
+                  - service_id: 44
+                    name: "Facebook Insights"
+                    is_connected: true
+                error: false
+                warnings: []
+                status: 200                  
+                
         '401':
           description: Invalid access token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_401'   
+                $ref: '#/components/schemas/error_401' 
+                
+  /services/id/data/data_view_id/field:
+    get:
+      tags:
+        - Services (Data Sources)
+      summary: Data for a service
+      description: This returns the data of a specific service
+      security:
+        - oauth2: []
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: id of the service to get.
+        - in: query
+          name: data_view_id
+          schema:
+            type: string
+          required: false
+          description: Data view id the column belongs to
+        - in: query
+          name: field
+          schema:
+            type: string
+          required: false
+          description: Field names of column to fetch
+      responses:
+        '200':
+          description: Ok Successful Response
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/response_200'
+              # This is an example for /services/id/data  
+              # example:
+              #   data:
+              #     customer_id: 7
+              #     campaign: 27
+              #     column1: "JL Ads"
+              #     column2: "Keebler, Windler and Yundt"
+              #     column3: "Durango"
+              #     column4: "Dodge"
+              #     AVG(score): 0.0000
+              #     client_name: "JL Ads"
+              #     _client_city: ""
+              #     _client_state: ""
+              #     _client_zip_code: ""
+              #     client_reporting_status: "active"
+              #     client_billing_id: ""
+              #     client_additional_details_1: ""
+              #     client_additional_details_2: ""
+              #     client_additional_details_3: ""
+              #     client_crm_id: ""
+              #     _client_cluster_name: null
+              #     _client_account_manager: null
+              #     _client_category: null
+              #   error: false
+              #   warnings: []
+              #   status: 200
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401' 
+
+
+        
+                
+  /services/info/id:
+    get:
+      tags:
+        - Services (Data Sources)
+      summary: General info on One or All Services
+      description: This returns general information regarding a Service
+        
+        
+        Note that if the query parameter "id" is omitted, this will return a list of all the information of all services.
+      security:
+        - oauth2: []
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          required: false
+          description: id of the service to get. If omitted, it will return all the information of all the services
+      responses:
+        '200':
+          description: Ok Successful Response
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/response_200'
+              example:
+                data:
+                  id: 1
+                  service_id: 110
+                  connect_steps: null
+                  categories: "display, demand side platform (dsp), ad server, yield management tools, programmatic"
+                  keywords: "ad serving, advertising technology, ad operations, demand-side platform"
+                  summary: "AdGear Technologies, Inc. is a digital advertising technology company, providing software and services for the digital media industry. The company's full-stack advertising platform offers customers advanced advertising analytics, attribution measurement, ad serving, real-time bidding and exchange technology. AdGear"
+                  company_size: "11-50 employees"
+                  links:
+                    Website: "www.adgear.com"
+                    Sign Up: ""
+                    Contact: "http://adgear.com/company/offices"
+                    Newsletter: ""
+                    Demo Request: ""
+                    Free Trial: ""
+                    Promotions:
+                      null: ""
+                error: false
+                warnings: []
+                status: 200
+                
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'  
+        
+  /services/orderitems/order_item_id:
+    get:
+      tags:
+        - Services (Data Sources)
+      summary: All OR a specific order item
+      description: This returns an order item (order_item_id).
+          
+          
+        Note that if the query parameter "order_item_id" is omitted, this will return a list of all the order items in the instance.
+      security:
+        - oauth2: []
+      parameters:
+        - in: query
+          name: order_item_id
+          schema:
+            type: integer
+          required: false
+          description: numeric Id of the order item to get. If omitted, it will return all order items 
+      responses:
+        '200':
+          description: Ok Successful Response
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/response_200'
+              example:
+                data:
+                  - id: 2
+                    service_id: 45
+                    customer_id: 5
+                    item_id: 3
+                    mapping_date: "Sept 25, 20187"
+                    connection_setting_id: 3
+                    first_level_mapping: 3
+                    second_level_mapping: ""
+                error: false
+                warnings: []
+                status: 200
+                
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'         
+      
+                
                 
 # --------------------- Users --------------------------  
                 
@@ -882,7 +1074,7 @@ paths:
       tags:
         - Users
       summary: All Users
-      description: This returns all the active and inactive Users
+      description: This returns all the active and inactive users
       security:
         - oauth2: []
       responses:
@@ -892,6 +1084,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200'
+              example:
+                data:
+                  id: 1
+                  client_id: null
+                  user_type: "superadmin"
+                  company_name: null
+                  first_name: "Jack"
+                  last_name: "Smith"
+                  address_1: ""
+                  address_2: ""
+                  city: ""
+                  state: ""
+                  zip: ""
+                  phone: ""
+                  email: "jsmith@jpmarketing.com"
+                  cluster_id: null
+                  external_user_id: ""
+                  additional_details_1: ""
+                  additional_details_2: ""
+                  additional_details_3: ""
+                  enable_io_tool_module: true
+                  enable_lead_management_module: false
+                  has_light_logo: false
+                  has_dark_logo: false
+                  override_dashboard_pages_from_reporting_profile: false
+                  default_home_page: null
+                  io_tool_notification_frequency: null
+                  country: ""
+                  timezone: "default"
+                  status: "active"
+                  hipaa_acknowledgement_timestamp: null
+                  creation_time: 1540403488
+                  show_services_overview: "default"
+                  show_categories_overview: "default"
+                  role_id: null
+                  io_tool_role_id: 6
+                  client_group_id: null
+                  reporting_profile_id: 8
+                  user_type_display: "Super Admin"
+                  country_display: ""
+                  timezone_display: "default"
+                  status_display: "active"
+                  formatted_creation_time: "Sept 24, 2018 2:14 PM"
         '401':
           description: Invalid access token
           content:
@@ -904,42 +1139,63 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
-        
-                
-    # post:
-    #   summary: Creates a new User
-    #   security:
-    #     - oauth2: []
-    #   requestBody:
-    #     content:
-    #       'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
-    #         schema:
-    #           $ref: "#/components/schemas/user"
-    #         examples:
-    #           '0':
-    #             value: |-
-    #               ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
-    #               Content-Disposition: form-data; name="model"
+ 
+    post:
+      tags:
+        - Users
+      summary: Create a user
+      security:
+        - oauth2: []
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema:
+              $ref: "#/components/schemas/user"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
 
-    #               {
-    #               "user_type": "agent",
-    #               "email": "TestingFromSwaggerInsp@email.com",
-    #               "password": "user1234",
-    #               "first_name": "John",
-    #               "last_name": "Doe",
-    #               "reporting_profile_id": 1,
-    #               "client_group_id": 1,
-    #               "role_id": 1,
-    #               "status": "active"
-    #               }
-    #               ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
-    #   responses:
-    #     '200':
-    #       description: Ok Successful Operation
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/response_200'
+                  {
+                  "user_type": "agent",
+                  "email": "TestingFromSwaggerInsp@email.com",
+                  "password": "user1234",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "reporting_profile_id": 1,
+                  "client_group_id": 1,
+                  "role_id": 1,
+                  "status": "active"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                  error:
+                    type: boolean
+                  warnings:
+                    type: array
+                    items: 
+                      type: string
+                  status:
+                    type: integer
+              example:
+                data:
+                  id: 35
+                error: false
+                warnings: []
+                status: 200
                 
   /users/user_id:
     get:
@@ -954,7 +1210,7 @@ paths:
           schema:
             type: integer
           required: false
-          description: numeric Id of the User to get
+          description: numeric Id of the user to get
       responses:
         '200':
           description: Ok Successful Operation
@@ -962,6 +1218,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/user'
+              example:
+                data:
+                  id: 1
+                  client_id: null
+                  user_type: "superadmin"
+                  company_name: null
+                  first_name: "Jack"
+                  last_name: "Smith"
+                  address_1: ""
+                  address_2: ""
+                  city: ""
+                  state: ""
+                  zip: ""
+                  phone: ""
+                  email: "jsmith@jpmarketing.com"
+                  cluster_id: null
+                  external_user_id: ""
+                  additional_details_1: ""
+                  additional_details_2: ""
+                  additional_details_3: ""
+                  enable_io_tool_module: true
+                  enable_lead_management_module: false
+                  has_light_logo: false
+                  has_dark_logo: false
+                  override_dashboard_pages_from_reporting_profile: false
+                  default_home_page: null
+                  io_tool_notification_frequency: null
+                  country: ""
+                  timezone: "default"
+                  status: "active"
+                  hipaa_acknowledgement_timestamp: null
+                  creation_time: 1540403488
+                  show_services_overview: "default"
+                  show_categories_overview: "default"
+                  role_id: null
+                  io_tool_role_id: 6
+                  client_group_id: null
+                  reporting_profile_id: 8
+                  user_type_display: "Super Admin"
+                  country_display: ""
+                  timezone_display: "default"
+                  status_display: "active"
+                  formatted_creation_time: "Sept 24, 2018 2:14 PM"
         '401':
           description: Invalid access token
           content:
@@ -969,53 +1268,69 @@ paths:
               schema:
                 $ref: '#/components/schemas/error_401'
                 
+    post:
+      tags:
+        - Users
+      summary: Edit an existing user
+      security:
+        - oauth2: []
+      parameters:
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+          description: numeric Id of the user that needs to be edited
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema:
+              $ref: "#/components/schemas/user"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
 
-
-
-
-  # /dash/widgets:
-  #   get:
-  #     summary: Returns all the widgets from all dashboards
-  #     description: |
-  #       This returns all the metadata of all the widgets created in the instance
-  #     security:
-  #       - oauth2: []
-  #     responses:
-  #       '200':
-  #         description: OK Successful Response
-  #       '401':
-  #         description: Invalid access token
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/error_401'
-
-  # /dash/widgets/widgetId:
-  #   delete:
-  #     summary: Deletes a specific widget
-  #     security:
-  #       - oauth2: []
-  #     parameters:
-  #       - in: query
-  #         name: widgetId
-  #         schema:
-  #           type: integer
-  #         required: true
-  #         description: numeric Id of the widget to delete
-  #     responses:
-  #       '200':
-  #         description: Ok
-  #         content:
-  #           application/json;charset=utf-8:
-  #             schema:
-  #               type: string
-  #             examples: {}
-  #       '401':
-  #         description: Invalid access token
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/error_401'
+                  {
+                  "user_type": "agent",
+                  "email": "TestingFromSwaggerInsp@email.com",
+                  "password": "user1234",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "reporting_profile_id": 1,
+                  "client_group_id": 1,
+                  "role_id": 1,
+                  "status": "active"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                  error:
+                    type: boolean
+                  warnings:
+                    type: array
+                    items: 
+                      type: string
+                  status:
+                    type: integer
+              example:
+                data:
+                  id: 35
+                error: false
+                warnings: []
+                status: 200    
               
               
 components:
@@ -1469,6 +1784,28 @@ components:
           type: boolean
         iso_timestamp:
           type: string
+
+# --------------- Order Item Model ----------------- 
+    orderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        service_id:
+          type: integer
+        customer_id:
+          type: integer
+        item_id:
+          type: integer
+        mapping_date:
+          type: string
+        connection_setting_id:
+          type: integer
+        first_level_mapping:
+          type: integer
+        second_level_mapping:
+          type: integer
+
           
 # --------------- Role Model -----------------            
     role:
@@ -1493,8 +1830,8 @@ components:
           
 
             
-# --------------- Services (Data Sources) Model -----------------  
-    service:
+# --------------- Simple Service (Data Sources) Model -----------------  
+    simpleService:
       type: object
       properties:
         service_id:
@@ -1503,6 +1840,93 @@ components:
           type: string
         is_connected:
           type: boolean
+            
+# --------------- Service Information (Data Sources) Model -----------------
+    serviceInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        service_id:
+          type: integer
+        connect_steps:
+          type: string
+        categories:
+          type: string
+        keywords:
+          type: string
+        summary:
+          type: string
+        company_size:
+          type: string
+        links:
+          type: object
+          properties:
+            Website:
+              type: string
+            Sign Up:
+              type: string
+            Contact:
+              type: string
+            Newsletter:
+              type: string
+            Demo Request:
+              type: string
+            Free Trial:
+              type: string
+            Promotions:
+              type: object
+              properties:
+                null:
+                  type: string
+                  
+# --------------- ServiceData (Data Sources) Model -----------------                  
+    serviceData:
+      type: object
+      properties:
+        customer_id:
+          type: integer
+        campaign_id:
+          type: integer
+        name:
+          type: string
+        AVG(score):
+          type: string
+        ViewAdUnits:
+          type: string
+        client_name:
+          type: string
+        _client_city:
+          type: string
+        _client_state: 
+          type: string
+        _client_zip_code: 
+          type: string
+        client_reporting_status:
+          type: string
+        client_billing_id: 
+          type: integer
+        client_additional_details_1:
+          type: string        
+        client_additional_details_2:
+          type: string
+        client_additional_details_3:
+          type: string
+        client_crm_id: 
+          type: integer
+        _client_cluster_name: 
+          type: string
+        _client_account_manager:
+          type: string
+        _client_category:
+          type: string
+            
+
+# --------------- DataView Result Model ----------------- 
+
+# --------------- Field Result Model ----------------- 
+
+            
             
 # --------------- User Model -----------------    
     user:
@@ -1715,6 +2139,11 @@ components:
             - $ref: '#/components/schemas/language'
             - $ref: '#/components/schemas/lead'
             - $ref: '#/components/schemas/role'
+            - $ref: '#/components/schemas/simpleService'
+            - $ref: '#/components/schemas/serviceInfo'
+            - $ref: '#/components/schemas/orderItem'
+            - $ref: '#/components/schemas/serviceData'
+            
         error:
           type: boolean
         warnings:
