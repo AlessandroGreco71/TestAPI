@@ -1017,7 +1017,22 @@ paths:
         - Users
       summary: All Users
       description: This returns all the active and inactive users
-      operationId: getUsers
+      parameters:
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/groupby"
+        - $ref: "#/components/parameters/timegrouping"
+        - $ref: "#/components/parameters/aggregate"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/row_count"
+        - $ref: "#/components/parameters/daterange"
+        - $ref: "#/components/parameters/nested"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"
+        
+      # operationId: getUsers
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1246,17 +1261,144 @@ paths:
                 status: 200  
               
               
+              
+              
+# ---------------- QUERY PARAMETERS ------------------------
 components:
   parameters:
-    offsetParam:  # <-- Arbitrary name for the definition that will be used to refer to it.
-                  # Not necessarily the same as the parameter name.
+    metadata:  
       in: query
-      name: offset
+      name: metadata
       required: false
       schema:
         type: integer
-        minimum: 0
-      description: The number of items to skip before starting to collect the result set
+        enum: [0,1]
+      description: The API will provide more or all the info for the available fields.
+      example: https://<span></span>api.tapclicks.com/v2/services/34?metadata=1
+
+    page:
+      in: query
+      name: page
+      required: false
+      schema:
+        type: string
+      description: The example will return the first five records
+        
+        
+        This will limit the number of rows in the fetch result
+        #2. It will return 6 records, starting from the 13th
+      example: https://api.tapclicks.com/v2/34/data/cgn?page=0,5
+        #2- https://api.tapclicks.com/v2/34/data/cgn?page=2,6 
+        
+    groupby:
+      in: query
+      name: groupby
+      required: false
+      schema:
+        type: string
+      description: The results will be grouped based on the provided field
+      example: https://api.tapclicks.com/v2/services?groupby=name,customer_id
+      
+    timegrouping:
+      in: query
+      name: timegrouping
+      required: false
+      schema:
+        type: string
+        enum: [yearly, monthly, weekly, daily, hourly]
+      description: The results will be narrowed within the specified timegroup
+      example: https://[...]/v2/services/34/data/cgn=?timegrouping=weekly
+      
+    aggregate:
+      in: query
+      name: aggregate
+      required: false
+      schema:
+        type: boolean
+      description: The results will be the aggregated value of each field
+      example: https://api.tapclicks.com/v2/services/34/data/cgn?aggregate=true
+      
+    fields:
+      in: query
+      name: fields
+      required: false
+      schema:
+        type: string
+      description: This will filter the result data with the specific fields
+      example: https://api.tapclicks.com/v2/34/data/cgn?fields=CTR,ClickCount
+      
+    sort:
+      in: query
+      name: sort
+      required: false
+      schema: 
+        type: string
+      description: Ascending by default; prefix **-** for descending
+      
+      
+        This will sort the results based on the specific field and sort order.
+      example: https://api.tapclicks.com/v2/34/data/cgn?sort=-ClickCount
+      
+    count:
+      in: query
+      name: sort
+      required: false
+      schema:
+        type: integer
+        enum: [0,1]
+      description: The API will provide a total number of records in the result
+      example: http://api.tapclicks.com/34/data/cgn?count=1
+      
+    row_count:
+      in: query
+      name: row_count
+      required: false
+      schema:
+        type: string
+      description: Passing **row_count** along with the list of fields will provide grouped result and row count on each group
+      example: https://[...]/cgn=?groupby=campaign_id&fields=ClickCount,row_count
+      
+    daterange:
+      in: query
+      name: daterange
+      required: false
+      schema:
+        type: string
+      description: This filters the result between the given date range
+      example: https://[...]/cgn?daterange=2018-06-02|2018-10-22
+      
+    nested:
+      in: query
+      name: nested
+      required: false
+      schema:
+        type: integer
+        enum: [0,1]
+      description: Fetch grouped data that nested based on the groupby expression
+      example: https://[...]/cgn?groupby=campaign_name&nested=1
+      
+    filter_items:
+      in: query
+      name: nested
+      required: false
+      schema:
+        type: string
+      description: This will filter the data that contains only specific values.
+      
+      
+        To remove items use **!**
+      example: https://[...]/cgn?customer_id=4,!3,8
+      
+    filter_values:
+      in: query
+      name: filter_values
+      required: false
+      schema:
+        type: string
+      description: This will filter the data with any available fields and expected values
+      example: https://[...]/cgn?page=0,50&period=day&campaign_status=enabled
+
+
 
   schemas:
 # --------------- Business Unit Model -----------------     
@@ -2345,16 +2487,16 @@ components:
 
         The **TapClicks** API uses the OAuth 2.0 protocol for authentication and authorization.
         
-        As a first step, you can request your OAuth client credentials by sending an email to api-developer@tapclicks.com. You will need to provide a valid and active TapClicks account email address and the complete domain name that you have access to (https://your_instance.tapclicks.com).
-        This request will be answered by assigning to you a unique Client ID (`client_id`) and a unique Client Secret (`client_secret`). Make sure to store your Client Secret securely.
+        As a first step, you can request your OAuth client credentials by sending an email to api-developer@tapclicks.com. You will need to provide a valid and active TapClicks account *email address* and the complete domain name that you have access to (*https://<span></span>your_instance.tapclicks.com*).
+        This request will be answered by assigning to you a unique Client ID (`<client_id>`) and a unique Client Secret (`<client_secret>`). Make sure to store your Client Secret securely.
 
-        This set of values will allow you to obtain an Access Token (`access_token`) that will finally grant you access to the API.
+        This set of values will allow you to obtain an Access Token (`<access_token>`) that will finally grant you access to the API.
         
         **To obtain the Access Token:**
 
         ```
-        curl -X POST 
-        -d "client_id=<client_id>&client_secret=<client_secret>&grant_type=client_credentials"
+        curl -X POST \
+        -d "client_id=<client_id>&client_secret=<client_secret>&grant_type=client_credentials" \
         "https://api.tapclicks.com/oauth/accesstoken"
         
         ```
@@ -2365,7 +2507,7 @@ components:
         The Access Token needs to be included in every single API call in the Authorization Header as a type Bearer.
         
         ```
-        curl -X GET https://api.tapclicks.com/v2/ 
+        curl -X GET https://api.tapclicks.com/v2/ \
         -H "Authorization: Bearer <access_token>"
         
         ```
@@ -2374,8 +2516,8 @@ components:
         The Access Token has a limited lifetime. You can request another Access Token using your client_id and client_secret with a refresh_accesstoken call. 
         
         ```
-        curl -X POST -d 
-        "client_id=<client_id>&client_secret=<client_secret>&grant_type=client_credentials" 
+        curl -X POST -d \
+        "client_id=<client_id>&client_secret=<client_secret>&grant_type=client_credentials" \
         "https://api.tapclicks.com/oauth/refresh_accesstoken"
         
         ```
@@ -2450,7 +2592,7 @@ components:
                     the representation. Please wait for a bit and try again.
         
         ```
-
+        ---
 
 
 
