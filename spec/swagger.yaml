@@ -56,11 +56,11 @@ paths:
         - TapClicks API
       summary: Welcome Message
       description: This call will simply return a "Welcome to TAP API" message
-      security:
-        - oauth2: []
+      # security:
+      #   - oauth2: []
       responses:
         '200':
-          description: Ok
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
@@ -101,19 +101,17 @@ paths:
       tags:
         - Business Units
       summary: All Business Units
-      description: Clusters are Business Units.
+      description: Clusters are Business Units
         
         
         This returns a list of all the Business Units, active and inactive 
-      security:
-        - oauth2: []
       responses:
         '200':
-          description: Ok
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_clusters'
               example:
                 data:
                   - id: 1
@@ -145,15 +143,13 @@ paths:
         Categories are the Channels. 
         
         This returns all the Channels, even the pre-defined Channels that are not active.
-      security:
-        - oauth2: []
       responses:
         '200':
-          description: Ok
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_categories'
               example:
                 data:
                   - id: "49"
@@ -187,15 +183,13 @@ paths:
       tags:
         - Clients
       summary: All Clients
-      security:
-        - oauth2: []
       responses:
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_clients'
               example:
                 data:
                   - id: 1,
@@ -253,8 +247,6 @@ paths:
       tags:
         - Clients
       summary: Create a Client
-      security:
-        - oauth2: []
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -275,25 +267,11 @@ paths:
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
       responses:
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                  error:
-                    type: boolean
-                  warnings:
-                    type: array
-                    items: 
-                      type: string
-                  status:
-                    type: integer
+                $ref: '#/components/schemas/response_200_new_edit_client_user'
               example:
                 data:
                   id: 35
@@ -309,7 +287,7 @@ paths:
       
         
         
-  /clients/client_id:
+  /clients/{client_id}:
     get:
       tags:
         - Clients
@@ -317,23 +295,21 @@ paths:
       description: This returns a specific Client (client_id)
       
       
-        Note that if the query parameter "client_id" is omitted, this will return all the Clients in the instance.
-      security:
-        - oauth2: []
+        Note that if the path parameter "client_id" is omitted, this will return all the Clients in the instance.
       parameters:
-        - in: query
+        - in: path
           name: client_id
           schema:
             type: integer
           required: true
-          description: numeric Id of the Client to get
+          description: Numeric Id of the Client to get. Please refer to <a href="#tag/Clients">Clients</a> to obtain the correct Id
       responses:
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_clients'
               example:
                 data:
                   - id: 1,
@@ -391,8 +367,13 @@ paths:
         - Clients
       summary: Edit existing Client
       description: This is to modify the information of an existing Client
-      security:
-        - oauth2: []
+      parameters:
+        - in: path
+          name: client_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the Client to get. Please refer to <a href="#tag/Clients">Clients</a> to obtain the correct Id
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -413,25 +394,11 @@ paths:
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
       responses:
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                  error:
-                    type: boolean
-                  warnings:
-                    type: array
-                    items: 
-                      type: string
-                  status:
-                    type: integer
+                $ref: '#/components/schemas/response_200_new_edit_client_user'
               example:
                 data:
                   id: 35
@@ -456,15 +423,13 @@ paths:
       
       
         For example --- Services, Automotive, Retailer, Restaurant...
-      security: 
-        - oauth2: []
       responses: 
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_clientcategories'
               example:
                 data:
                   - id: 1
@@ -486,16 +451,15 @@ paths:
       tags:
         - Client Groups
       summary: All Client Groups
-      description: This returns a list of all Groups of Clients 
-      security:
-        - oauth2: []
+      description: This returns a list of all Groups of Clients
+      operationId: getClientGroups
       responses:
         '200':
-          description: OK Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_clientgroups'
               example:
                 data:
                   - id: "1"
@@ -527,15 +491,13 @@ paths:
         - Data Profiles
       summary: All Data Profiles
       description: This returns all the Data Profiles that are available in the instance
-      security:
-        - oauth2: []
       responses:
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_dataprofiles'
               example:
                 data:
                   - id: 1
@@ -565,15 +527,13 @@ paths:
         - Data Types
       summary: All data types
       description: This returns all the data types that are available for any field
-      security:
-        - oauth2: []
       responses:
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_datatypes'
               example:
                 data:
                   - key: "integer"
@@ -598,16 +558,14 @@ paths:
       tags:
         - Date Range
       summary: Date range
-      description: --- Returns the date range in the instance ---
-      security:
-        - oauth2: []
+      description: This returns the date range in the instance
       responses: 
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_daterange'
               example:
                 data:
                   start: 1541894432
@@ -635,15 +593,13 @@ paths:
         - Languages
       summary: All supported languages
       description: This returns a list of all supported languages
-      security:
-        - oauth2: []
       responses:
         '200':
-          description: Ok Successful Response
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_languages'
               example:
                 data: 
                   - locale: "en_US"
@@ -668,15 +624,13 @@ paths:
         - Leads
       summary: All leads
       description: This returns all the leads in the instance
-      security:
-        - oauth2: []
       responses:
         '200':
-          description: Ok Successful Response
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_leads'
               example:
                 data:
                   - id: 1
@@ -726,7 +680,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/error_403"      
 
-  /leads/lead_id:
+  /leads/{lead_id}:
     get:
       tags:
         - Leads
@@ -734,23 +688,21 @@ paths:
       description: This returns a specific lead (lead_id). 
         
         
-        Note that if the query parameter "lead_id" is omitted, this will return a list of all the leads in the instance.
-      security: 
-        - oauth2: []
+        Note that if the path parameter "lead_id" is omitted, this will return a list of all the leads in the instance
       parameters:
-        - in: query
+        - in: path
           name: lead_id
           schema:
             type: integer
-          required: false
-          description: numeric Id of the lead to get
+          required: true
+          description: Numeric Id of the lead to get
       responses:
         '200':
-          description: Ok Successful Response
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_leads'
               example:
                 data:
                   - id: 1
@@ -801,7 +753,7 @@ paths:
                 $ref: "#/components/schemas/error_403"
                 
 # --------------------- Role --------------------------  
-  /roles/role_id:
+  /roles/{role_id}:
     get:
       tags:
         - Roles
@@ -809,23 +761,21 @@ paths:
       description: This returns a specific role (role_id) that can be assigned to a user who has the IO tool module enabled.
       
       
-        Note that if the query parameter "role_id" is omitted, this will return a list of all the roles that can be assigned to the IOTool user.
-      security:
-        - oauth2: []
+        Note that if the path parameter "role_id" is omitted, this will return a list of all the roles that can be assigned to the IOTool user
       parameters:
-        - in: query
+        - in: path
           name: role_id
           schema:
             type: integer
-          required: false
-          description: numeric Id of the role to get. If omitted, it will return all roles        
+          required: true
+          description: Numeric Id of the role to get. If omitted, it will return all roles        
       responses:
         '200':
-          description: Ok Successful Response
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_roles'
               example:
                 data:
                   - id: 2
@@ -850,7 +800,7 @@ paths:
       
 # --------------------- Services (Data Sources) --------------------------        
 
-  /services/service_id:
+  /services/{service_id}:
     get:
       tags:
         - Services (Data Sources)
@@ -862,23 +812,21 @@ paths:
         This API call returns a specific service ("service_id") in the instance. This can be helpful to find out if such is connected or not.
         
         
-        Note that if the query parameter "service_id" is omitted, this will return a list of all the services available in the instance, whether they're connected or not.        
-      security:
-        - oauth2: []
+        Note that if the path parameter "service_id" is omitted, this will return a list of all the services available in the instance, whether they're connected or not.
       parameters:
-        - in: query
+        - in: path
           name: service_id
           schema:
             type: integer
-          required: false
-          description: numeric Id of the service to get. If omitted, it will return all services 
+          required: true
+          description: Numeric Id of the service to get. If omitted, it will return all services 
       responses:
         '200':
-          description: Ok Successful Response
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_services'
               example:
                 data:
                   - service_id: 44
@@ -895,40 +843,38 @@ paths:
               schema:
                 $ref: '#/components/schemas/error_401' 
                 
-  /services/id/data/data_view_id/field:
+  /services/{id}/data/{data_view_id}/{field}:
     get:
       tags:
         - Services (Data Sources)
       summary: Data for a service
       description: This returns the data of a specific service
-      security:
-        - oauth2: []
       parameters:
-        - in: query
+        - in: path
           name: id
           schema:
             type: integer
           required: true
-          description: id of the service to get.
-        - in: query
+          description: Id of the service to get
+        - in: path
           name: data_view_id
           schema:
             type: string
-          required: false
+          required: true
           description: Data view id the column belongs to
-        - in: query
+        - in: path
           name: field
           schema:
             type: string
-          required: false
+          required: true
           description: Field names of column to fetch
       responses:
         '200':
-          description: Ok Successful Response
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_servicesdataview'
               # This is an example for /services/id/data  
               # example:
               #   data:
@@ -965,7 +911,7 @@ paths:
 
         
                 
-  /services/info/id:
+  /services/info/{id}:
     get:
       tags:
         - Services (Data Sources)
@@ -973,23 +919,21 @@ paths:
       description: This returns general information regarding a Service
         
         
-        Note that if the query parameter "id" is omitted, this will return a list of all the information of all services.
-      security:
-        - oauth2: []
+        Note that if the path parameter "id" is omitted, this will return a list of all the information of all services.
       parameters:
-        - in: query
+        - in: path
           name: id
           schema:
             type: integer
-          required: false
-          description: id of the service to get. If omitted, it will return all the information of all the services
+          required: true
+          description: Id of the service to get. If omitted, it will return all the information of all the services
       responses:
         '200':
-          description: Ok Successful Response
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_servicesinfo'
               example:
                 data:
                   id: 1
@@ -1019,31 +963,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/error_401'  
         
-  /services/orderitems/order_item_id:
+  /services/orderitems/{order_item_id}:
     get:
       tags:
         - Services (Data Sources)
       summary: All OR a specific order item
-      description: This returns an order item (order_item_id).
+      description: This returns an order item (order_item_id)
           
           
-        Note that if the query parameter "order_item_id" is omitted, this will return a list of all the order items in the instance.
-      security:
-        - oauth2: []
+        Note that if the path parameter "order_item_id" is omitted, this will return a list of all the order items in the instance.
       parameters:
-        - in: query
+        - in: path
           name: order_item_id
           schema:
             type: integer
-          required: false
-          description: numeric Id of the order item to get. If omitted, it will return all order items 
+          required: true
+          description: Numeric Id of the order item to get. If omitted, it will return all order items 
       responses:
         '200':
-          description: Ok Successful Response
+          description: Ok - Successful Operation
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_servicesorderitem'
               example:
                 data:
                   - id: 2
@@ -1075,58 +1017,60 @@ paths:
         - Users
       summary: All Users
       description: This returns all the active and inactive users
-      security:
-        - oauth2: []
+      operationId: getUsers
       responses:
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200'
+                $ref: '#/components/schemas/response_200_users'
               example:
                 data:
-                  id: 1
-                  client_id: null
-                  user_type: "superadmin"
-                  company_name: null
-                  first_name: "Jack"
-                  last_name: "Smith"
-                  address_1: ""
-                  address_2: ""
-                  city: ""
-                  state: ""
-                  zip: ""
-                  phone: ""
-                  email: "jsmith@jpmarketing.com"
-                  cluster_id: null
-                  external_user_id: ""
-                  additional_details_1: ""
-                  additional_details_2: ""
-                  additional_details_3: ""
-                  enable_io_tool_module: true
-                  enable_lead_management_module: false
-                  has_light_logo: false
-                  has_dark_logo: false
-                  override_dashboard_pages_from_reporting_profile: false
-                  default_home_page: null
-                  io_tool_notification_frequency: null
-                  country: ""
-                  timezone: "default"
-                  status: "active"
-                  hipaa_acknowledgement_timestamp: null
-                  creation_time: 1540403488
-                  show_services_overview: "default"
-                  show_categories_overview: "default"
-                  role_id: null
-                  io_tool_role_id: 6
-                  client_group_id: null
-                  reporting_profile_id: 8
-                  user_type_display: "Super Admin"
-                  country_display: ""
-                  timezone_display: "default"
-                  status_display: "active"
-                  formatted_creation_time: "Sept 24, 2018 2:14 PM"
+                  - id: 1
+                    client_id: null
+                    user_type: "superadmin"
+                    company_name: null
+                    first_name: "Jack"
+                    last_name: "Smith"
+                    address_1: ""
+                    address_2: ""
+                    city: ""
+                    state: ""
+                    zip: ""
+                    phone: ""
+                    email: "jsmith@jpmarketing.com"
+                    cluster_id: null
+                    external_user_id: ""
+                    additional_details_1: ""
+                    additional_details_2: ""
+                    additional_details_3: ""
+                    enable_io_tool_module: true
+                    enable_lead_management_module: false
+                    has_light_logo: false
+                    has_dark_logo: false
+                    override_dashboard_pages_from_reporting_profile: false
+                    default_home_page: null
+                    io_tool_notification_frequency: null
+                    country: ""
+                    timezone: "default"
+                    status: "active"
+                    hipaa_acknowledgement_timestamp: null
+                    creation_time: 1540403488
+                    show_services_overview: "default"
+                    show_categories_overview: "default"
+                    role_id: null
+                    io_tool_role_id: 6
+                    client_group_id: null
+                    reporting_profile_id: 8
+                    user_type_display: "Super Admin"
+                    country_display: ""
+                    timezone_display: "default"
+                    status_display: "active"
+                    formatted_creation_time: "Sept 24, 2018 2:14 PM"
+                error: false
+                warnings: []
+                status: 200                
         '401':
           description: Invalid access token
           content:
@@ -1144,8 +1088,6 @@ paths:
       tags:
         - Users
       summary: Create a user
-      security:
-        - oauth2: []
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -1171,25 +1113,11 @@ paths:
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
       responses:
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                  error:
-                    type: boolean
-                  warnings:
-                    type: array
-                    items: 
-                      type: string
-                  status:
-                    type: integer
+                $ref: '#/components/schemas/response_200_new_edit_client_user'
               example:
                 data:
                   id: 35
@@ -1197,70 +1125,71 @@ paths:
                 warnings: []
                 status: 200
                 
-  /users/user_id:
+  /users/{user_id}:
     get:
       tags:
         - Users
       summary: A specific user
-      security:
-        - oauth2: []
       parameters:
-        - in: query
+        - in: path
           name: user_id
           schema:
             type: integer
-          required: false
-          description: numeric Id of the user to get
+          required: true
+          description: Numeric Id of the user to get
       responses:
         '200':
           description: Ok Successful Operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                $ref: '#/components/schemas/response_200_users'
               example:
                 data:
-                  id: 1
-                  client_id: null
-                  user_type: "superadmin"
-                  company_name: null
-                  first_name: "Jack"
-                  last_name: "Smith"
-                  address_1: ""
-                  address_2: ""
-                  city: ""
-                  state: ""
-                  zip: ""
-                  phone: ""
-                  email: "jsmith@jpmarketing.com"
-                  cluster_id: null
-                  external_user_id: ""
-                  additional_details_1: ""
-                  additional_details_2: ""
-                  additional_details_3: ""
-                  enable_io_tool_module: true
-                  enable_lead_management_module: false
-                  has_light_logo: false
-                  has_dark_logo: false
-                  override_dashboard_pages_from_reporting_profile: false
-                  default_home_page: null
-                  io_tool_notification_frequency: null
-                  country: ""
-                  timezone: "default"
-                  status: "active"
-                  hipaa_acknowledgement_timestamp: null
-                  creation_time: 1540403488
-                  show_services_overview: "default"
-                  show_categories_overview: "default"
-                  role_id: null
-                  io_tool_role_id: 6
-                  client_group_id: null
-                  reporting_profile_id: 8
-                  user_type_display: "Super Admin"
-                  country_display: ""
-                  timezone_display: "default"
-                  status_display: "active"
-                  formatted_creation_time: "Sept 24, 2018 2:14 PM"
+                  - id: 1
+                    client_id: null
+                    user_type: "superadmin"
+                    company_name: null
+                    first_name: "Jack"
+                    last_name: "Smith"
+                    address_1: ""
+                    address_2: ""
+                    city: ""
+                    state: ""
+                    zip: ""
+                    phone: ""
+                    email: "jsmith@jpmarketing.com"
+                    cluster_id: null
+                    external_user_id: ""
+                    additional_details_1: ""
+                    additional_details_2: ""
+                    additional_details_3: ""
+                    enable_io_tool_module: true
+                    enable_lead_management_module: false
+                    has_light_logo: false
+                    has_dark_logo: false
+                    override_dashboard_pages_from_reporting_profile: false
+                    default_home_page: null
+                    io_tool_notification_frequency: null
+                    country: ""
+                    timezone: "default"
+                    status: "active"
+                    hipaa_acknowledgement_timestamp: null
+                    creation_time: 1540403488
+                    show_services_overview: "default"
+                    show_categories_overview: "default"
+                    role_id: null
+                    io_tool_role_id: 6
+                    client_group_id: null
+                    reporting_profile_id: 8
+                    user_type_display: "Super Admin"
+                    country_display: ""
+                    timezone_display: "default"
+                    status_display: "active"
+                    formatted_creation_time: "Sept 24, 2018 2:14 PM"
+                error: false
+                warnings: []
+                status: 200 
         '401':
           description: Invalid access token
           content:
@@ -1272,15 +1201,13 @@ paths:
       tags:
         - Users
       summary: Edit an existing user
-      security:
-        - oauth2: []
       parameters:
-        - in: query
+        - in: path
           name: user_id
           schema:
             type: integer
           required: true
-          description: numeric Id of the user that needs to be edited
+          description: Numeric Id of the user that needs to be edited
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -1306,48 +1233,34 @@ paths:
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
       responses:
         '200':
-          description: Ok Successful Operation
+          description: Ok - Successful Operation
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                  error:
-                    type: boolean
-                  warnings:
-                    type: array
-                    items: 
-                      type: string
-                  status:
-                    type: integer
+                $ref: '#/components/schemas/response_200_new_edit_client_user'
               example:
                 data:
                   id: 35
                 error: false
                 warnings: []
-                status: 200    
+                status: 200  
               
               
 components:
-  # parameters:
-  #   offsetParam:  # <-- Arbitrary name for the definition that will be used to refer to it.
-  #                 # Not necessarily the same as the parameter name.
-  #     in: query
-  #     name: offset
-  #     required: false
-  #     schema:
-  #       type: integer
-  #       minimum: 0
-  #     description: The number of items to skip before starting to collect the result set.
+  parameters:
+    offsetParam:  # <-- Arbitrary name for the definition that will be used to refer to it.
+                  # Not necessarily the same as the parameter name.
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: The number of items to skip before starting to collect the result set
 
   schemas:
 # --------------- Business Unit Model -----------------     
-    businessUnit:
+    cluster:
       type: object
       properties:
         id:
@@ -1372,7 +1285,7 @@ components:
           enum: [Active, Inactive]
             
 # --------------- Channel Model ----------------- 
-    channel:
+    category:
       type: object
       properties:
         id:
@@ -1566,6 +1479,7 @@ components:
           type: integer
         default_reporting_profile_id:
           type: integer
+          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain a list of all reporting profiles
         client_category_id:
           type: integer
         reporting_status:
@@ -1946,10 +1860,12 @@ components:
           type: integer
         client_id: 
           type: integer
+          description: This is mandatory when user_type = "client"
         user_type:
           type: string
           enum: [client, agent, superadmin, clusteradmin]
           default: client
+          # description: Link to be added here please refer to <a href="#tag/Roles">ROLES</a> to obtain all possible role types and ids
         company_name: 
           type: string
         first_name:
@@ -1974,6 +1890,7 @@ components:
           type: string
         cluster_id:
           type: integer
+          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all of the exisiting business unit id
         external_user_id:
           type: integer
         additional_details_1:
@@ -2001,7 +1918,8 @@ components:
         country:
           type: string
         timezone:
-          type: string # there could be a link to a different schema, instead of enum
+          type: string 
+          # there could be a link to a different schema, instead of enum
           default: default
         status:
           type: string
@@ -2018,13 +1936,17 @@ components:
           default: default
         role_id:
           type: integer
+          description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
         io_tool_role_id:
           type: integer
+          description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
         client_group_id:
           type: integer
+          description: This is mandatory when user_type = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
           type: integer
           default: 1
+          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all of the exisiting data profile id
         user_type_display: 
           type: string
           enum: [Super Admin, Business Unit Admin, Agent, Client]
@@ -2121,29 +2043,58 @@ components:
         data: ['API Route not found']
         warnings: []
         status: 404
-    response_200:
+    # response_200:
+    #   type: object
+    #   properties:
+    #     data:
+    #       type: object
+    #       oneOf: 
+    #         - $ref: '#/components/schemas/clientGroup'
+    #         - $ref: '#/components/schemas/user'
+    #         - $ref: '#/components/schemas/clientCategory'
+    #         - $ref: '#/components/schemas/client'
+    #         - $ref: '#/components/schemas/cluster'
+    #         - $ref: '#/components/schemas/dataType'
+    #         - $ref: '#/components/schemas/dateRange'
+    #         - $ref: '#/components/schemas/dataProfile'
+    #         - $ref: '#/components/schemas/category'
+    #         - $ref: '#/components/schemas/language'
+    #         - $ref: '#/components/schemas/lead'
+    #         - $ref: '#/components/schemas/role'
+    #         - $ref: '#/components/schemas/simpleService'
+    #         - $ref: '#/components/schemas/serviceInfo'
+    #         - $ref: '#/components/schemas/orderItem'
+    #         - $ref: '#/components/schemas/serviceData'
+    #     error:
+    #       type: boolean
+    #     warnings:
+    #       type: array
+    #       items:
+    #         type: string
+    #     status: 
+    #       type: integer
+          
+    response_200_clusters:
       type: object
       properties:
         data:
           type: object
-          oneOf: 
-            - $ref: '#/components/schemas/clientGroup'
-            - $ref: '#/components/schemas/user'
-            - $ref: '#/components/schemas/clientCategory'
-            - $ref: '#/components/schemas/client'
-            - $ref: '#/components/schemas/businessUnit'
-            - $ref: '#/components/schemas/dataType'
-            - $ref: '#/components/schemas/dateRange'
-            - $ref: '#/components/schemas/dataProfile'
-            - $ref: '#/components/schemas/channel'
-            - $ref: '#/components/schemas/language'
-            - $ref: '#/components/schemas/lead'
-            - $ref: '#/components/schemas/role'
-            - $ref: '#/components/schemas/simpleService'
-            - $ref: '#/components/schemas/serviceInfo'
-            - $ref: '#/components/schemas/orderItem'
-            - $ref: '#/components/schemas/serviceData'
-            
+          $ref: '#/components/schemas/cluster'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer      
+
+    response_200_categories:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/category'
         error:
           type: boolean
         warnings:
@@ -2152,28 +2103,366 @@ components:
             type: string
         status: 
           type: integer
+
+    response_200_clients:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/client'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer 
+          
+    response_200_new_edit_client_user:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer          
+
+    response_200_clientcategories:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/clientCategory'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_clientgroups:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/clientGroup'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_dataprofiles:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/dataProfile'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_datatypes:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/dataType'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_daterange:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/dateRange'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer 
+          
+    response_200_languages:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/language'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_leads:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/lead'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_roles:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/role'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_services:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/simpleService'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_servicesdataview:
+      type: object
+      properties:
+        data:
+          type: object
+          # IMPORTANT:
+          # this reference Model is incorrect, please create a new Model once
+          # you can test the response
+          $ref: '#/components/schemas/simpleService'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_servicesinfo:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/serviceInfo'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer    
+          
+    response_200_servicesorderitem:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/orderItem'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+    response_200_users:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/user'
+        error:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        status: 
+          type: integer
+          
+
         
         
 
   securitySchemes:
-    # bearerAuth:            # arbitrary name for the security scheme
-    #   type: http
-    #   scheme: bearer
-    #   bearerFormat: JWT 
     oAuth2ClientCredentials:
       type: oauth2
       description: |
-        Get access to data while protecting your account credentials.
-        OAuth2 is also a safer and more secure way to give you access.
-        Authentication Process
 
-        The TapClicks API uses the OAuth 2.0 protocol for authentication and authorization.
+        The **TapClicks** API uses the OAuth 2.0 protocol for authentication and authorization.
+        
+        As a first step, you can request your OAuth client credentials by sending an email to api-developer@tapclicks.com. You will need to provide a valid and active TapClicks account email address and the complete domain name that you have access to (https://your_instance.tapclicks.com).
+        This request will be answered by assigning to you a unique Client ID (`client_id`) and a unique Client Secret (`client_secret`). Make sure to store your Client Secret securely.
+
+        This set of values will allow you to obtain an Access Token (`access_token`) that will finally grant you access to the API.
+        
+        **To obtain the Access Token:**
+
+        ```
+        curl -X POST 
+        -d "client_id=<client_id>&client_secret=<client_secret>&grant_type=client_credentials"
+        "https://api.tapclicks.com/oauth/accesstoken"
+        
+        ```
+
+        **Base URL and Authorization Header:**
+        The base URL for all API calls is https://api.tapclicks.com/v2
+        
+        The Access Token needs to be included in every single API call in the Authorization Header as a type Bearer.
+        
+        ```
+        curl -X GET https://api.tapclicks.com/v2/ 
+        -H "Authorization: Bearer <access_token>"
+        
+        ```
+        
+        **Get New Access Token:**
+        The Access Token has a limited lifetime. You can request another Access Token using your client_id and client_secret with a refresh_accesstoken call. 
+        
+        ```
+        curl -X POST -d 
+        "client_id=<client_id>&client_secret=<client_secret>&grant_type=client_credentials" 
+        "https://api.tapclicks.com/oauth/refresh_accesstoken"
+        
+        ```
+
+        The Refresh Token also has a limited lifetime. The lifetime (expires_in) is expressed in seconds
+
+
+
+
+
+        **Possible responses:**
+
+        ```
+          Good Response: Status 200 OK
+
+          {
+            "access_token": string,
+            "expires_in": integer
+          }
+          
+          
+          Bad Requests: Status 401 BAD REQUEST
+          {
+            "access_token": null,
+            "expires_in": null
+          }          
+
+          Bad Requests: Status 401 BAD REQUEST
+          {
+            "fault": {
+              "faultstring": "Invalid client identifier {0}",
+              "detail": {
+                "errorcode": "oauth.v2.InvalidClientIdentifier"
+              }
+            }
+          }
+
+          Bad Requests: Status 401 BAD REQUEST
+          {
+            "fault": {
+              "faultstring": "invalid_request",
+              "detail": {
+                "errorcode": "invalid_request"
+              }
+            }
+          }
+          
+        ```
+        
+        
+        
+        
+        **Possible Response Codes:**
+        ```
+        > 200 - OK: The request was successful and the response body contains 
+                    the representation requested
+        > 302 - FOUND: A common redirect response; you can GET the representation 
+                    at the URL in the Location response header
+        > 304 - NOT MODIFIED: Your client's cached version of the representation 
+                    is still up to date
+        > 400 - BAD REQUEST: The request could not be understood by the server 
+                    due to malformed syntax                    
+        > 401 - UNAUTHORIZED: The supplied credentials, if any, are not sufficient 
+                    to access the resource
+        > 404 - NOT FOUND: The server has not found anything matching the 
+                    Request-URI
+        > 429 - TOO MANY REQUESTS: Your application is sending too many 
+                    simultaneous requests
+        > 500 - SERVER ERROR: We couldn't return the representation due to 
+                    an internal server error
+        > 503 - SERVICE UNAVAILABLE: We are temporarily unable to return 
+                    the representation. Please wait for a bit and try again.
+        
+        ```
+
+
+
 
       flows: 
         clientCredentials: 
           tokenUrl: https://api.tapclicks.com/oauth/accesstoken
           refreshUrl: https://api.tapclicks.com/oauth/refresh_accesstoken
           scopes: {}
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT           
     
-# security:                   // It applies this type of security to all operations 
-#   - bearerAuth: []
+security:
+  - bearerAuth: []
