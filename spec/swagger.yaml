@@ -104,7 +104,15 @@ paths:
       description: Clusters are Business Units
         
         
-        This returns a list of all the Business Units, active and inactive 
+        This returns a list of all the Business Units, active and inactive
+      parameters:
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"      
       responses:
         '200':
           description: Ok - Successful Operation
@@ -143,6 +151,14 @@ paths:
         Categories are the Channels. 
         
         This returns all the Channels, even the pre-defined Channels that are not active.
+      parameters:
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -183,6 +199,15 @@ paths:
       tags:
         - Clients
       summary: All Clients
+      description: This returns all Clients, in any reporting status
+      parameters:
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -303,6 +328,13 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the Client to get. Please refer to <a href="#tag/Clients">Clients</a> to obtain the correct Id
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -452,7 +484,15 @@ paths:
         - Client Groups
       summary: All Client Groups
       description: This returns a list of all Groups of Clients
-      operationId: getClientGroups
+      # operationId: getClientGroups
+      parameters:
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"      
       responses:
         '200':
           description: Ok - Successful Operation
@@ -491,6 +531,14 @@ paths:
         - Data Profiles
       summary: All Data Profiles
       description: This returns all the Data Profiles that are available in the instance
+      parameters:
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"  
       responses:
         '200':
           description: Ok - Successful Operation
@@ -558,7 +606,7 @@ paths:
       tags:
         - Date Range
       summary: Date range
-      description: This returns the date range in the instance
+      description: This returns the current set date range
       responses: 
         '200':
           description: Ok - Successful Operation
@@ -624,6 +672,14 @@ paths:
         - Leads
       summary: All leads
       description: This returns all the leads in the instance
+      parameters:
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"        
       responses:
         '200':
           description: Ok - Successful Operation
@@ -696,6 +752,8 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the lead to get
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/fields"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -768,7 +826,10 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the role to get. If omitted, it will return all roles        
+          description: Numeric Id of the role to get. If omitted, it will return all roles  
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/sort"        
       responses:
         '200':
           description: Ok - Successful Operation
@@ -820,6 +881,12 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the service to get. If omitted, it will return all services 
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"          
       responses:
         '200':
           description: Ok - Successful Operation
@@ -868,6 +935,19 @@ paths:
             type: string
           required: true
           description: Field names of column to fetch
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/groupby"
+        - $ref: "#/components/parameters/timegrouping"
+        - $ref: "#/components/parameters/aggregate"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/row_count"
+        - $ref: "#/components/parameters/daterange"
+        - $ref: "#/components/parameters/nested"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -927,6 +1007,12 @@ paths:
             type: integer
           required: true
           description: Id of the service to get. If omitted, it will return all the information of all the services
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"          
       responses:
         '200':
           description: Ok - Successful Operation
@@ -979,6 +1065,19 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the order item to get. If omitted, it will return all order items 
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/groupby"
+        - $ref: "#/components/parameters/timegrouping"
+        - $ref: "#/components/parameters/aggregate"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/row_count"
+        - $ref: "#/components/parameters/daterange"
+        - $ref: "#/components/parameters/nested"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1016,19 +1115,13 @@ paths:
       tags:
         - Users
       summary: All Users
-      description: This returns all the active and inactive users
+      description: This returns all users, whether they're active or inactive
       parameters:
         - $ref: "#/components/parameters/metadata"
         - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/groupby"
-        - $ref: "#/components/parameters/timegrouping"
-        - $ref: "#/components/parameters/aggregate"
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/row_count"
-        - $ref: "#/components/parameters/daterange"
-        - $ref: "#/components/parameters/nested"
         - $ref: "#/components/parameters/filter_items"
         - $ref: "#/components/parameters/filter_values"
         
@@ -1152,6 +1245,13 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the user to get
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/filter_items"
+        - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok Successful Operation
@@ -1558,98 +1658,138 @@ components:
       properties:
         id:
           type: integer
+          description: Id of the Client
         company_name:
           type: string
+          description: Company Name
         first_name:
           type: string
+          description: First Name
         last_name:
           type: string
+          description: Last Name
         email:
           type: string
+          description: Email
         address_1:
           type: string
+          description: Address 1
         address_2:
           type: string
+          description: Address 2
         city:
           type: string
+          description: City
         state:
           type: string
+          description: State
         zip:
           type: string
+          description: Zip/Postal Code
         country:
           type: string
+          description: Country
         phone:
           type: string
+          description: Phone number
         fax:
           type: string
+          description: Fax number
         website:
           type: string
+          description: Website
         account_manager_user_id:
           type: integer
+          description: Id of the Account Manager
         has_light_logo:
           type: boolean
+          description: Has light logo
           default: false
         has_dark_logo":
           type: boolean
           default: false
+          description: Has dark logo
         crm_id:
           type: integer
+          description: Id of the CRM
         billing_id:
           type: integer
+          description: Billing Id
         additional_details_1:
           type: string
+          description: Additional details 1
         additional_details_2:
           type: string
+          description: Additional details 2
         additional_details_3:
           type: string
+          description: Additional details 3
         enable_lead_management_module:
           type: boolean
           default: false
+          description: Enable Lead Management module for this Client
         created_by_user_id:
           type: integer
+          description: Created by User Id
         created_by_user:
           type: string
+          description: Created by User
         report_language:
           type: string
+          description: Report language (if available)
         source_service_id:
           type: integer
+          description: Id of the source service
         creation_time:
           type: integer
+          description: Creation time
         last_modification_time:
           type: integer
+          description: Time of last modification
         cluster_id:
           type: integer
+          description: Id of the Business Unit
         default_reporting_profile_id:
           type: integer
           description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain a list of all reporting profiles
         client_category_id:
           type: integer
+          description: Id of Client Category
         reporting_status:
           type: string
           enum: [pending_mapping, active, hold, terminated]
           default: pending_mapping
+          description: Reporting status
         iotool_status:
           type: string
           enum: [presale, active, inactive, terminated]
           default: presale
+          description: TapOrders status
         has_hipaa_data:
           type: boolean
+          description: Has hippa data
         formatted_creation_time:
           type: string
+          description: Formatted creation time
         formatted_last_modification_time:
           type: string
+          description: Formatted last modification time
         client_group_ids:
           type: array
           items: 
             type: integer
+            description: Id of the Client Group
         activate_tapleads:
           type: boolean
+          description: Activate TapLeads
         reporting_status_display:
           type: string
           enum: [pending_mapping, active, hold, terminated]
+          description:  Reporting status display
         iotool_status_display:
           type: string
           enum: [pending_mapping, active, hold, terminated]
+          description: TapOrders status display
           
     
 # --------------- Client Category Model -----------------     
