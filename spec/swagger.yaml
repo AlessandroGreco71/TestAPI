@@ -111,8 +111,8 @@ paths:
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"      
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"      
       responses:
         '200':
           description: Ok - Successful Operation
@@ -157,8 +157,8 @@ paths:
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -206,8 +206,8 @@ paths:
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -333,8 +333,8 @@ paths:
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -491,8 +491,8 @@ paths:
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"      
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"      
       responses:
         '200':
           description: Ok - Successful Operation
@@ -537,8 +537,8 @@ paths:
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"  
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"  
       responses:
         '200':
           description: Ok - Successful Operation
@@ -678,8 +678,8 @@ paths:
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"        
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"        
       responses:
         '200':
           description: Ok - Successful Operation
@@ -885,8 +885,8 @@ paths:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"          
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"          
       responses:
         '200':
           description: Ok - Successful Operation
@@ -915,7 +915,7 @@ paths:
       tags:
         - Services (Data Sources)
       summary: Data for a service
-      description: This returns the data of a specific service
+      description: This returns the data of a specific field of a specific service
       parameters:
         - in: path
           name: id
@@ -946,8 +946,8 @@ paths:
         - $ref: "#/components/parameters/row_count"
         - $ref: "#/components/parameters/daterange"
         - $ref: "#/components/parameters/nested"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1011,8 +1011,8 @@ paths:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"          
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"          
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1076,8 +1076,8 @@ paths:
         - $ref: "#/components/parameters/row_count"
         - $ref: "#/components/parameters/daterange"
         - $ref: "#/components/parameters/nested"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1122,8 +1122,8 @@ paths:
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"
         
       # operationId: getUsers
       responses:
@@ -1250,8 +1250,8 @@ paths:
         - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/filter_items"
-        - $ref: "#/components/parameters/filter_values"
+        - $ref: "#/components/parameters/field_data_filter"
+      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok Successful Operation
@@ -1441,7 +1441,7 @@ components:
       
     count:
       in: query
-      name: sort
+      name: count
       required: false
       schema:
         type: integer
@@ -1477,9 +1477,9 @@ components:
       description: Fetch grouped data that nested based on the groupby expression
       example: https://[...]/cgn?groupby=campaign_name&nested=1
       
-    filter_items:
+    field_data_filter:
       in: query
-      name: nested
+      name: field data filter
       required: false
       schema:
         type: string
@@ -1489,9 +1489,10 @@ components:
         To remove items use **!**
       example: https://[...]/cgn?customer_id=4,!3,8
       
+    # This is not being used right now; same as field_data_filter?!  
     filter_values:
       in: query
-      name: filter_values
+      name: filter values
       required: false
       schema:
         type: string
@@ -1658,7 +1659,7 @@ components:
       properties:
         id:
           type: integer
-          description: Id of the Client
+          description: Client Id
         company_name:
           type: string
           description: Company Name
@@ -1700,7 +1701,7 @@ components:
           description: Website
         account_manager_user_id:
           type: integer
-          description: Id of the Account Manager
+          description: Account Manager User Id
         has_light_logo:
           type: boolean
           description: Has light logo
@@ -1711,7 +1712,7 @@ components:
           description: Has dark logo
         crm_id:
           type: integer
-          description: Id of the CRM
+          description: CRM Id
         billing_id:
           type: integer
           description: Billing Id
@@ -1739,7 +1740,7 @@ components:
           description: Report language (if available)
         source_service_id:
           type: integer
-          description: Id of the source service
+          description: Source service Id
         creation_time:
           type: integer
           description: Creation time
@@ -1748,13 +1749,13 @@ components:
           description: Time of last modification
         cluster_id:
           type: integer
-          description: Id of the Business Unit
+          description: Business Unit Id
         default_reporting_profile_id:
           type: integer
           description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain a list of all reporting profiles
         client_category_id:
           type: integer
-          description: Id of Client Category
+          description: Client Category Id
         reporting_status:
           type: string
           enum: [pending_mapping, active, hold, terminated]
@@ -1778,7 +1779,7 @@ components:
           type: array
           items: 
             type: integer
-            description: Id of the Client Group
+            description: Client Group Id
         activate_tapleads:
           type: boolean
           description: Activate TapLeads
@@ -1798,8 +1799,10 @@ components:
       properties:
         id:
           type: integer
+          description: Client Category Id
         name:
           type: string
+          description: Client Category
       
 # --------------- Client Group Model -----------------         
     clientGroup:
@@ -1807,29 +1810,40 @@ components:
       properties:
         id:
           type: integer
+          description: Client Group Id
         name:
           type: string
+          description: Client Group
         cluster_id:
           type: integer
+          description: Business Unit Id
         group_type:
           type: string
           enum: [group_of_clients, group_of_client_group]
+          description: Type
         has_light_logo:
           type: boolean
+          description: Has light logo
         has_dark_logo:
           type: boolean
+          description: Has dark logo
         created_at:
           type: integer
+          description: Creation time
         updated at:
           type: integer
+          description: Updated time
         formatted_created_at: 
           type: string
+          description: Formatted creation time
         formatted_updated_at:
           type: string
+          description: Formatted updated time
         client_ids:
           type: array
           items: 
             type: integer
+          description: Clients Ids
       example:
         data:
           id: "1"
@@ -1850,22 +1864,31 @@ components:
       properties:
         id:
           type: integer
+          description: Data Profile Id
         name:
           type: string
+          description: Data Profile
         created_at:
           type: integer
+          description: Creation time
         updated_at:
           type: integer
+          description: Updated time
         enable_new_services_by_default:
           type: boolean
+          description: Enable new services by default
         enable_scores:
           type: boolean
+          description: Enable scores
         adwords_split_active:
           type: boolean
+          description: Adwords split active
         hide_adwords_network:
           type: boolean
+          description: Hide adwords active
         cluster_id:
           type: integer
+          description: Business Unit Id
         
 # --------------- Data Type Model -----------------         
     dataType:
@@ -1874,17 +1897,23 @@ components:
         key:
           type: string
           enum: [integer, decimal, percent, currency, string, phonenumber, callback, date, time, link, url, image, datetime, id, bool]
+          description: Key
         value:
           type: string
           enum: [Number, Decimal, Percent, Currency, Text, Phone_Number, Date, Time, Link, URL, Image, Id, Boolean]
+          description: Value
         icon:
           type: string
+          description: Icon
         is_selectable:
           type: boolean
+          description: Is selectable
         is_numeric:
           type: boolean
+          description: Is numeric
         precision:
           type: integer  
+          description: Precision
   
 # --------------- Date Range Model -----------------  
     dateRange:
@@ -1892,18 +1921,25 @@ components:
       properties:
         start:
           type: integer
+          description: Start
         end:
           type: integer
+          description: End
         relative_date_range:
           type: integer
+          description: Relative date range
         comparison_start:
           type: integer
+          description: Comparison start
         comparison_end:
           type: integer
+          description: Comparison end
         comparison_active:
           type: integer
+          description: Comparison Active
         comparison_period:
           type: integer
+          description: Comparison Period
           
 # --------------- Language Model -----------------           
     language:
@@ -1911,8 +1947,10 @@ components:
       properties:
         locale:
           type: string
+          description: Locale
         name:
           type: string
+          description: Name
           
 # --------------- Lead Model -----------------  
     lead:
@@ -1987,20 +2025,28 @@ components:
       properties:
         id:
           type: integer
+          description: Order item Id
         service_id:
           type: integer
+          description: Service Id
         customer_id:
           type: integer
+          description: Customer Id
         item_id:
           type: integer
+          description: Item Id
         mapping_date:
           type: string
+          description: Mapping date
         connection_setting_id:
           type: integer
+          description: Connection setting Id
         first_level_mapping:
           type: integer
+          description: First level mapping
         second_level_mapping:
           type: integer
+          description: Second level mapping
 
           
 # --------------- Role Model -----------------            
@@ -2009,20 +2055,27 @@ components:
       properties:
         id:
           type: integer
+          description: Role Id
         name:
           type: string
+          description: Name
         role_type:
           type: string
+          description: Role type
         cluster_id:
           type: integer
+          description: Business Unit Id
         reporting_template_ids:
           type: array
           items:
             type: integer
+          description: Reporting Template Ids
         manage_dashboard:
           type: boolean
+          description: Manage dashboard
         can_manage_alerts:
           type: boolean
+          description: Can manage alerts
           
 
             
@@ -2032,10 +2085,13 @@ components:
       properties:
         service_id:
           type: integer
+          description: Service Id
         name:
           type: string
+          description: Name
         is_connected:
           type: boolean
+          description: Is connected
             
 # --------------- Service Information (Data Sources) Model -----------------
     serviceInfo:
@@ -2043,80 +2099,213 @@ components:
       properties:
         id:
           type: integer
+          description: Id
         service_id:
           type: integer
+          description: Service Id
         connect_steps:
           type: string
+          description: Connect steps
         categories:
           type: string
+          description: Categories
         keywords:
           type: string
+          description: Keywords
         summary:
           type: string
+          description: Summary
         company_size:
           type: string
+          description: Company size
         links:
           type: object
+          description: Links
           properties:
             Website:
               type: string
+              description: Website
             Sign Up:
               type: string
+              description: Sign Up
             Contact:
               type: string
+              description: Contact
             Newsletter:
               type: string
+              description: Newsletter
             Demo Request:
               type: string
+              description: Demo request
             Free Trial:
               type: string
+              description: Free trial
             Promotions:
               type: object
+              description: Promotions
               properties:
                 null:
                   type: string
+                  description: Properties 
                   
-# --------------- ServiceData (Data Sources) Model -----------------                  
-    serviceData:
+# --------------- ServiceDataViewField (Data Sources) Model -----------------                  
+    serviceDataViewField:
       type: object
-      properties:
-        customer_id:
+      properties: 
+        is_href:
+          type: string
+        callback_fn:
+          type: string
+        is_callback_only:
+          type: string
+        extra_settings:
+          type: string
+        sub_columns:
+          type: string
+        attribute_for_categories:
+          type: string
+        field:
+          type: string
+        label:
+          type: string
+        format:
+          type: string
+        values:
+          type: array
+          items: 
+            type: string
+        has_set_values:
+          type: boolean
+        value_data_source_type:
+          type: string
+        order: 
           type: integer
-        campaign_id:
+        summary_order:
           type: integer
-        name:
+        sortable: 
+          type: boolean
+        custom_sort:
           type: string
-        AVG(score):
+        tooltip: 
           type: string
-        ViewAdUnits:
+        placeholder:
           type: string
-        client_name:
+        custom_error_ms:
           type: string
-        _client_city:
+        preprocess_type:
           type: string
-        _client_state: 
+        postprocess_type:
           type: string
-        _client_zip_code: 
+        edit_control_type: 
           type: string
-        client_reporting_status:
+        is_custom_edit_control:
+          type: boolean
+        ignore_save:
+          type: boolean
+        ignore_set_data:
+          type: boolean
+        is_unique: 
+          type: boolean
+        is_required: 
+          type: boolean
+        is_read_only: 
+          type: boolean
+        is_selectable:
+          type: boolean
+        allows_null_value: 
+          type: boolean
+        return_null_values:
+          type: boolean
+        is_summary: 
+          type: boolean
+        is_hidden: 
+          type: boolean
+        is_hidden_in_details: 
+          type: boolean
+        is_primary_key: 
+          type: boolean
+        is_primary_name_field: 
+          type: boolean
+        is_primary_date_field: 
+          type: boolean
+        is_foreign_key: 
+          type: boolean
+        is_foreign_field: 
+          type: boolean
+        foreign_mapping: 
           type: string
-        client_billing_id: 
-          type: integer
-        client_additional_details_1:
-          type: string        
-        client_additional_details_2:
+        alternate_field: 
           type: string
-        client_additional_details_3:
+        field_alias:
           type: string
-        client_crm_id: 
-          type: integer
-        _client_cluster_name: 
+        is_pseudo:
+          type: boolean
+        is_helper:
+          type: boolean
+        is_virtual:
+          type: boolean
+        is_extra:
+          type: boolean
+        is_api_safe:
+          type: boolean
+        is_groupable:
+          type: boolean
+        is_filterable:
+          type: boolean
+        groupby_id_field:
           type: string
-        _client_account_manager:
+        groupby_name_field:
           type: string
-        _client_category:
+        groupby_field_format:
           type: string
+        is_groupby_name_field:
+          type: boolean
+        show_on_group_by:
+          type: boolean
+        query:
+          type: string
+        aggregate_query:
+          type: string
+        table_relationship:
+          type: string
+        table_prefix: 
+          type: string
+        is_metric:
+          type: boolean
+        is_numeric:
+          type: boolean
+        precision: 
+          type: string          
+        is_required_field:
+          type: boolean
+        extra_parameters:       
+          type: array
+          items:
+            type: string
+        force_in_select:
+          type: boolean
+        is_private:
+          type: boolean
+        enable_history:
+          type: boolean
+        is_taggable:
+          type: boolean
+        tag_default_value:
+          type: string
+        custom_distinct_values: 
+          type: string
+        is_naming_convention_identifier:
+          type: boolean
+        error:
+          type: boolean
+        owa_field_alias:
+          type: string
+        dependencies: 
+          type: array
+          items:
+            type: string
             
+              
 
 # --------------- DataView Result Model ----------------- 
 
@@ -2140,82 +2329,113 @@ components:
       properties:
         id:
           type: integer
+          description: User Id
         client_id: 
           type: integer
-          description: This is mandatory when user_type = "client"
+          description: Client Id - This is mandatory when user_type = "client"
         user_type:
           type: string
           enum: [client, agent, superadmin, clusteradmin]
           default: client
-          # description: Link to be added here please refer to <a href="#tag/Roles">ROLES</a> to obtain all possible role types and ids
+          description: User type
+          # description: Link to be added here please refer to <a href="#tag/Roles">TYPE</a> to obtain all possible role types and ids
         company_name: 
           type: string
+          description: Company Name
         first_name:
           type: string
+          description: First Name
         last_name:
           type: string
+          description: Last Name
         address_1:
           type: string
+          description: Address 1
         address_2:
           type: string
+          description: Address 2
         city:
           type: string
+          description: City
         state:
           type: string
+          description: State
         zip:
           type: string
+          description: Zip/Postal Code
         phone:
           type: string
+          description: Phone number
         email:
           type: string
+          description: Email address
         password:
           type: string
+          description: Password
         cluster_id:
           type: integer
           description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all of the exisiting business unit id
         external_user_id:
           type: integer
+          description: External User Id
         additional_details_1:
           type: string
+          description: Additional Details 1
         additional_details_2:
           type: string
+          description: Additional Details 2
         additional_details_3:
           type: string
+          description: Additional Details 3
         enable_io_tool_module:
           type: boolean
+          description: Enable IOTool Module
         enable_lead_management_module:
           type: boolean
+          description: Enable Lead Management Module
         has_light_logo:
           type: boolean
+          description: Has light logo
         has_dark_logo:
           type: boolean
+          description: Has dark logo
         override_dashboard_pages_from_reporting_profile:
           type: boolean
+          description: Override dashboard pages from reporting profile
         default_home_page:
           type: string
+          description: Default home page
         io_tool_notification_frequency:
           type: string
           enum: [never, real_time, daily, weekly, monthly]
           default: null
+          description: IOTool notification frequency
         country:
           type: string
+          description: Country
         timezone:
           type: string 
           # there could be a link to a different schema, instead of enum
           default: default
+          description: Timezone
         status:
           type: string
           enum: [active, inactive]
+          description: Status
         hipaa_acknowledgement_timestamp:
           type: string
+          description: Hipaa ackowledgement timestamp
         creation_time:
           type: integer
+          description: Creation time
         show_services_overview: 
           type: string
           default: default
+          description: Show services overview
         show_categories_overview:
           type: string
           default: default
+          description: Show categories overview
         role_id:
           type: integer
           description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
@@ -2232,16 +2452,20 @@ components:
         user_type_display: 
           type: string
           enum: [Super Admin, Business Unit Admin, Agent, Client]
+          description: User type display
         country_display:
           type: string
+          description: Country display
         timezone_display: 
           type: string
-          description: default
+          description: Timezone display
         status_display:
           type: string
           enum: [active, inactive]
+          description: Status display
         formatted_creation_time:
           type: string
+          description: Formatted creation time
           
 
 # --------------- Error Msg/Responses Model-----------------  
@@ -2561,7 +2785,7 @@ components:
           # IMPORTANT:
           # this reference Model is incorrect, please create a new Model once
           # you can test the response
-          $ref: '#/components/schemas/simpleService'
+          $ref: '#/components/schemas/serviceDataViewField'
         error:
           type: boolean
         warnings:
