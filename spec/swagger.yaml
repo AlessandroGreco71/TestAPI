@@ -9,39 +9,40 @@ info:
   termsOfService: 'https://www.tapclicks.com/terms-of-use/'
   x-logo:
     url: 'https://jobs.mindtheproduct.com/wp-content/uploads/company_logos/2018/04/tapclicks_logo_png-250x93.png'
+    # url: 'https://www.tapclicks.com/static-templates/img/tapclicks-logo-color.png'
   
 servers:
   - url: 'https://api.tapclicks.com/v2'
   
 tags:
   - name: TapClicks API
-    description: Welcome to Tap API
+    description: Welcome to Tap API.
   - name: Business Units
-    description: Refers to the Business Unit in the instance
+    description: Business Units are much like Client Groups except that a Business Units is managed by a Business Units Admin who has access similar to that of a Super Admin. These are often used if a company has multiple locations under which clients exist (e.g. franchises). As a Business Unit Admin you can manage a single Business Unit or a Group of Business Units.
   - name: Channels
-    description: Refers to the Channels in the instance
+    description: A way to bring in metrics from multiple data sources and show the performance of your campaign across these data sources.
   - name: Clients
-    description: Refers to the Clients in the instance
+    description: Refers to the Clients in the instance.
   - name: Client's Categories
-    description: Categories that can be assigned to a Client
+    description: Refers to the categories that be assigned to a Client (For example&#58; Services, Automotive, Retailer, Restaurant...).
   - name: Client Groups
-    description: Referes to the Client Groups in the instance
+    description: Client Groups allow you to group Clients together. This way you can grant an agent access to all of their reports. These groups can be used with Clients who have multiple locations that require individual reporting, but also require one person to have complete data access. You can also create groups of Client groups if the need is there.
   - name: Data Profiles
-    description: Refers to the Data Profiles in the instance
+    description: Data Profiles help you control the types of campaigns, data and metric you want each User to have access to.
   - name: Data Types
-    description: All data types available for any field
+    description: All data types available for any field.
   - name: Date Range
-    description: Date range of the instance
+    description: Date ranges allow you to focus on the data set you are concerned about or want to run a report for.
   - name: Languages
-    description: Supported languages
+    description: Supported languages.
   - name: Leads
-    description: Leads
+    description: Only if the Leads Management module is active.
   - name: Roles
-    description: Roles
+    description: Roles are used to control the access of Agents and Business Unit Admin. If the TapOrders module is active, IOTool roles can be assigned to “Super Admin”, “Agent”, “Business Unit Admin” type of user as well.
   - name: Services (Data Sources)
-    description: Refers to Data Source in the instance
+    description: Services are the Data Sources that a client can connect to pull data into TapClicks; these also include all the resources that were created with the Smart Connector.
   - name: Users
-    description: Refers to a user or users in the instance
+    description: Users in the instance.
 
 
 
@@ -56,8 +57,6 @@ paths:
         - TapClicks API
       summary: Welcome Message
       description: This call will simply return a "Welcome to TAP API" message
-      # security:
-      #   - oauth2: []
       responses:
         '200':
           description: Ok - Successful Operation
@@ -93,19 +92,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401'
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
                 
 # --------------------- Business Units --------------------------
 
-  /clusters:
+  /clusters/{cluster_id}:
     get:
       tags:
         - Business Units
-      summary: All Business Units
-      description: Clusters are Business Units
-        
-        
-        This returns a list of all the Business Units, active and inactive
+      summary: Business Units
+      description: Clusters are Business Units. This returns a specific Business Unit (*cluster_id*).
+      
+      
+        **Note&#58;** if the path parameter *cluster_id* is omitted, this will return all the Business Units in the instance.
       parameters:
+        - in: path
+          name: cluster_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the cluster to get. If omitted, it will return all Business Units       
         - $ref: "#/components/parameters/metadata"
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/fields"
@@ -139,19 +150,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401'
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
                 
 # --------------------- Channels (Categories) --------------------------                
       
-  /categories:
+  /categories/{category_id}:
     get:
       tags:
         - Channels
       summary: All channels
-      description: |
-        Categories are the Channels. 
-        
-        This returns all the Channels, even the pre-defined Channels that are not active.
+      description: Categories are Channels. This returns a specific category (*category_id*).
+      
+      
+        **Note&#58;** if the path parameter *category_id* is omitted, this will return all the channels in the instance.
       parameters:
+        - in: path
+          name: category_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the category to get. If omitted, it will return all Channels  
         - $ref: "#/components/parameters/metadata"
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/fields"
@@ -191,136 +214,99 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401'
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
 
 # --------------------- Clients --------------------------                  
                 
-  /clients:
-    get:
-      tags:
-        - Clients
-      summary: All Clients
-      description: This returns all Clients, in any reporting status
-      parameters:
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"
-      responses:
-        '200':
-          description: Ok - Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response_200_clients'
-              example:
-                data:
-                  - id: 1,
-                    company_name: "JP Marketing"
-                    first_name: "Jack"
-                    last_name: "Smith"
-                    email: "jsmith@JPmarketing.com"
-                    address_1: "Rue Washington 66"
-                    address_2: ""
-                    city: "Minneapolis"
-                    state: "Minnesota"
-                    zip: "54201"
-                    country: ""
-                    phone: ""
-                    fax: ""
-                    website: "jpmark.com"
-                    account_manager_user_id: null
-                    has_light_logo: false
-                    has_dark_logo: false
-                    crm_id: ""
-                    billing_id: ""
-                    additional_details_1: ""
-                    additional_details_2: ""
-                    additional_details_3: ""
-                    enable_lead_management_module: false
-                    created_by_user_id: "1"
-                    created_by_user: "jsmith@JPmarketing.com"
-                    report_language: ""
-                    source_service_id: null
-                    creation_time: 1540478543
-                    last_modification_time: 1540478543
-                    cluster_id: null
-                    default_reporting_profile_id: "1"
-                    client_category_id: null
-                    reporting_status: "active"
-                    iotool_status: "presale"
-                    has_hipaa_data: false
-                    formatted_creation_time: "Oct 25, 2018 1:15 PM"
-                    formatted_last_modification_time: "Oct 25, 2018 1:15 PM"
-                    client_group_ids: []
-                    activate_tapleads: false
-                    reporting_status_display: "active"
-                    iotool_status_display: "presale"
-                error: false
-                warnings: []
-                status: 200                  
-        '401':
-          description: Invalid access token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_401'
+  # /clients:
+    # get:
+    #   tags:
+    #     - Clients
+    #   summary: All Clients
+    #   description: This returns all Clients, in any reporting status
+    #   parameters:
+    #     - $ref: "#/components/parameters/metadata"
+    #     - $ref: "#/components/parameters/page"
+    #     - $ref: "#/components/parameters/fields"
+    #     - $ref: "#/components/parameters/sort"
+    #     - $ref: "#/components/parameters/count"
+    #     - $ref: "#/components/parameters/field_data_filter"
+    #   #  - $ref: "#/components/parameters/filter_values"
+    #   responses:
+    #     '200':
+    #       description: Ok - Successful Operation
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/response_200_clients'
+    #           example:
+    #             data:
+    #               - id: 1,
+    #                 company_name: "JP Marketing"
+    #                 first_name: "Jack"
+    #                 last_name: "Smith"
+    #                 email: "jsmith@JPmarketing.com"
+    #                 address_1: "Rue Washington 66"
+    #                 address_2: ""
+    #                 city: "Minneapolis"
+    #                 state: "Minnesota"
+    #                 zip: "54201"
+    #                 country: ""
+    #                 phone: ""
+    #                 fax: ""
+    #                 website: "jpmark.com"
+    #                 account_manager_user_id: null
+    #                 has_light_logo: false
+    #                 has_dark_logo: false
+    #                 crm_id: ""
+    #                 billing_id: ""
+    #                 additional_details_1: ""
+    #                 additional_details_2: ""
+    #                 additional_details_3: ""
+    #                 enable_lead_management_module: false
+    #                 created_by_user_id: "1"
+    #                 created_by_user: "jsmith@JPmarketing.com"
+    #                 report_language: ""
+    #                 source_service_id: null
+    #                 creation_time: 1540478543
+    #                 last_modification_time: 1540478543
+    #                 cluster_id: null
+    #                 default_reporting_profile_id: "1"
+    #                 client_category_id: null
+    #                 reporting_status: "active"
+    #                 iotool_status: "presale"
+    #                 has_hipaa_data: false
+    #                 formatted_creation_time: "Oct 25, 2018 1:15 PM"
+    #                 formatted_last_modification_time: "Oct 25, 2018 1:15 PM"
+    #                 client_group_ids: []
+    #                 activate_tapleads: false
+    #                 reporting_status_display: "active"
+    #                 iotool_status_display: "presale"
+    #             error: false
+    #             warnings: []
+    #             status: 200                  
+    #     '401':
+    #       description: Invalid access token
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/error_401'
 
-    post:
-      tags:
-        - Clients
-      summary: Create a Client
-      requestBody:
-        content:
-          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
-            schema:
-              $ref: "#/components/schemas/newClient"
-            examples:
-              '0':
-                value: |-
-                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
-                  Content-Disposition: form-data; name="model"
-
-                  {
-                  "company_name": "JP Marketing",
-                  "default_reporting_profile_id": 1,
-                  "reporting_status": "pending_mapping",
-                  "iotool_status": "presale"
-                  }
-                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
-      responses:
-        '200':
-          description: Ok - Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response_200_new_edit_client_user'
-              example:
-                data:
-                  id: 35
-                error: false
-                warnings: []
-                status: 200
-        '401':
-          description: Invalid access token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_401'
-      
-        
         
   /clients/{client_id}:
     get:
       tags:
         - Clients
-      summary: A specific Client
-      description: This returns a specific Client (client_id)
+      summary: Clients
+      description: This returns a specific Client (*client_id*).
       
       
-        Note that if the path parameter "client_id" is omitted, this will return all the Clients in the instance.
+        **Note&#58;** if the path parameter *client_id* is omitted, this will return all the Clients in the instance.
       parameters:
         - in: path
           name: client_id
@@ -328,6 +314,9 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the Client to get. Please refer to <a href="#tag/Clients">Clients</a> to obtain the correct Id
+          
+          
+            If omitted, it will return all Clients
         - $ref: "#/components/parameters/metadata"
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/fields"
@@ -394,11 +383,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401'
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
+                
     post:
       tags:
         - Clients
       summary: Edit existing Client
-      description: This is to modify the information of an existing Client
+      description: This is to modify the information of an existing Client.
       parameters:
         - in: path
           name: client_id
@@ -410,7 +406,7 @@ paths:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
-              $ref: "#/components/schemas/newClient"
+              $ref: "#/components/schemas/createClient"
             examples:
               '0':
                 value: |-
@@ -442,8 +438,62 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_401'     
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
                 
+  /clients:
+    post:
+      tags:
+        - Clients
+      summary: Create a new Client
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema:
+              $ref: "#/components/schemas/createClient"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
+
+                  {
+                  "company_name": "JP Marketing",
+                  "default_reporting_profile_id": 1,
+                  "reporting_status": "pending_mapping",
+                  "iotool_status": "presale"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
+      responses:
+        '200':
+          description: Ok - Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200_new_edit_client_user'
+              example:
+                data:
+                  id: 35
+                error: false
+                warnings: []
+                status: 200
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'   
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
 # --------------------- Client's Categories --------------------------  
   
   /clientcategories:
@@ -454,7 +504,7 @@ paths:
       description: This returns a list of all possible categories that can be assigned to a client.
       
       
-        For example --- Services, Automotive, Retailer, Restaurant...
+        For example&#58; Services, Automotive, Retailer, Restaurant...
       responses: 
         '200':
           description: Ok - Successful Operation
@@ -474,18 +524,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_401'       
+                $ref: '#/components/schemas/error_401'   
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
 
 # --------------------- Client Groups --------------------------        
                   
-  /clientgroups:
+  /clientgroups/{clientgroup_id}:
     get:
       tags:
         - Client Groups
       summary: All Client Groups
-      description: This returns a list of all Groups of Clients
-      # operationId: getClientGroups
+      description: This returns a specific Group of Clients (*clientgroup_id*).
+      
+      
+        **Note&#58;** if the path parameter *clientgroup_id* is omitted, this will return all the Groups of Clients in the instance.
       parameters:
+        - in: path
+          name: clientgroup_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the Group of Client to get. If omitted, it will return all Groups of Clients
         - $ref: "#/components/parameters/metadata"
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/fields"
@@ -522,16 +586,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401'
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
         
 # --------------------- Data Profiles -------------------------- 
 
-  /reportingprofiles:
+  /reportingprofiles/{profile_id}:
     get:
       tags:
         - Data Profiles
       summary: All Data Profiles
-      description: This returns all the Data Profiles that are available in the instance
+      description: This returns a specific Data Profile (*profile_id*).
+      
+      
+        **Note&#58;** if the path parameter *profile_id* is omitted, this will return all the Data Profiles in the instance.
       parameters:
+        - in: path
+          name: profile_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the Data Profile to get. If omitted, it will return all Data Profiles  
         - $ref: "#/components/parameters/metadata"
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/fields"
@@ -566,6 +645,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401'
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
                 
 # --------------------- Data Types --------------------------                 
   
@@ -574,7 +659,7 @@ paths:
       tags:
         - Data Types
       summary: All data types
-      description: This returns all the data types that are available for any field
+      description: This returns all the data types that are available for any field.
       responses:
         '200':
           description: Ok - Successful Operation
@@ -598,7 +683,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_401'     
+                $ref: '#/components/schemas/error_401'  
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
                 
 # --------------------- Date Range --------------------------                  
   /daterange:
@@ -606,7 +697,7 @@ paths:
       tags:
         - Date Range
       summary: Date range
-      description: This returns the current set date range
+      description: This returns the current set date range.
       responses: 
         '200':
           description: Ok - Successful Operation
@@ -633,6 +724,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
                 
 # --------------------- Languages --------------------------                 
   /languages:
@@ -640,7 +737,7 @@ paths:
       tags:
         - Languages
       summary: All supported languages
-      description: This returns a list of all supported languages
+      description: This returns a list of all supported languages.
       responses:
         '200':
           description: Ok - Successful Operation
@@ -663,95 +760,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_401'   
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
                 
 # --------------------- Leads --------------------------    
-  /leads:
-    get:
-      tags:
-        - Leads
-      summary: All leads
-      description: This returns all the leads in the instance
-      parameters:
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"        
-      responses:
-        '200':
-          description: Ok - Successful Operation
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/response_200_leads'
-              example:
-                data:
-                  - id: 1
-                    service_lead_id: 10901
-                    service_id: 55
-                    service_name: "CallCap"
-                    type: "call"
-                    status: "Visible"
-                    campaign_id: 32
-                    campaign_name: "Hyland Hills - Email"
-                    client_id: 13
-                    first_name: null
-                    last_name: null
-                    caller_name: "8002782420"
-                    end_customer_id: null
-                    customer_number: "800-278-2420"
-                    duration: null
-                    customer_email: null
-                    call_status: "Blocked"
-                    grade: null
-                    notes: null
-                    call_was_recorded: "Not recorded"
-                    timestamp: "Oct 20, 2018 1:56 PM"
-                    lead_id: 10901
-                    source_name: null
-                    source_type: null
-                    client_name: "callcap-hyland-hills"
-                    customer_name: null
-                    row_grouping_count: 1
-                    can_be_edited: true
-                    can_be_deleted: false
-                    can_be_cloned: false
-                    iso_timestamp: "2018-10-20T13:56:13Z"
-                error: false
-                warnings: []
-                status: 200
-        '401':
-          description: Invalid access token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_401'  
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/error_403"      
-
   /leads/{lead_id}:
     get:
       tags:
         - Leads
       summary: A specific lead
-      description: This returns a specific lead (lead_id). 
+      description: This returns a specific lead (*lead_id*). 
         
         
-        Note that if the path parameter "lead_id" is omitted, this will return a list of all the leads in the instance
+        **Note&#58;** that if the path parameter *lead_id* is omitted, this will return a list of all the leads in the instance.
       parameters:
         - in: path
           name: lead_id
           schema:
             type: integer
           required: true
-          description: Numeric Id of the lead to get
+          description: Numeric Id of the lead to get. If omitted, it will return all leads 
         - $ref: "#/components/parameters/metadata"
         - $ref: "#/components/parameters/fields"
       responses:
@@ -809,17 +842,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/error_403"
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
                 
 # --------------------- Role --------------------------  
   /roles/{role_id}:
     get:
       tags:
         - Roles
-      summary: A IOTool user role
-      description: This returns a specific role (role_id) that can be assigned to a user who has the IO tool module enabled.
+      summary: User roles
+      description: This returns a specific role (*role_id*) that can be assigned to a user.
       
       
-        Note that if the path parameter "role_id" is omitted, this will return a list of all the roles that can be assigned to the IOTool user
+        **Note&#58;** that if the path parameter *role_id* is omitted, this will return a list of all the roles in the instance.
       parameters:
         - in: path
           name: role_id
@@ -856,7 +895,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_401'        
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
 
       
 # --------------------- Services (Data Sources) --------------------------        
@@ -865,15 +910,12 @@ paths:
     get:
       tags:
         - Services (Data Sources)
-      summary: All OR a specific service
+      summary: Services
       description: 
-        Services are the Data Sources that a client can connect to pull data into TapClicks; these also include all the resources that were created with the Smart Connector
+        This returns a specific service (*service_id*) in the instance. This can be helpful to find out if such is connected or not.
         
         
-        This API call returns a specific service ("service_id") in the instance. This can be helpful to find out if such is connected or not.
-        
-        
-        Note that if the path parameter "service_id" is omitted, this will return a list of all the services available in the instance, whether they're connected or not.
+        **Note&#58;** that if the path parameter *service_id* is omitted, this will return a list of all the services available in the instance, whether they're connected or not.
       parameters:
         - in: path
           name: service_id
@@ -909,13 +951,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
                 
   /services/{id}/data/{data_view_id}/{field}:
     get:
       tags:
         - Services (Data Sources)
       summary: Data for a service
-      description: This returns the data of a specific field of a specific service
+      description: This returns the data of a specific field of a specific service.
       parameters:
         - in: path
           name: id
@@ -987,19 +1035,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401' 
-
-
-        
-                
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
+       
   /services/info/{id}:
     get:
       tags:
         - Services (Data Sources)
-      summary: General info on One or All Services
-      description: This returns general information regarding a Service
+      summary: Information on One or All Services
+      description: This returns general information regarding a Service (*id*).
         
         
-        Note that if the path parameter "id" is omitted, this will return a list of all the information of all services.
+        **Note&#58;** that if the path parameter *id* is omitted, this will return a list of all the information of all services.
       parameters:
         - in: path
           name: id
@@ -1047,17 +1098,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_401'  
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
         
   /services/orderitems/{order_item_id}:
     get:
       tags:
         - Services (Data Sources)
       summary: All OR a specific order item
-      description: This returns an order item (order_item_id)
+      description: This returns an order item (*order_item_id*).
           
           
-        Note that if the path parameter "order_item_id" is omitted, this will return a list of all the order items in the instance.
+        **Note&#58;** that if the path parameter *order_item_id* is omitted, this will return a list of all the order items in the instance.
       parameters:
         - in: path
           name: order_item_id
@@ -1098,153 +1155,123 @@ paths:
                 error: false
                 warnings: []
                 status: 200
-                
         '401':
           description: Invalid access token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_401'         
+                $ref: '#/components/schemas/error_401'   
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
       
                 
                 
 # --------------------- Users --------------------------  
                 
-  /users:
-    get:
-      tags:
-        - Users
-      summary: All Users
-      description: This returns all users, whether they're active or inactive
-      parameters:
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"
+  # /users:
+    # get:
+    #   tags:
+    #     - Users
+    #   summary: All Users
+    #   description: This returns all users, whether they're active or inactive
+    #   parameters:
+    #     - $ref: "#/components/parameters/metadata"
+    #     - $ref: "#/components/parameters/page"
+    #     - $ref: "#/components/parameters/fields"
+    #     - $ref: "#/components/parameters/sort"
+    #     - $ref: "#/components/parameters/count"
+    #     - $ref: "#/components/parameters/field_data_filter"
+    #   #  - $ref: "#/components/parameters/filter_values"
         
-      # operationId: getUsers
-      responses:
-        '200':
-          description: Ok - Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response_200_users'
-              example:
-                data:
-                  - id: 1
-                    client_id: null
-                    user_type: "superadmin"
-                    company_name: null
-                    first_name: "Jack"
-                    last_name: "Smith"
-                    address_1: ""
-                    address_2: ""
-                    city: ""
-                    state: ""
-                    zip: ""
-                    phone: ""
-                    email: "jsmith@jpmarketing.com"
-                    cluster_id: null
-                    external_user_id: ""
-                    additional_details_1: ""
-                    additional_details_2: ""
-                    additional_details_3: ""
-                    enable_io_tool_module: true
-                    enable_lead_management_module: false
-                    has_light_logo: false
-                    has_dark_logo: false
-                    override_dashboard_pages_from_reporting_profile: false
-                    default_home_page: null
-                    io_tool_notification_frequency: null
-                    country: ""
-                    timezone: "default"
-                    status: "active"
-                    hipaa_acknowledgement_timestamp: null
-                    creation_time: 1540403488
-                    show_services_overview: "default"
-                    show_categories_overview: "default"
-                    role_id: null
-                    io_tool_role_id: 6
-                    client_group_id: null
-                    reporting_profile_id: 8
-                    user_type_display: "Super Admin"
-                    country_display: ""
-                    timezone_display: "default"
-                    status_display: "active"
-                    formatted_creation_time: "Sept 24, 2018 2:14 PM"
-                error: false
-                warnings: []
-                status: 200                
-        '401':
-          description: Invalid access token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_401'
-        '404':
-          description: API Route not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_404'
+    #   # operationId: getUsers
+    #   responses:
+    #     '200':
+    #       description: Ok - Successful Operation
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/response_200_users'
+    #           example:
+    #             data:
+    #               - id: 1
+    #                 client_id: null
+    #                 user_type: "superadmin"
+    #                 company_name: null
+    #                 first_name: "Jack"
+    #                 last_name: "Smith"
+    #                 address_1: ""
+    #                 address_2: ""
+    #                 city: ""
+    #                 state: ""
+    #                 zip: ""
+    #                 phone: ""
+    #                 email: "jsmith@jpmarketing.com"
+    #                 cluster_id: null
+    #                 external_user_id: ""
+    #                 additional_details_1: ""
+    #                 additional_details_2: ""
+    #                 additional_details_3: ""
+    #                 enable_io_tool_module: true
+    #                 enable_lead_management_module: false
+    #                 has_light_logo: false
+    #                 has_dark_logo: false
+    #                 override_dashboard_pages_from_reporting_profile: false
+    #                 default_home_page: null
+    #                 io_tool_notification_frequency: null
+    #                 country: ""
+    #                 timezone: "default"
+    #                 status: "active"
+    #                 hipaa_acknowledgement_timestamp: null
+    #                 creation_time: 1540403488
+    #                 show_services_overview: "default"
+    #                 show_categories_overview: "default"
+    #                 role_id: null
+    #                 io_tool_role_id: 6
+    #                 client_group_id: null
+    #                 reporting_profile_id: 8
+    #                 user_type_display: "Super Admin"
+    #                 country_display: ""
+    #                 timezone_display: "default"
+    #                 status_display: "active"
+    #                 formatted_creation_time: "Sept 24, 2018 2:14 PM"
+    #             error: false
+    #             warnings: []
+    #             status: 200                
+    #     '401':
+    #       description: Invalid access token
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/error_401'
+    #     '404':
+    #       description: API Route not found
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/error_404'
  
-    post:
-      tags:
-        - Users
-      summary: Create a user
-      requestBody:
-        content:
-          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
-            schema:
-              $ref: "#/components/schemas/user"
-            examples:
-              '0':
-                value: |-
-                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
-                  Content-Disposition: form-data; name="model"
 
-                  {
-                  "user_type": "agent",
-                  "email": "TestingFromSwaggerInsp@email.com",
-                  "password": "user1234",
-                  "first_name": "John",
-                  "last_name": "Doe",
-                  "reporting_profile_id": 1,
-                  "client_group_id": 1,
-                  "role_id": 1,
-                  "status": "active"
-                  }
-                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
-      responses:
-        '200':
-          description: Ok - Successful Operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/response_200_new_edit_client_user'
-              example:
-                data:
-                  id: 35
-                error: false
-                warnings: []
-                status: 200
                 
   /users/{user_id}:
     get:
       tags:
         - Users
-      summary: A specific user
+      summary: Users
+      description: This returns a specific User (*user_id*).
+      
+      
+        **Note&#58;** if the path parameter *user_id* is omitted, this will return all the Users in the instance.
       parameters:
         - in: path
           name: user_id
           schema:
             type: integer
           required: true
-          description: Numeric Id of the user to get
+          description: Numeric Id of the user to get. If omitted, it will return all Users
         - $ref: "#/components/parameters/metadata"
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/fields"
@@ -1311,7 +1338,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401'
-                
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
+
     post:
       tags:
         - Users
@@ -1323,6 +1356,54 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the user that needs to be edited
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema:
+              $ref: "#/components/schemas/createUser"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
+
+                  {
+                  "user_type": "agent",
+                  "email": "TestingFromSwaggerInsp@email.com",
+                  "password": "user1234",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "reporting_profile_id": 1,
+                  "client_group_id": 1,
+                  "role_id": 1,
+                  "status": "active"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
+      responses:
+        '200':
+          description: Ok - Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200_new_edit_client_user'
+              example:
+                data:
+                  id: 35
+                error: false
+                warnings: []
+                status: 200  
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
+              
+  /users:
+    post:
+      tags:
+        - Users
+      summary: Create a new user
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -1358,11 +1439,14 @@ paths:
                   id: 35
                 error: false
                 warnings: []
-                status: 200  
-              
-              
-              
-              
+                status: 200
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
+
 # ---------------- QUERY PARAMETERS ------------------------
 components:
   parameters:
@@ -1508,24 +1592,36 @@ components:
       properties:
         id:
           type: integer
+          description: Business Unit Id
         name:
           type: string
+          description: Business Unit Name
         has_light_logo:
           type: boolean
+          description: Has light logo
         has_dark_logo:
           type: boolean
+          description: Has dark logo
         external_cluster_id:
           type: integer
+          description: External Business Unit Id
         enable_inventory_calendar:
           type: boolean
+          description: Enable inventory calendar 
+          
+          
+            **Note&#58;** This field is returned only if the TapOrders module is active
         is_cluster_group:
           type: boolean
+          description: Is it a Business Unit Group
         status:
           type: string
           enum: [active, inactive]
+          description: Status
         status_display:
           type: string
           enum: [Active, Inactive]
+          description: Status display
             
 # --------------- Channel Model ----------------- 
     category:
@@ -1533,40 +1629,53 @@ components:
       properties:
         id:
           type: integer
+          description: Channel Id
         name:
           type: string
+          description: Channel Nane
         services_ids:
           type: object
+          description: Service Ids in the Channel
           properties:
             service_id:
               type: object
+              description: Service Id; Please refer to <a href="#tag/Services-(Data-Sources)/paths/~1services~1info~1{id}/get">Services (Data Sources)</a> for general information on these Services
               properties:
                 icon:
                   type: string
+                  description: Service icon
                 name:
                   type: string
+                  description: Service Name
                 color:
                   type: string
+                  description: Service color
                 is_connected:
                   type: boolean
+                  description: Is connected
         color:
           type: string
+          description: Channel color
         custom_icon:
           type: string
+          description: Channel custom icon
         is_predefined:
           type: boolean
+          description: Is predefined
         category_key:
           type: string
+          description: Channel key
         unique_id:
           type: string
+          description: Channel unique Id
         is_connected:
           type: boolean
+          description: Is connected
       
       
 
-# --------------- Creates New Client Model - (missing: id, has_light_logo, has_dark_logo, created_by_user, created_by_user_id, formatted_creation_time, formatted_last_modification_time, creation_time, last_modification_time)  ----------------- 
-
-    newClient:
+# --------------- Creates New Client Model - (missing: id, has_light_logo, has_dark_logo, created_by_user, created_by_user_id, formatted_creation_time, formatted_last_modification_time, creation_time, last_modification_time, reporting_status_display, io_tool_status_display)  ----------------- 
+    createClient:
       type: object
       required:
       - company_name
@@ -1576,77 +1685,101 @@ components:
       properties:
         company_name:
           type: string
+          description: Company Name
         first_name:
           type: string
+          description: First Name
         last_name:
           type: string
+          description: Last Name
         email:
           type: string
+          description: Email Address
         address_1:
           type: string
+          description: Address 1
         address_2:
           type: string
+          description: Address 2
         city:
           type: string
+          description: City
         state:
           type: string
+          description: State
         zip:
           type: string
+          description: Zip/Postal Code
         country:
           type: string
+          description: Country
         phone:
           type: string
+          description: Phone number
         fax:
           type: string
+          description: Fax number
         website:
           type: string
+          description: Website
         account_manager_user_id:
           type: integer
+          description: Account Manager User Id
         crm_id:
           type: integer
+          description: CRM Id
         billing_id:
           type: integer
+          description: Billing Id
         additional_details_1:
           type: string
+          description: Additional details 1
         additional_details_2:
           type: string
+          description: Additional details 2
         additional_details_3:
           type: string
+          description: Additional details 3
         enable_lead_management_module:
           type: boolean
           default: false
+          description: Enable Lead Management Module
         report_language:
           type: string
+          description: Report language
         source_service_id:
           type: integer
+          description: Source service Id
         cluster_id:
           type: integer
+          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
           type: integer
+          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
           type: integer
+          description: Please refer to <a href="#tag/Client's-Categories">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
           enum: [pending_mapping, active, hold, terminated]
           default: pending_mapping
+          description: Reporting status
         iotool_status:
           type: string
           enum: [presale, active, inactive, terminated]
           default: presale
+          description: TapOrders status
         has_hipaa_data:
           type: boolean
+          description: Has HIPAA data
         client_group_ids:
           type: array
           items: 
             type: integer
+            description: Please refer to <a href="#tag/Client-Group">Client Group</a> to obtain all existing Client Group Ids
         activate_tapleads:
           type: boolean
-        reporting_status_display:
-          type: string
-          enum: [pending_mapping, active, hold, terminated]
-        iotool_status_display:
-          type: string
-          enum: [pending_mapping, active, hold, terminated]
+          description: Activate TapLeads
           
 # --------------- Client Model (Edit existing client) ----------------- 
     client:
@@ -1671,7 +1804,7 @@ components:
           description: Last Name
         email:
           type: string
-          description: Email
+          description: Email Address
         address_1:
           type: string
           description: Address 1
@@ -1728,10 +1861,10 @@ components:
         enable_lead_management_module:
           type: boolean
           default: false
-          description: Enable Lead Management module for this Client
+          description: Enable Lead Management Module
         created_by_user_id:
           type: integer
-          description: Created by User Id
+          description: Created by User Id; please refer to <a href="#tag/Users">User Id</a> to obtain all existing User Ids
         created_by_user:
           type: string
           description: Created by User
@@ -1749,13 +1882,13 @@ components:
           description: Time of last modification
         cluster_id:
           type: integer
-          description: Business Unit Id
+          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
           type: integer
-          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain a list of all reporting profiles
+          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
           type: integer
-          description: Client Category Id
+          description: Please refer to <a href="#tag/Client's-Categories">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
           enum: [pending_mapping, active, hold, terminated]
@@ -1768,7 +1901,7 @@ components:
           description: TapOrders status
         has_hipaa_data:
           type: boolean
-          description: Has hippa data
+          description: Has HIPAA data
         formatted_creation_time:
           type: string
           description: Formatted creation time
@@ -1779,7 +1912,7 @@ components:
           type: array
           items: 
             type: integer
-            description: Client Group Id
+            description: Please refer to <a href="#tag/Client-Group">Client Group</a> to obtain all existing Client Group Ids
         activate_tapleads:
           type: boolean
           description: Activate TapLeads
@@ -1816,7 +1949,7 @@ components:
           description: Client Group
         cluster_id:
           type: integer
-          description: Business Unit Id
+          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
         group_type:
           type: string
           enum: [group_of_clients, group_of_client_group]
@@ -1843,7 +1976,7 @@ components:
           type: array
           items: 
             type: integer
-          description: Clients Ids
+          description: Please refer to <a href="#tag/Clients">Clients</a> to obtain all existing Client Ids
       example:
         data:
           id: "1"
@@ -1921,19 +2054,19 @@ components:
       properties:
         start:
           type: integer
-          description: Start
+          description: Start - Unix Time Stamp
         end:
           type: integer
-          description: End
+          description: End - Unix Time Stamp
         relative_date_range:
           type: integer
           description: Relative date range
         comparison_start:
           type: integer
-          description: Comparison start
+          description: Comparison start - Unix Time Stamp
         comparison_end:
           type: integer
-          description: Comparison end
+          description: Comparison end - Unix Time Stamp
         comparison_active:
           type: integer
           description: Comparison Active
@@ -2312,9 +2445,8 @@ components:
 # --------------- Field Result Model ----------------- 
 
             
-            
-# --------------- User Model -----------------    
-    user:
+# --------------- CreateUser Model (missing fields: id, has_light_logo, has_dark_logo, creation_time, user_type_display, country_display, timezone_display, status_display, formatted_creation-time, hipaa_acknowledgement_timestamp) ------------------            
+    createUser:
       type: object
       required: 
         - first_name
@@ -2327,18 +2459,15 @@ components:
         - role_id
         - reporting_profile_id
       properties:
-        id:
-          type: integer
-          description: User Id
         client_id: 
           type: integer
-          description: Client Id - This is mandatory when user_type = "client"
+          description: Client Id - This is **mandatory** when user_type = "client"
         user_type:
           type: string
           enum: [client, agent, superadmin, clusteradmin]
           default: client
           description: User type
-          # description: Link to be added here please refer to <a href="#tag/Roles">TYPE</a> to obtain all possible role types and ids
+          # description: Link to be added here "Please refer to <a href="#tag/Roles">TYPE</a> to obtain all possible role types and ids"
         company_name: 
           type: string
           description: Company Name
@@ -2393,6 +2522,117 @@ components:
         enable_lead_management_module:
           type: boolean
           description: Enable Lead Management Module
+        override_dashboard_pages_from_reporting_profile:
+          type: boolean
+          description: Override dashboard pages from reporting profile
+        default_home_page:
+          type: string
+          description: Default home page
+        io_tool_notification_frequency:
+          type: string
+          enum: [never, real_time, daily, weekly, monthly]
+          default: null
+          description: IOTool notification frequency
+        country:
+          type: string
+          description: Country
+        timezone:
+          type: string 
+          default: default
+          description: Timezone
+          # link to another endpoint (all available user timezones), once that starts working
+        status:
+          type: string
+          enum: [active, inactive]
+          description: Status
+        show_services_overview: 
+          type: string
+          default: default
+          description: Show services overview
+        show_categories_overview:
+          type: string
+          default: default
+          description: Show categories overview
+        role_id:
+          type: integer
+          description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
+        io_tool_role_id:
+          type: integer
+          description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
+        client_group_id:
+          type: integer
+          description: This is mandatory when user_type = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
+        reporting_profile_id:
+          type: integer
+          default: 1
+          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all of the exisiting data profile id 
+# --------------- User Model (GET) -----------------    
+    user:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: User Id
+        client_id: 
+          type: integer
+          description: Client Id - This is mandatory when user_type = "client"
+        user_type:
+          type: string
+          enum: [client, agent, superadmin, clusteradmin]
+          default: client
+          description: User type
+          # description: Link to be added here please refer to <a href="#tag/Roles">TYPE</a> to obtain all user types, once that endpoints starts working again
+        company_name: 
+          type: string
+          description: Company Name
+        first_name:
+          type: string
+          description: First Name
+        last_name:
+          type: string
+          description: Last Name
+        address_1:
+          type: string
+          description: Address 1
+        address_2:
+          type: string
+          description: Address 2
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State
+        zip:
+          type: string
+          description: Zip/Postal Code
+        phone:
+          type: string
+          description: Phone number
+        email:
+          type: string
+          description: Email address
+        cluster_id:
+          type: integer
+          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all of the exisiting business unit id
+        external_user_id:
+          type: integer
+          description: External User Id
+        additional_details_1:
+          type: string
+          description: Additional Details 1
+        additional_details_2:
+          type: string
+          description: Additional Details 2
+        additional_details_3:
+          type: string
+          description: Additional Details 3
+        enable_io_tool_module:
+          type: boolean
+          description: Enable IOTool Module
+        enable_lead_management_module:
+          type: boolean
+          description: Enable Lead Management Module
         has_light_logo:
           type: boolean
           description: Has light logo
@@ -2415,7 +2655,7 @@ components:
           description: Country
         timezone:
           type: string 
-          # there could be a link to a different schema, instead of enum
+          # link to another endpoint (all available user timezones), once that starts working
           default: default
           description: Timezone
         status:
@@ -2456,9 +2696,15 @@ components:
         country_display:
           type: string
           description: Country display
+            
+            
+            **Note&#58;** This field is NOT returned if the *user_type* is "agent"
         timezone_display: 
           type: string
           description: Timezone display
+          
+          
+            **Note&#58;** This field is NOT returned if the *user_type* is "agent"
         status_display:
           type: string
           enum: [active, inactive]
@@ -2466,10 +2712,7 @@ components:
         formatted_creation_time:
           type: string
           description: Formatted creation time
-          
-
 # --------------- Error Msg/Responses Model-----------------  
-
     error_400:
       type: object
       properties:
@@ -2925,6 +3168,16 @@ components:
               "faultstring": "invalid_request",
               "detail": {
                 "errorcode": "invalid_request"
+              }
+            }
+          }
+          
+          Bad Request: Status 404 BAD REQUEST
+          {
+            "fault": {
+              "faultstring": "Unable to identify proxy for host: https_vhost and url: /clients",
+              "detail": {
+                "errorcode": "messaging.adaptors.http.flow.ApplicationNotFound"
               }
             }
           }
