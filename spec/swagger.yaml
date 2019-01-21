@@ -1,60 +1,120 @@
 openapi: 3.0.1
 info:
-  title: TapClicks
+  title: TAPCLICKS
   description: |-
   
-    This is the first version of the API Specification for TapClicks
+    This is the first version of the API Specification for TapClicks.
+
+    # AUTHENTICATION
+    The **TapClicks** API uses the OAuth 2.0 protocol for authentication and authorization (<a href="https://tools.ietf.org/html/rfc6749#section-4.4">Client Credentials Grant</a>).<br>
+    All requests must be authenticated and must include a valid access token.
 
   version: '0.1'
   termsOfService: 'https://www.tapclicks.com/terms-of-use/'
   x-logo:
     url: 'https://jobs.mindtheproduct.com/wp-content/uploads/company_logos/2018/04/tapclicks_logo_png-250x93.png'
     # url: 'https://www.tapclicks.com/static-templates/img/tapclicks-logo-color.png'
+
   
 servers:
   - url: 'https://api.tapclicks.com/v2'
   
 tags:
-  - name: TapClicks API
+  - name: POSSIBLE RESPONSES
+    description: |
+        **Possible Response Codes:**
+        ```
+        > 200 - OK: The request was successful and the response body contains 
+                    the representation requested
+        > 302 - FOUND: A common redirect response; you can GET the representation 
+                    at the URL in the Location response header
+        > 304 - NOT MODIFIED: Your client's cached version of the representation 
+                    is still up to date
+        > 400 - BAD REQUEST: The request could not be understood by the server 
+                    due to malformed syntax                    
+        > 401 - UNAUTHORIZED: The supplied credentials, if any, are not sufficient 
+                    to access the resource
+        > 404 - NOT FOUND: The server has not found anything matching the 
+                    Request-URI
+        > 429 - TOO MANY REQUESTS: Your application is sending too many 
+                    simultaneous requests
+        > 500 - SERVER ERROR: We couldn't return the representation due to 
+                    an internal server error
+        > 503 - SERVICE UNAVAILABLE: We are temporarily unable to return 
+                    the representation. Please wait for a bit and try again.
+        
+        ```
+        
+  - name: PAGINATION
+    description: | 
+      Pagination can be implemented with the query parameter `page`, which accepts two parameters.<br>
+      The first parameter represents which page is returned (starting from index = 0).<br>
+      The second parameter represents how many records each page contains and, therefore, the number of records that will be returned.
+      
+      **Examples&#58;**
+      
+      |URL                                                | Records returned|
+      |---------------------------------------------------|-----------------|
+      |https://api.tapclicks.com/v2/34/data/cgn?page=0,5  | returns the 5 records of page index 0 (records 1 -> 5) |
+      |https://api.tapclicks.com/v2/34/data/cgn?page=1,5  | returns the 5 records of page index 1 (records 6 -> 10) |
+      |https://api.tapclicks.com/v2/34/data/cgn?page=1,8  | returns the 8 records of page index 1 (records 9 -> 16) |
+      |https://api.tapclicks.com/v2/34/data/cgn?page=2,6  | returns the 6 records of page index 2 (records 13 -> 18) |
+      
+        
+  - name: TAPCLICKS API
     description: Welcome to Tap API.
-  - name: Business Units
+  - name: BUSINESS UNITS
     description: Business Units are much like Client Groups except that a Business Units is managed by a Business Units Admin who has access similar to that of a Super Admin. These are often used if a company has multiple locations under which clients exist (e.g. franchises). As a Business Unit Admin you can manage a single Business Unit or a Group of Business Units.
-  - name: Channels
+  - name: CHANNELS
     description: A way to bring in metrics from multiple data sources and show the performance of your campaign across these data sources.
-  - name: Clients
+  - name: CLIENTS
     description: Refers to the Clients in the instance.
-  - name: Client's Categories
+  - name: CLIENT'S CATEGORIES
     description: Refers to the categories that be assigned to a Client (For example&#58; Services, Automotive, Retailer, Restaurant...).
-  - name: Client Groups
+  - name: CLIENT GROUPS
     description: Client Groups allow you to group Clients together. This way you can grant an agent access to all of their reports. These groups can be used with Clients who have multiple locations that require individual reporting, but also require one person to have complete data access. You can also create groups of Client groups if the need is there.
-  - name: Data Profiles
+  - name: DATA PROFILES
     description: Data Profiles help you control the types of campaigns, data and metric you want each User to have access to.
-  - name: Data Types
+  - name: DATA TYPES
     description: All data types available for any field.
-  - name: Date Range
+  - name: DATE RANGE
     description: Date ranges allow you to focus on the data set you are concerned about or want to run a report for.
-  - name: Languages
+  - name: LANGUAGES
     description: Supported languages.
-  - name: Leads
+  - name: LEADS
     description: Only if the Leads Management module is active.
-  - name: Roles
-    description: Roles are used to control the access of Agents and Business Unit Admin. If the TapOrders module is active, IOTool roles can be assigned to “Super Admin”, “Agent”, “Business Unit Admin” type of user as well.
-  - name: Services (Data Sources)
+  - name: ROLES
+    description: Roles are used to control the access of Agents and Business Unit Admins. If the TapOrders module is active, IOTool roles can be assigned to “Super Admin”, “Agent” and “Business Unit Admin” type of user as well.
+  - name: SERVICES (DATA SOURCES)
     description: Services are the Data Sources that a client can connect to pull data into TapClicks; these also include all the resources that were created with the Smart Connector.
-  - name: Users
+  - name: USERS
     description: Users in the instance.
-
-
-
-
-
-
+  - name: EXAMPLES
+    description: |
+      | Replace the the {id} in the URL with a service_id from the list of all <a href="#tag/Services-(Data-Sources)/paths/~1services~1{service_id}/get">Services (Data Sources)</a> |  
+      | --------------------------------------------------------------------------------------|   
+      | **1. Get API version**                                                                | 
+      | https://api.tapclicks.com/v2/                                                         | 
+      | **2. Get metadata for the service**                                                   |
+      | https://api.tapclicks.com/v2/services/{id}/data/cgn?metadata=1                        | 
+      | **3. Get services level data**                                                        | 
+      | https://api.tapclicks.com/v2/services/{id}                                            | 
+      | **4. Get campaign level data**                                                        | 
+      | https://api.tapclicks.com/v2/services/{id}/data/cgn                                   | 
+      | **5. Get campaign level data paginated**                                              | 
+      | https://api.tapclicks.com/v2/services/{id}/data/cgn?page=0,10                         | 
+      | **6. Get campaign level data paginated and grouped yearly**                           | 
+      | https://api.tapclicks.com/v2/services/{id}/data/cgn?page=0,10&timegrouping=yearly     | 
+      | **7. Get certain metrics only**                                                       | 
+      | https://api.tapclicks.com/v2/services/{id}/data/cgn?page=0,10&groupby=customer_id&fields=customer_id,row_count,CTR,AverageCPC,ClickCount&sort=customer_id                                 | 
+      
+      
   
 paths:
   /:
     get:
       tags:
-        - TapClicks API
+        - TAPCLICKS API
       summary: Welcome Message
       description: This call will simply return a "Welcome to TAP API" message
       responses:
@@ -104,7 +164,7 @@ paths:
   /clusters/{cluster_id}:
     get:
       tags:
-        - Business Units
+        - BUSINESS UNITS
       summary: Business Units
       description: Clusters are Business Units. This returns a specific Business Unit (*cluster_id*).
       
@@ -123,7 +183,6 @@ paths:
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"      
       responses:
         '200':
           description: Ok - Successful Operation
@@ -162,8 +221,8 @@ paths:
   /categories/{category_id}:
     get:
       tags:
-        - Channels
-      summary: All channels
+        - CHANNELS
+      summary: Channels
       description: Categories are Channels. This returns a specific category (*category_id*).
       
       
@@ -181,7 +240,6 @@ paths:
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -222,86 +280,11 @@ paths:
                 $ref: '#/components/schemas/error_404'
 
 # --------------------- Clients --------------------------                  
-                
-  # /clients:
-    # get:
-    #   tags:
-    #     - Clients
-    #   summary: All Clients
-    #   description: This returns all Clients, in any reporting status
-    #   parameters:
-    #     - $ref: "#/components/parameters/metadata"
-    #     - $ref: "#/components/parameters/page"
-    #     - $ref: "#/components/parameters/fields"
-    #     - $ref: "#/components/parameters/sort"
-    #     - $ref: "#/components/parameters/count"
-    #     - $ref: "#/components/parameters/field_data_filter"
-    #   #  - $ref: "#/components/parameters/filter_values"
-    #   responses:
-    #     '200':
-    #       description: Ok - Successful Operation
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/response_200_clients'
-    #           example:
-    #             data:
-    #               - id: 1,
-    #                 company_name: "JP Marketing"
-    #                 first_name: "Jack"
-    #                 last_name: "Smith"
-    #                 email: "jsmith@JPmarketing.com"
-    #                 address_1: "Rue Washington 66"
-    #                 address_2: ""
-    #                 city: "Minneapolis"
-    #                 state: "Minnesota"
-    #                 zip: "54201"
-    #                 country: ""
-    #                 phone: ""
-    #                 fax: ""
-    #                 website: "jpmark.com"
-    #                 account_manager_user_id: null
-    #                 has_light_logo: false
-    #                 has_dark_logo: false
-    #                 crm_id: ""
-    #                 billing_id: ""
-    #                 additional_details_1: ""
-    #                 additional_details_2: ""
-    #                 additional_details_3: ""
-    #                 enable_lead_management_module: false
-    #                 created_by_user_id: "1"
-    #                 created_by_user: "jsmith@JPmarketing.com"
-    #                 report_language: ""
-    #                 source_service_id: null
-    #                 creation_time: 1540478543
-    #                 last_modification_time: 1540478543
-    #                 cluster_id: null
-    #                 default_reporting_profile_id: "1"
-    #                 client_category_id: null
-    #                 reporting_status: "active"
-    #                 iotool_status: "presale"
-    #                 has_hipaa_data: false
-    #                 formatted_creation_time: "Oct 25, 2018 1:15 PM"
-    #                 formatted_last_modification_time: "Oct 25, 2018 1:15 PM"
-    #                 client_group_ids: []
-    #                 activate_tapleads: false
-    #                 reporting_status_display: "active"
-    #                 iotool_status_display: "presale"
-    #             error: false
-    #             warnings: []
-    #             status: 200                  
-    #     '401':
-    #       description: Invalid access token
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/error_401'
 
-        
   /clients/{client_id}:
     get:
       tags:
-        - Clients
+        - CLIENTS
       summary: Clients
       description: This returns a specific Client (*client_id*).
       
@@ -323,7 +306,7 @@ paths:
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"
+
       responses:
         '200':
           description: Ok - Successful Operation
@@ -392,7 +375,7 @@ paths:
                 
     post:
       tags:
-        - Clients
+        - CLIENTS
       summary: Edit existing Client
       description: This is to modify the information of an existing Client.
       parameters:
@@ -449,7 +432,7 @@ paths:
   /clients:
     post:
       tags:
-        - Clients
+        - CLIENTS
       summary: Create a new Client
       requestBody:
         content:
@@ -499,12 +482,17 @@ paths:
   /clientcategories:
     get:
       tags:
-        - Client's Categories
+        - CLIENT'S CATEGORIES
       summary: All Client's categories
       description: This returns a list of all possible categories that can be assigned to a client.
       
       
         For example&#58; Services, Automotive, Retailer, Restaurant...
+      parameters:
+        - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/count"
+        - $ref: "#/components/parameters/field_data_filter"        
       responses: 
         '200':
           description: Ok - Successful Operation
@@ -515,7 +503,45 @@ paths:
               example:
                 data:
                   - id: 1
-                    name: General
+                    name: "General"
+                  - id: 2
+                    name: "Wholesale"
+                  - id: 3
+                    name: "Retailer"
+                  - id: 4
+                    name: "Restaurants"
+                  - id: 5
+                    name: "Auto Dealerships"
+                  - id: 6
+                    name: "Arts & Entertainment"
+                  - id: 7
+                    name: "Automotive"
+                  - id: 8
+                    name: "Beauty & Fitness" 
+                  - id: 9
+                    name: "Community, Clubs & Organizations"
+                  - id: 10
+                    name: "Computers & Electronics"
+                  - id: 11
+                    name: "Education"
+                  - id: 12
+                    name: "Food & Dining"
+                  - id: 13
+                    name: "Health Care"
+                  - id: 14
+                    name: "Home & Garden"
+                  - id: 15
+                    name: "Real Estate & Rentals"
+                  - id: 16
+                    name: "Recreation & Sporting Goods"
+                  - id: 17
+                    name: "Travel & Accomodations"
+                  - id: 18
+                    name: "Services"
+                  - id: 20
+                    name: "Home Applicances"
+                  - id: 21
+                    name: "Agricultural"
                 error: false
                 warnings: []
                 status: 200   
@@ -537,8 +563,8 @@ paths:
   /clientgroups/{clientgroup_id}:
     get:
       tags:
-        - Client Groups
-      summary: All Client Groups
+        - CLIENT GROUPS
+      summary: Client Groups
       description: This returns a specific Group of Clients (*clientgroup_id*).
       
       
@@ -556,7 +582,6 @@ paths:
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"      
       responses:
         '200':
           description: Ok - Successful Operation
@@ -598,8 +623,8 @@ paths:
   /reportingprofiles/{profile_id}:
     get:
       tags:
-        - Data Profiles
-      summary: All Data Profiles
+        - DATA PROFILES
+      summary: Data Profiles
       description: This returns a specific Data Profile (*profile_id*).
       
       
@@ -617,7 +642,6 @@ paths:
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"  
       responses:
         '200':
           description: Ok - Successful Operation
@@ -657,7 +681,7 @@ paths:
   /columns/datatypes:
     get:
       tags:
-        - Data Types
+        - DATA TYPES
       summary: All data types
       description: This returns all the data types that are available for any field.
       responses:
@@ -674,6 +698,90 @@ paths:
                     icon: "#"
                     is_selectable: true
                     is_numeric: true
+                    precision: 0
+                  - key: "decimal"
+                    value: "Decimal"
+                    icon: ".00"
+                    is_selectable: true
+                    is_numeric: true
+                    precision: 2
+                  - key: "percent"
+                    value: "Percent"
+                    icon: "%"
+                    is_selectable: true
+                    is_numeric: true
+                    precision: 2
+                  - key: "currency"
+                    value: "Currency"
+                    icon: "$"
+                    is_selectable: true
+                    is_numeric: true
+                    precision: 2
+                  - key: "string"
+                    value: "Text"
+                    icon: "T"
+                    is_selectable: true
+                    is_numeric: false
+                    precision: 0
+                  - key: "phonenumber"
+                    value: "Phone Number"
+                    icon: "icon-phone"
+                    is_selectable: true
+                    is_numeric: false
+                    precision: 0
+                  - key: "callback"
+                    value: "Text"
+                    icon: "T"
+                    is_selectable: false
+                    is_numeric: false
+                    precision: 0
+                  - key: "date"
+                    value: "Date"
+                    icon: "icon-calendar"
+                    is_selectable: true
+                    is_numeric: false
+                    precision: 0
+                  - key: "time"
+                    value: "Time"
+                    icon: "icon-clock-o"
+                    is_selectable: true
+                    is_numeric: true
+                    precision: 0
+                  - key: "link"
+                    value: "Link"
+                    icon: "icon-link"
+                    is_selectable: true
+                    is_numeric: false
+                    precision: 0
+                  - key: "url"
+                    value: "URL"
+                    icon: "icon-link"
+                    is_selectable: true
+                    is_numeric: false
+                    precision: 0
+                  - key: "image"
+                    value: "Image"
+                    icon: "icon-image"
+                    is_selectable: true
+                    is_numeric: false
+                    precision: 0
+                  - key: "datetime"
+                    value: "Date"
+                    icon: "icon-calendar"
+                    is_selectable: false
+                    is_numeric: false
+                    precision: 0
+                  - key: "id"
+                    value: "Id"
+                    icon: "ID"
+                    is_selectable: false
+                    is_numeric: false
+                    precision: 0
+                  - key: "bool"
+                    value: "Boolean"
+                    icon: "icon-check"
+                    is_selectable: false
+                    is_numeric: false
                     precision: 0
                 error: false
                 warnings: []
@@ -695,7 +803,7 @@ paths:
   /daterange:
     get:
       tags:
-        - Date Range
+        - DATE RANGE
       summary: Date range
       description: This returns the current set date range.
       responses: 
@@ -735,7 +843,7 @@ paths:
   /languages:
     get:
       tags:
-        - Languages
+        - LANGUAGES
       summary: All supported languages
       description: This returns a list of all supported languages.
       responses:
@@ -749,9 +857,14 @@ paths:
                 data: 
                   - locale: "en_US"
                     name: "English"
-                  
                   - locale: "fr_CA"
                     name: "French"
+                  - locale: "hi_IN"
+                    name: "Hindi"
+                  - locale: "id_ID"
+                    name: "Indonesian"
+                  - locale: "es_ES"
+                    name: "Spanish"
                 error: false
                 warnings: []
                 status: 200
@@ -772,8 +885,8 @@ paths:
   /leads/{lead_id}:
     get:
       tags:
-        - Leads
-      summary: A specific lead
+        - LEADS
+      summary: Leads
       description: This returns a specific lead (*lead_id*). 
         
         
@@ -853,7 +966,7 @@ paths:
   /roles/{role_id}:
     get:
       tags:
-        - Roles
+        - ROLES
       summary: User roles
       description: This returns a specific role (*role_id*) that can be assigned to a user.
       
@@ -867,8 +980,11 @@ paths:
           required: true
           description: Numeric Id of the role to get. If omitted, it will return all roles  
         - $ref: "#/components/parameters/metadata"
+        - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/sort"        
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/field_data_filter"
+        
       responses:
         '200':
           description: Ok - Successful Operation
@@ -909,7 +1025,7 @@ paths:
   /services/{service_id}:
     get:
       tags:
-        - Services (Data Sources)
+        - SERVICES (DATA SOURCES)
       summary: Services
       description: 
         This returns a specific service (*service_id*) in the instance. This can be helpful to find out if such is connected or not.
@@ -928,7 +1044,6 @@ paths:
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"          
       responses:
         '200':
           description: Ok - Successful Operation
@@ -961,9 +1076,9 @@ paths:
   /services/{id}/data/{data_view_id}/{field}:
     get:
       tags:
-        - Services (Data Sources)
+        - SERVICES (DATA SOURCES)
       summary: Data for a service
-      description: This returns the data of a specific field of a specific service.
+      description: This returns the column metadata for a specific field of a specific service.
       parameters:
         - in: path
           name: id
@@ -995,7 +1110,6 @@ paths:
         - $ref: "#/components/parameters/daterange"
         - $ref: "#/components/parameters/nested"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1045,8 +1159,8 @@ paths:
   /services/info/{id}:
     get:
       tags:
-        - Services (Data Sources)
-      summary: Information on One or All Services
+        - SERVICES (DATA SOURCES)
+      summary: Information on Services
       description: This returns general information regarding a Service (*id*).
         
         
@@ -1063,7 +1177,6 @@ paths:
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"          
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1109,8 +1222,8 @@ paths:
   /services/orderitems/{order_item_id}:
     get:
       tags:
-        - Services (Data Sources)
-      summary: All OR a specific order item
+        - SERVICES (DATA SOURCES)
+      summary: Order items of a Service
       description: This returns an order item (*order_item_id*).
           
           
@@ -1134,7 +1247,6 @@ paths:
         - $ref: "#/components/parameters/daterange"
         - $ref: "#/components/parameters/nested"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1171,95 +1283,11 @@ paths:
                 
                 
 # --------------------- Users --------------------------  
-                
-  # /users:
-    # get:
-    #   tags:
-    #     - Users
-    #   summary: All Users
-    #   description: This returns all users, whether they're active or inactive
-    #   parameters:
-    #     - $ref: "#/components/parameters/metadata"
-    #     - $ref: "#/components/parameters/page"
-    #     - $ref: "#/components/parameters/fields"
-    #     - $ref: "#/components/parameters/sort"
-    #     - $ref: "#/components/parameters/count"
-    #     - $ref: "#/components/parameters/field_data_filter"
-    #   #  - $ref: "#/components/parameters/filter_values"
-        
-    #   # operationId: getUsers
-    #   responses:
-    #     '200':
-    #       description: Ok - Successful Operation
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/response_200_users'
-    #           example:
-    #             data:
-    #               - id: 1
-    #                 client_id: null
-    #                 user_type: "superadmin"
-    #                 company_name: null
-    #                 first_name: "Jack"
-    #                 last_name: "Smith"
-    #                 address_1: ""
-    #                 address_2: ""
-    #                 city: ""
-    #                 state: ""
-    #                 zip: ""
-    #                 phone: ""
-    #                 email: "jsmith@jpmarketing.com"
-    #                 cluster_id: null
-    #                 external_user_id: ""
-    #                 additional_details_1: ""
-    #                 additional_details_2: ""
-    #                 additional_details_3: ""
-    #                 enable_io_tool_module: true
-    #                 enable_lead_management_module: false
-    #                 has_light_logo: false
-    #                 has_dark_logo: false
-    #                 override_dashboard_pages_from_reporting_profile: false
-    #                 default_home_page: null
-    #                 io_tool_notification_frequency: null
-    #                 country: ""
-    #                 timezone: "default"
-    #                 status: "active"
-    #                 hipaa_acknowledgement_timestamp: null
-    #                 creation_time: 1540403488
-    #                 show_services_overview: "default"
-    #                 show_categories_overview: "default"
-    #                 role_id: null
-    #                 io_tool_role_id: 6
-    #                 client_group_id: null
-    #                 reporting_profile_id: 8
-    #                 user_type_display: "Super Admin"
-    #                 country_display: ""
-    #                 timezone_display: "default"
-    #                 status_display: "active"
-    #                 formatted_creation_time: "Sept 24, 2018 2:14 PM"
-    #             error: false
-    #             warnings: []
-    #             status: 200                
-    #     '401':
-    #       description: Invalid access token
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/error_401'
-    #     '404':
-    #       description: API Route not found
-    #       content:
-    #         application/json:
-    #           schema:
-    #             $ref: '#/components/schemas/error_404'
- 
 
-                
   /users/{user_id}:
     get:
       tags:
-        - Users
+        - USERS
       summary: Users
       description: This returns a specific User (*user_id*).
       
@@ -1274,11 +1302,9 @@ paths:
           description: Numeric Id of the user to get. If omitted, it will return all Users
         - $ref: "#/components/parameters/metadata"
         - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/fields"
         - $ref: "#/components/parameters/sort"
         - $ref: "#/components/parameters/count"
         - $ref: "#/components/parameters/field_data_filter"
-      #  - $ref: "#/components/parameters/filter_values"
       responses:
         '200':
           description: Ok Successful Operation
@@ -1347,7 +1373,7 @@ paths:
 
     post:
       tags:
-        - Users
+        - USERS
       summary: Edit an existing user
       parameters:
         - in: path
@@ -1369,7 +1395,7 @@ paths:
 
                   {
                   "user_type": "agent",
-                  "email": "TestingFromSwaggerInsp@email.com",
+                  "email": "user@email.com",
                   "password": "user1234",
                   "first_name": "John",
                   "last_name": "Doe",
@@ -1402,7 +1428,7 @@ paths:
   /users:
     post:
       tags:
-        - Users
+        - USERS
       summary: Create a new user
       requestBody:
         content:
@@ -1458,7 +1484,7 @@ components:
         type: integer
         enum: [0,1]
       description: The API will provide more or all the info for the available fields.
-      example: https://<span></span>api.tapclicks.com/v2/services/34?metadata=1
+      example: https://api.tapclicks.com/v2/services/34?metadata=1
 
     page:
       in: query
@@ -1573,15 +1599,15 @@ components:
         To remove items use **!**
       example: https://[...]/cgn?customer_id=4,!3,8
       
-    # This is not being used right now; same as field_data_filter?!  
-    filter_values:
-      in: query
-      name: filter values
-      required: false
-      schema:
-        type: string
-      description: This will filter the data with any available fields and expected values
-      example: https://[...]/cgn?page=0,50&period=day&campaign_status=enabled
+    # Copy from old documentation: same as field_data_filter query parameter
+    # filter_values:
+    #   in: query
+    #   name: filter values
+    #   required: false
+    #   schema:
+    #     type: string
+    #   description: This will filter the data with any available fields and expected values
+    #   example: https://[...]/cgn?page=0,50&period=day&campaign_status=enabled
 
 
 
@@ -1781,14 +1807,9 @@ components:
           type: boolean
           description: Activate TapLeads
           
-# --------------- Client Model (Edit existing client) ----------------- 
+# --------------- Client Model (GET) ----------------- 
     client:
       type: object
-      required:
-      - company_name
-      - reporting_status
-      - iotool_status
-      - default_reporting_profile_id
       properties:
         id:
           type: integer
@@ -2445,7 +2466,7 @@ components:
 # --------------- Field Result Model ----------------- 
 
             
-# --------------- CreateUser Model (missing fields: id, has_light_logo, has_dark_logo, creation_time, user_type_display, country_display, timezone_display, status_display, formatted_creation-time, hipaa_acknowledgement_timestamp) ------------------            
+# --------------- CreateUser Model (fields NOT displayed: id, has_light_logo, has_dark_logo, creation_time, user_type_display, country_display, timezone_display, status_display, formatted_creation-time, hipaa_acknowledgement_timestamp) ------------------            
     createUser:
       type: object
       required: 
@@ -3091,13 +3112,12 @@ components:
     oAuth2ClientCredentials:
       type: oauth2
       description: |
-
-        The **TapClicks** API uses the OAuth 2.0 protocol for authentication and authorization.
         
-        As a first step, you can request your OAuth client credentials by sending an email to api-developer@tapclicks.com. You will need to provide a valid and active TapClicks account *email address* and the complete domain name that you have access to (*https://<span></span>your_instance.tapclicks.com*).
+        As a first step, you can request your OAuth client credentials by sending an email to api-developer@tapclicks.com.<br>
+        You will need to provide a valid and active TapClicks account *email address* and the complete domain name that you have access to (*https://<span></span>your_instance.tapclicks.com*).<br>
         This request will be answered by assigning to you a unique Client ID (`<client_id>`) and a unique Client Secret (`<client_secret>`). Make sure to store your Client Secret securely.
 
-        This set of values will allow you to obtain an Access Token (`<access_token>`) that will finally grant you access to the API.
+        This set of values will allow you to obtain an Access Token (`<access_token>`) that will grant you access to the API.
         
         **To obtain the Access Token:**
 
@@ -3130,9 +3150,6 @@ components:
         ```
 
         The Refresh Token also has a limited lifetime. The lifetime (expires_in) is expressed in seconds
-
-
-
 
 
         **Possible responses:**
@@ -3183,34 +3200,6 @@ components:
           }
           
         ```
-        
-        
-        
-        
-        **Possible Response Codes:**
-        ```
-        > 200 - OK: The request was successful and the response body contains 
-                    the representation requested
-        > 302 - FOUND: A common redirect response; you can GET the representation 
-                    at the URL in the Location response header
-        > 304 - NOT MODIFIED: Your client's cached version of the representation 
-                    is still up to date
-        > 400 - BAD REQUEST: The request could not be understood by the server 
-                    due to malformed syntax                    
-        > 401 - UNAUTHORIZED: The supplied credentials, if any, are not sufficient 
-                    to access the resource
-        > 404 - NOT FOUND: The server has not found anything matching the 
-                    Request-URI
-        > 429 - TOO MANY REQUESTS: Your application is sending too many 
-                    simultaneous requests
-        > 500 - SERVER ERROR: We couldn't return the representation due to 
-                    an internal server error
-        > 503 - SERVICE UNAVAILABLE: We are temporarily unable to return 
-                    the representation. Please wait for a bit and try again.
-        
-        ```
-        ---
-
 
 
       flows: 
