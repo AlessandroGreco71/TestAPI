@@ -176,13 +176,64 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the cluster to get. If omitted, it will return all Business Units       
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
+          description: Numeric Id of the cluster to get. If omitted, it will return all Business Units.
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/clusters/22?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/clusters?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/clusters?fields=id,name
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by name.
+          example: https://api.tapclicks.com/v2/clusters?sort=name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/clusters?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!**.
+          example: https://api.tapclicks.com/v2/clusters?id=10,11,12
+
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1499,9 +1550,7 @@ components:
         
         
         This will limit the number of rows in the fetch result
-        #2. It will return 6 records, starting from the 13th
       example: https://api.tapclicks.com/v2/34/data/cgn?page=0,5
-        #2- https://api.tapclicks.com/v2/34/data/cgn?page=2,6 
         
     groupby:
       in: query
@@ -1518,7 +1567,7 @@ components:
       required: false
       schema:
         type: string
-        enum: [yearly, monthly, weekly, daily, hourly]
+        enum: [yearly,monthly,weekly,daily,hourly]
       description: The results will be narrowed within the specified timegroup
       example: https://[...]/v2/services/34/data/cgn=?timegrouping=weekly
       
@@ -1538,6 +1587,9 @@ components:
       schema:
         type: string
       description: This will filter the result data with the specific fields
+      
+      
+        **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
       example: https://api.tapclicks.com/v2/34/data/cgn?fields=CTR,ClickCount
       
     sort:
@@ -1601,17 +1653,6 @@ components:
       
         To remove items use **!**
       example: https://[...]/cgn?customer_id=4,!3,8
-      
-    # Copy from old documentation: same as field_data_filter query parameter
-    # filter_values:
-    #   in: query
-    #   name: filter values
-    #   required: false
-    #   schema:
-    #     type: string
-    #   description: This will filter the data with any available fields and expected values
-    #   example: https://[...]/cgn?page=0,50&period=day&campaign_status=enabled
-
 
 
   schemas:
@@ -1645,11 +1686,11 @@ components:
           description: Is it a Business Unit Group
         status:
           type: string
-          enum: [active, inactive]
+          enum: [active,inactive]
           description: Status
         status_display:
           type: string
-          enum: [Active, Inactive]
+          enum: [Active,Inactive]
           description: Status display
             
 # --------------- Channel Model ----------------- 
@@ -1790,12 +1831,12 @@ components:
           description: Please refer to <a href="#tag/Client's-Categories">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
-          enum: [pending_mapping, active, hold, terminated]
+          enum: [pending_mapping,active,hold,terminated]
           default: pending_mapping
           description: Reporting status
         iotool_status:
           type: string
-          enum: [presale, active, inactive, terminated]
+          enum: [presale,active,inactive,terminated]
           default: presale
           description: TapOrders status
         has_hipaa_data:
@@ -1915,12 +1956,12 @@ components:
           description: Please refer to <a href="#tag/Client's-Categories">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
-          enum: [pending_mapping, active, hold, terminated]
+          enum: [pending_mapping,active,hold,terminated]
           default: pending_mapping
           description: Reporting status
         iotool_status:
           type: string
-          enum: [presale, active, inactive, terminated]
+          enum: [presale,active,inactive,terminated]
           default: presale
           description: TapOrders status
         has_hipaa_data:
@@ -1942,11 +1983,11 @@ components:
           description: Activate TapLeads
         reporting_status_display:
           type: string
-          enum: [pending_mapping, active, hold, terminated]
+          enum: [pending_mapping,active,hold,terminated]
           description:  Reporting status display
         iotool_status_display:
           type: string
-          enum: [pending_mapping, active, hold, terminated]
+          enum: [pending_mapping,active,hold,terminated]
           description: TapOrders status display
           
     
@@ -1976,7 +2017,7 @@ components:
           description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
         group_type:
           type: string
-          enum: [group_of_clients, group_of_client_group]
+          enum: [group_of_clients,group_of_client_group]
           description: Type
         has_light_logo:
           type: boolean
@@ -2053,11 +2094,11 @@ components:
       properties:
         key:
           type: string
-          enum: [integer, decimal, percent, currency, string, phonenumber, callback, date, time, link, url, image, datetime, id, bool]
+          enum: [integer,decimal,percent,currency,string,phonenumber,callback,date,time,link,url,image,datetime,id,bool]
           description: Key
         value:
           type: string
-          enum: [Number, Decimal, Percent, Currency, Text, Phone_Number, Date, Time, Link, URL, Image, Id, Boolean]
+          enum: [Number,Decimal,Percent,Currency,Text,Phone_Number,Date,Time,Link,URL,Image,Id,Boolean]
           description: Value
         icon:
           type: string
@@ -2488,7 +2529,7 @@ components:
           description: Client Id - This is **mandatory** when user_type = "client"
         user_type:
           type: string
-          enum: [client, agent, superadmin, clusteradmin]
+          enum: [client,agent,superadmin,clusteradmin]
           default: client
           description: User type
           # description: Link to be added here "Please refer to <a href="#tag/Roles">TYPE</a> to obtain all possible role types and ids"
@@ -2554,7 +2595,7 @@ components:
           description: Default home page
         io_tool_notification_frequency:
           type: string
-          enum: [never, real_time, daily, weekly, monthly]
+          enum: [never,real_time,daily,weekly,monthly]
           default: null
           description: IOTool notification frequency
         country:
@@ -2567,7 +2608,7 @@ components:
           # link to another endpoint (all available user timezones), once that starts working
         status:
           type: string
-          enum: [active, inactive]
+          enum: [active,inactive]
           description: Status
         show_services_overview: 
           type: string
@@ -2602,7 +2643,7 @@ components:
           description: Client Id - This is mandatory when user_type = "client"
         user_type:
           type: string
-          enum: [client, agent, superadmin, clusteradmin]
+          enum: [client,agent,superadmin,clusteradmin]
           default: client
           description: User type
           # description: Link to be added here please refer to <a href="#tag/Roles">TYPE</a> to obtain all user types, once that endpoints starts working again
@@ -2671,7 +2712,7 @@ components:
           description: Default home page
         io_tool_notification_frequency:
           type: string
-          enum: [never, real_time, daily, weekly, monthly]
+          enum: [never,real_time,daily,weekly,monthly]
           default: null
           description: IOTool notification frequency
         country:
@@ -2684,7 +2725,7 @@ components:
           description: Timezone
         status:
           type: string
-          enum: [active, inactive]
+          enum: [active,inactive]
           description: Status
         hipaa_acknowledgement_timestamp:
           type: string
@@ -2715,7 +2756,7 @@ components:
           description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all of the exisiting data profile id
         user_type_display: 
           type: string
-          enum: [Super Admin, Business Unit Admin, Agent, Client]
+          enum: [Super Admin,Business Unit Admin,Agent,Client]
           description: User type display
         country_display:
           type: string
@@ -2731,7 +2772,7 @@ components:
             **Note&#58;** This field is NOT returned if the *user_type* is "agent"
         status_display:
           type: string
-          enum: [active, inactive]
+          enum: [active,inactive]
           description: Status display
         formatted_creation_time:
           type: string
