@@ -284,13 +284,64 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the category to get. If omitted, it will return all Channels  
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
+          description: Numeric Id of the category to get. If omitted, it will return all Channels.
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/categories?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/categories?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/categories?fields=id,name
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by name.
+          example: https://api.tapclicks.com/v2/categories?sort=name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/categories?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!**.
+          example: https://api.tapclicks.com/v2/categories?name=Social%20Services,Display%20Services
+
       responses:
         '200':
           description: Ok - Successful Operation
@@ -351,12 +402,62 @@ paths:
           
           
             If omitted, it will return all Clients
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/clients?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/clients?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/clients?fields=id,company_name,last_name
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by company name.
+          example: https://api.tapclicks.com/v2/clients?sort=company_name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/clients?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!**.
+          example: https://api.tapclicks.com/v2/clients?company_name=JL%20Marketing
 
       responses:
         '200':
@@ -541,10 +642,43 @@ paths:
       
         For example&#58; Services, Automotive, Retailer, Restaurant...
       parameters:
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"        
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/clientcategories?metadata=1
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by name.
+          example: https://api.tapclicks.com/v2/clientcategories?sort=name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/clusters?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!**.
+          example: https://api.tapclicks.com/v2/clientcategories?name=Automotive       
+       
       responses: 
         '200':
           description: Ok - Successful Operation
@@ -628,12 +762,62 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the Group of Client to get. If omitted, it will return all Groups of Clients
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/clientgroups/1?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/clientgroups?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/clientgroups?fields=id,name
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by name.
+          example: https://api.tapclicks.com/v2/clientgroups?sort=name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/clientgroups?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!**.
+          example: https://api.tapclicks.com/v2/clientgroups?id=10,15,16
       responses:
         '200':
           description: Ok - Successful Operation
@@ -688,12 +872,62 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the Data Profile to get. If omitted, it will return all Data Profiles  
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/reportingprofiles?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/reportingprofiles?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/reportingprofiles?fields=id,name
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by name.
+          example: https://api.tapclicks.com/v2/reportingprofiles?sort=name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/reportingprofiles?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!**.
+          example: https://api.tapclicks.com/v2/reportingprofiles?name=Default%20Profile,Internal-Employee
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1031,11 +1265,62 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the role to get. If omitted, it will return all roles  
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/field_data_filter"
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/roles?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/roles?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/roles?fields=id,name
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by name.
+          example: https://api.tapclicks.com/v2/roles?sort=name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/roles?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!**.
+          example: https://api.tapclicks.com/v2/roles?name=Sales,Vendor
         
       responses:
         '200':
@@ -1352,11 +1637,63 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the user to get. If omitted, it will return all Users
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/users/1?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/users?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/users?fields=id,user_type,last_name,email
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by last name.
+          example: https://api.tapclicks.com/v2/users?sort=last_name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/users?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!**.
+          example: https://api.tapclicks.com/v2/users?id=1,2,3          
+
       responses:
         '200':
           description: Ok Successful Operation
