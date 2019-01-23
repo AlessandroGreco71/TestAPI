@@ -228,10 +228,15 @@ paths:
           required: false
           schema:
             type: string
-          description: This will filter the data that contains only specific values.
+          description: |
+            This will filter the data that contains only specific values.
       
       
-            To remove items use **!**.
+            To remove items use **!** before the value.
+            
+            
+            Example&#58; `"https://api.tapclicks.com/v2/clusters?id=!12"`<br>
+            This will return all clusters, except for the one with id = 12
           example: https://api.tapclicks.com/v2/clusters?id=10,11,12
 
       responses:
@@ -336,10 +341,15 @@ paths:
           required: false
           schema:
             type: string
-          description: This will filter the data that contains only specific values.
+          description: |
+            This will filter the data that contains only specific values.
       
       
-            To remove items use **!**.
+            To remove items use **!** before the value.
+            
+              
+            Example&#58; `"https://api.tapclicks.com/v2/categories?id=!12"`<br>
+            This will return all channels, except for the one with id = 12
           example: https://api.tapclicks.com/v2/categories?name=Social%20Services,Display%20Services
 
       responses:
@@ -453,10 +463,15 @@ paths:
           required: false
           schema:
             type: string
-          description: This will filter the data that contains only specific values.
+          description: | 
+            This will filter the data that contains only specific values.
       
       
-            To remove items use **!**.
+            To remove items use **!** before the value.
+            
+
+            Example&#58; `"https://api.tapclicks.com/v2/clients?id=!12"`<br>
+            This will return all Clients, except for the one with id = 12
           example: https://api.tapclicks.com/v2/clients?company_name=JL%20Marketing
 
       responses:
@@ -667,16 +682,21 @@ paths:
             type: integer
             enum: [0,1]
           description: The API will provide a total number of records in the result.
-          example: http://api.tapclicks.com/v2/clusters?count=1
+          example: http://api.tapclicks.com/v2/clientcategories?count=1
         - in: query
           name: field_data_filter
           required: false
           schema:
             type: string
-          description: This will filter the data that contains only specific values.
+          description: | 
+            This will filter the data that contains only specific values.
       
       
-            To remove items use **!**.
+            To remove items use **!** before the value.
+            
+          
+            Example&#58; `"https://api.tapclicks.com/v2/clientcategories?id=!12"`<br>
+            This will return all Client categories, except for the one with id = 12
           example: https://api.tapclicks.com/v2/clientcategories?name=Automotive       
        
       responses: 
@@ -813,10 +833,15 @@ paths:
           required: false
           schema:
             type: string
-          description: This will filter the data that contains only specific values.
+          description: |
+            This will filter the data that contains only specific values.
       
       
-            To remove items use **!**.
+            To remove items use **!** before the value.
+           
+            
+            Example&#58; `"https://api.tapclicks.com/v2/clientgroups?id=!12"`<br>
+            This will return all Client Groups, except for the one with id = 12
           example: https://api.tapclicks.com/v2/clientgroups?id=10,15,16
       responses:
         '200':
@@ -923,10 +948,15 @@ paths:
           required: false
           schema:
             type: string
-          description: This will filter the data that contains only specific values.
+          description: |
+            This will filter the data that contains only specific values.
       
       
-            To remove items use **!**.
+            To remove items use **!** before the value.
+          
+            
+            Example&#58; `"https://api.tapclicks.com/v2/reportingprofiles?id=!12"`<br>
+            This will return all data profiles, except for the one with id = 12
           example: https://api.tapclicks.com/v2/reportingprofiles?name=Default%20Profile,Internal-Employee
       responses:
         '200':
@@ -1316,10 +1346,15 @@ paths:
           required: false
           schema:
             type: string
-          description: This will filter the data that contains only specific values.
+          description: |
+            This will filter the data that contains only specific values.
       
       
-            To remove items use **!**.
+            To remove items use **!** before the value.
+            
+            
+            Example&#58; `"https://api.tapclicks.com/v2/roles?id=!12"`<br>
+            This will return all roles, except for the one with id = 12
           example: https://api.tapclicks.com/v2/roles?name=Sales,Vendor
         
       responses:
@@ -1688,10 +1723,15 @@ paths:
           required: false
           schema:
             type: string
-          description: This will filter the data that contains only specific values.
+          description: |
+            This will filter the data that contains only specific values.
       
       
-            To remove items use **!**.
+            To remove items use **!** before the value.
+          
+            
+            Example&#58; `"https://api.tapclicks.com/v2/users?id=!12"`<br>
+            This will return all Users, except for the one with id = 12
           example: https://api.tapclicks.com/v2/users?id=1,2,3          
 
       responses:
@@ -1988,7 +2028,7 @@ components:
       description: This will filter the data that contains only specific values.
       
       
-        To remove items use **!**
+        To remove items use **!** before the value.
       example: https://[...]/cgn?customer_id=4,!3,8
 
 
