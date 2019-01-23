@@ -127,14 +127,18 @@ paths:
                 properties:
                   data:
                     type: string
+                    description: Data
                   error:
                     type: boolean
+                    description: Error
                   warning:
                     type: array
+                    description: Warnings
                     items:
                       type: integer
                   status:
                     type: integer
+                    description: Status
                 example:
                   data: "Welcome to TAP API"
                   error: false
@@ -1225,37 +1229,75 @@ paths:
                 $ref: '#/components/schemas/response_200_leads'
               example:
                 data:
-                  - id: 1
-                    service_lead_id: 10901
-                    service_id: 55
-                    service_name: "CallCap"
+                  - id: null
+                    lead_id: 329312
+                    client_id: 409
+                    campaign_id: "51"
+                    campaign_name: "Destination Carins Marketing"
+                    customer_number: "5555550229"
+                    customer_email: null
+                    call_status: null
+                    tracking_source: "611555782855"
+                    caller_name: null
+                    comments: null
+                    call_was_recorded: "<audio preload='none' controls><source src='portal.avanser.com/audio/555/65570421/in/rec.6900-2018-08-29-1033-115.wav' type='audio/wav'></audio>"
+                    duration: null
+                    timestamp: 1545608100
+                    third_party_id: "50114777"
+                    note_count: null
+                    is_overriden: false
                     type: "call"
-                    status: "Visible"
-                    campaign_id: 32
-                    campaign_name: "Hyland Hills - Email"
-                    client_id: 13
+                    service_lead_id: "91555"
+                    service_id: "69"
+                    service_name: "Call Tracking"
+                    end_customer_id: null
+                    visibility: "Visible"
+                    quality: null
+                    status: null
                     first_name: null
                     last_name: null
-                    caller_name: "8002782420"
-                    end_customer_id: null
-                    customer_number: "800-278-2420"
-                    duration: null
-                    customer_email: null
-                    call_status: "Blocked"
-                    grade: null
-                    notes: null
-                    call_was_recorded: "Not recorded"
-                    timestamp: "Oct 20, 2018 1:56 PM"
-                    lead_id: 10901
+                    address_1: null
+                    address_2: null
+                    city: null
+                    state: "NSW"
+                    zip: null
+                    deal_amount: null
                     source_name: null
                     source_type: null
-                    client_name: "callcap-hyland-hills"
+                    client_name: "Destination Mark"
+                    client_reporting_status: "active"
+                    client_billing_id: ""
+                    client_additional_details_1: ""
+                    client_additional_details_2: ""
+                    client_additional_details_3: ""
+                    client_crm_id: ""
                     customer_name: null
-                    row_grouping_count: 1
-                    can_be_edited: true
-                    can_be_deleted: false
-                    can_be_cloned: false
-                    iso_timestamp: "2018-10-20T13:56:13Z"
+                    client_name_value: null
+                    client_name_value_id: null
+                    client_name_tag: "No Tag"
+                    client_name_color: null
+                    client_name_tag_id: null
+                    customer_number_value: null
+                    customer_number_value_id: null
+                    customer_number_tag: "No Tag"
+                    customer_number_color: null
+                    customer_number_tag_id: null
+                    customer_email_value: null
+                    customer_email_value_id: null
+                    customer_email_tag: "No Tag"
+                    customer_email_color: null
+                    customer_email_tag_id: null
+                    tracking_source_value: null
+                    tracking_source_value_id: null
+                    tracking_source_tag: "No Tag"
+                    tracking_source_color: null
+                    tracking_source_tag_id: null
+                    row_grouping_count: "1"
+                    formatted_customer_number: "555-555-0229"
+                    formatted_timestamp: "Jan 11, 2017 12:00 AM"
+                    has_history: false
+                    visibility_display: "Visible"
+                    tags: [ ]
                 error: false
                 warnings: []
                 status: 200
@@ -2533,66 +2575,214 @@ components:
       properties:
         id:
           type: integer
-        service_lead_id:
-          type: integer
-        service_id:
-          type: integer
-        service_name:
-          type: string
-        type:
-          type: string
-        status:
-          type: string
-        campaign_id:
-          type: integer
-        campaign_name:
-          type: string
-        client_id:
-          type: integer
-        first_name:
-          type: string
-        last_name:
-          type: string
-        caller_name: 
-          type: string
-        end_customer_id:
-          type: string
-        customer_number:
-          type: string
-        duration:
-          type: string
-        customer_email:
-          type: string
-        call_status:
-          type: string
-        grade:
-          type: string
-        notes: 
-          type: string
-        call_was_recorded:
-          type: string
-        timestamp:
-          type: string
+          description: Id
         lead_id:
           type: integer
+          description: Lead Id
+        client_id:
+          type: integer
+          description: Client Id
+        campaign_id:
+          type: integer
+          description: Campaign Id
+        campaign_name:
+          type: string
+          description: Campaign name
+        customer_number:
+          type: string
+          description: Customer number
+        customer_email:
+          type: string
+          description: Customer email
+        call_status:
+          type: string
+          description: Call status
+        tracking_source:
+          type: string
+          description: Tracking source
+        caller_name:
+          type: string
+          description: Caller name
+        comments:
+          type: string
+          description: Comments
+        call_was_recorded:
+          type: string
+          description: Call was recorded
+        duration:
+          type: string
+          description: Duration
+        timestamp:
+          type: integer
+          description: Timestamp - Unix Time Stamp
+        third_party_id:
+          type: integer
+          description: Third party id
+        note_count:
+          type: string
+          description: Note count
+        is_overridden:
+          type: boolean
+          description: Is overridden
+        type:
+          type: string
+          description: Type
+        service_lead_id:
+          type: integer
+          description: Service lead Id
+        service_id:
+          type: integer
+          description: Service Id
+        service_name:
+          type: string
+          description: Service name
+        end_customer_id:
+          type: integer
+          description: End Customer Id
+        visibility:
+          type: string
+          description: Visibility
+        quality:
+          type: string
+          description: Quality
+        status:
+          type: string
+          description: Status
+        first_name:
+          type: string
+          description: First name
+        last_name:
+          type: string
+          description: Last name
+        address_1:
+          type: string
+          description: Address 1
+        address_2:
+          type: string
+          description: Address 2
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State
+        zip:
+          type: string
+          description: Zip/Postal code
+        deal_amount:
+          type: string
+          description: Deal amount
         source_name:
           type: string
+          description: Source name
         source_type:
           type: string
+          description: Source type
         client_name:
           type: string
-        customer_name: 
+          description: Client name
+        client_reporting_status:
           type: string
-        row_grouping_count: 
+          description: string
+        client_billing_id:
           type: integer
-        can_be_edited:
-          type: boolean
-        can_be_deleted: 
-          type: boolean
-        can_be_cloned: 
-          type: boolean
-        iso_timestamp:
+          description: Client billing Id
+        client_additional_details_1:
           type: string
+          description: Client additional details 1
+        client_additional_details_2:
+          type: string
+          description: Client additional details 2
+        client_additional_details_3:
+          type: string
+          description: Client additional details 3
+        client_crm_id:
+          type: integer
+          description: client crm Id
+        customer_name:
+          type: string
+          description: Customer name
+        client_name_value:
+          type: string
+          description: Client name value
+        client_name_value_id:
+          type: integer
+          description: Client name value Id
+        client_name_tag:
+          type: string
+          description: Client name tag
+        client_name_color:
+          type: string
+          description: Client name color
+        client_name_tag_id:
+          type: integer
+          description: Client name tag Id
+        customer_number_value:
+          type: string
+          description: Customer number value
+        customer_number_value_id:
+          type: integer
+          description: Customer number value Id
+        customer_number_tag:
+          type: string
+          description: Customer number tag
+        customer_number_color:
+          type: string
+          description: Customer number color
+        customer_number_tag_id:
+          type: integer
+          description: Customer number tag Id
+        customer_email_value:
+          type: string
+          description: Customer email value
+        customer_email_value_id:
+          type: integer
+          description: Customer email value Id
+        customer_email_tag:
+          type: string
+          description: Customer email tag
+        customer_email_color:
+          type: string
+          description: Customer email color
+        customer_email_tag_id:
+          type: integer
+          description: Customer email tag Id
+        tracking_source_value:
+          type: string
+          description: Tracking source value
+        tracking_source_value_id:
+          type: integer
+          description: Tracking source value Id
+        tracking_source_tag:
+          type: string
+          description: Tracking source tag
+        tracking_source_color:
+          type: string
+          description: Tracking source color
+        tracking_source_tag_id:
+          type: integer
+          description: Tracking source tag Id
+        row_grouping_count:
+          type: string
+          description: Row grouping count
+        formatted_customer_number:
+          type: string
+          description: Formatted Customer number
+        formatted_timestamp:
+          type: string
+          description: Formatted timestamp
+        has_history:
+          type: boolean
+          description: Has history
+        visibility_display:
+          type: string
+          description: Visibility display
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags 
+        
 
 # --------------- Order Item Model ----------------- 
     orderItem:
@@ -3163,11 +3353,14 @@ components:
           properties:
             faultstring:
               type: string
+              description: Faultstring
             detail:
               type: object
               properties:
                 errorcode:
                   type: string
+                  description: Errorcode
+      # REVIEW THIS EXAMPLE            
       example: 
         fault:
           faultstring: 'Unable to identify proxy for host: https_vhost and url/: /v'
@@ -3181,11 +3374,13 @@ components:
           properties:
             faultstring:
               type: string
+              description: Faultstring
             detail:
               type: object
               properties:
                 errorcode:
                   type: string
+                  description: Errorcode
       example: 
         fault:
           faultstring: 'Invalid Access Token'
@@ -3197,16 +3392,20 @@ components:
       properties:
         error:
           type: boolean
+          description: Error
         data:
           type: array
+          description: Data
           items:
             type: string
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status:
           type: integer
+          description: Status
       example:
         error: true
         data: 
@@ -3219,16 +3418,20 @@ components:
       properties:
         error:
           type: boolean
+          description: Error
         data: 
           type: array
+          description: Data
           items:
             type: string
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status:
           type: integer
+          description: Status
       example:
         error: 'true'
         data: ['API Route not found']
@@ -3273,12 +3476,15 @@ components:
           $ref: '#/components/schemas/cluster'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
-          type: integer      
+          type: integer
+          description: Status
 
     response_200_categories:
       type: object
@@ -3288,12 +3494,15 @@ components:
           $ref: '#/components/schemas/category'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
 
     response_200_clients:
       type: object
@@ -3303,12 +3512,15 @@ components:
           $ref: '#/components/schemas/client'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer 
+          description: Status
           
     response_200_new_edit_client_user:
       type: object
@@ -3318,14 +3530,18 @@ components:
           properties:
             id:
               type: integer
+              description: Id
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
-          type: integer          
+          type: integer 
+          description: Status
 
     response_200_clientcategories:
       type: object
@@ -3335,12 +3551,15 @@ components:
           $ref: '#/components/schemas/clientCategory'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_clientgroups:
       type: object
@@ -3350,12 +3569,15 @@ components:
           $ref: '#/components/schemas/clientGroup'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_dataprofiles:
       type: object
@@ -3365,12 +3587,15 @@ components:
           $ref: '#/components/schemas/dataProfile'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_datatypes:
       type: object
@@ -3380,12 +3605,15 @@ components:
           $ref: '#/components/schemas/dataType'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_daterange:
       type: object
@@ -3395,12 +3623,15 @@ components:
           $ref: '#/components/schemas/dateRange'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer 
+          description: Status
           
     response_200_languages:
       type: object
@@ -3410,12 +3641,15 @@ components:
           $ref: '#/components/schemas/language'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_leads:
       type: object
@@ -3425,12 +3659,15 @@ components:
           $ref: '#/components/schemas/lead'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_roles:
       type: object
@@ -3440,12 +3677,15 @@ components:
           $ref: '#/components/schemas/role'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_services:
       type: object
@@ -3455,12 +3695,15 @@ components:
           $ref: '#/components/schemas/simpleService'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_servicesdataview:
       type: object
@@ -3473,12 +3716,15 @@ components:
           $ref: '#/components/schemas/serviceDataViewField'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_servicesinfo:
       type: object
@@ -3488,12 +3734,15 @@ components:
           $ref: '#/components/schemas/serviceInfo'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
-          type: integer    
+          type: integer
+          description: Status
           
     response_200_servicesorderitem:
       type: object
@@ -3503,12 +3752,15 @@ components:
           $ref: '#/components/schemas/orderItem'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
     response_200_users:
       type: object
@@ -3518,12 +3770,15 @@ components:
           $ref: '#/components/schemas/user'
         error:
           type: boolean
+          description: Error
         warnings:
           type: array
+          description: Warnings
           items:
             type: string
         status: 
           type: integer
+          description: Status
           
 
         
