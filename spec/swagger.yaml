@@ -157,7 +157,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error_401'
         '404':
-          description: API Route not found 
+          description: API Route not found
           content:
             application/json:
               schema:
@@ -263,6 +263,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'
         '401':
           description: Invalid access token
           content:
@@ -381,7 +387,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
-                    
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                    
         '401':
           description: Invalid access token
           content:
@@ -530,7 +541,13 @@ paths:
                     iotool_status_display: "presale"
                 error: false
                 warnings: []
-                status: 200     
+                status: 200    
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
         '401':
           description: Invalid access token
           content:
@@ -587,6 +604,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'
         '401':
           description: Invalid access token
           content:
@@ -637,6 +660,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'
         '401':
           description: Invalid access token
           content:
@@ -755,6 +784,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200   
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
         '401':
           description: Invalid access token
           content:
@@ -870,6 +905,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'
         '401':
           description: Invalid access token
           content:
@@ -983,6 +1024,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'
         '401':
           description: Invalid access token
           content:
@@ -1106,6 +1153,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'
         '401':
           description: Invalid access token
           content:
@@ -1145,7 +1198,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
-            
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'            
         '401':
           description: Invalid access token
           content:
@@ -1188,6 +1246,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
         '401':
           description: Invalid access token
           content:
@@ -1218,13 +1282,121 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the lead to get. If omitted, it will return all leads 
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/fields"
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/leads/13?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/leads?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/leads?fields=id,client_id,campaign_id
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by name.
+          example: https://api.tapclicks.com/v2/leads?sort=service_name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/leads?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: |
+            This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!** before the value.
+            
+            
+            Example&#58; `"https://api.tapclicks.com/v2/leads?id=!12"`<br>
+            This will return all leads, except for the one with id = 12
+          example: https://api.tapclicks.com/v2/leads?id=10,11,12
+        - in: query
+          name: groupby
+          required: false
+          schema:
+            type: string
+          description: The results will be grouped based on the provided field
+          example: https://api.tapclicks.com/v2/leads?groupby=client_id
+        - in: query
+          name: timegrouping
+          required: false
+          schema:
+            type: string
+          description: The results will be grouped and narrowed within the specified timegroup
+          example: https://api.tapclicks.com/v2/leads?timegrouping=yearly
+        - in: query
+          name: aggregate
+          required: false
+          schema:
+            type: boolean
+          description: The results will be the aggregated value of each field
+          example: https://api.tapclicks.com/v2/leads?id=27&aggregate=true
+        - in: query
+          name: row_grouping_count
+          required: false
+          schema:
+            type: string
+          description: |
+            **row_grouping_count** must be passed in the query parameter **fields**, along with other fields the user wants to select; also the query parameter **groupby** must be used in the API call.<br>
+            This will provide grouped results and a row count on each group
+          example: https://api.tapclicks.com/v2/leads?groupby=campaign_id&fields=row_grouping_count
+        - in: query
+          name: nested
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: Fetch grouped data that nested based on the groupby expression
+          example: https://api.tapclicks.com/v2/leads?groupby=campaign_name&nested=1
+        - in: query
+          name: daterange
+          required: false
+          schema:
+            type: string
+          description: The example will return the leads with a timestamp for the month of December.
+            
+            
+            This filters the result between the given date range (YYYY-MM-DD).
+          example: https://api.tapclicks.com/v2/leads?&daterange=2019-12-01|2019-12-31
+        
       responses:
         '200':
           description: Ok - Successful Operation
           content:
-            application/json;charset=utf-8:
+            application/json:
               schema:
                 $ref: '#/components/schemas/response_200_leads'
               example:
@@ -1301,6 +1473,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
         '401':
           description: Invalid access token
           content:
@@ -1419,7 +1597,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
-                
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
         '401':
           description: Invalid access token
           content:
@@ -1473,7 +1656,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200                  
-                
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
         '401':
           description: Invalid access token
           content:
@@ -1557,6 +1745,12 @@ paths:
               #   error: false
               #   warnings: []
               #   status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'              
         '401':
           description: Invalid access token
           content:
@@ -1619,7 +1813,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
-                
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
         '401':
           description: Invalid access token
           content:
@@ -1681,6 +1880,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
         '401':
           description: Invalid access token
           content:
@@ -1693,11 +1898,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
-      
-                
-                
+     
 # --------------------- Users --------------------------  
-
   /users{/user_id}:
     get:
       tags:
@@ -1829,6 +2031,12 @@ paths:
                 error: false
                 warnings: []
                 status: 200 
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
         '401':
           description: Invalid access token
           content:
@@ -1890,6 +2098,18 @@ paths:
                 error: false
                 warnings: []
                 status: 200  
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'  
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'                 
         '404':
           description: API Route not found 
           content:
@@ -1939,6 +2159,18 @@ paths:
                 error: false
                 warnings: []
                 status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400' 
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401' 
         '404':
           description: API Route not found 
           content:
@@ -2670,7 +2902,7 @@ components:
           type: string
           description: Zip/Postal code
         deal_amount:
-          type: string
+          type: integer
           description: Deal amount
         source_name:
           type: string
@@ -3279,7 +3511,7 @@ components:
           description: Default home page
         io_tool_notification_frequency:
           type: string
-          enum: [never,real_time,daily,weekly,monthly]
+          enum: [never,real_time]
           default: null
           description: IOTool notification frequency
         country:
@@ -3325,6 +3557,14 @@ components:
           type: string
           enum: [Super Admin,Business Unit Admin,Agent,Client]
           description: User type display
+        default_home_page_display:
+          type: string
+          description: Default Home Page Display - This field will be returned only if the value is set
+        io_tool_notification_frequency_display:
+          type: string
+          enum: [Never,Real-time]
+          default: null
+          description: IOTool notification frequency display 
         country_display:
           type: string
           description: Country display
