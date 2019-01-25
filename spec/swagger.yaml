@@ -308,16 +308,16 @@ paths:
             enum: [0,1]
           description: The API will provide more or all the info for the available fields.
           example: https://api.tapclicks.com/v2/categories?metadata=1
-        - in: query
-          name: page
-          required: false
-          schema:
-            type: string
-          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        # - in: query
+        #   name: page
+        #   required: false
+        #   schema:
+        #     type: string
+        #   description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
         
         
-            This will limit the number of rows in the fetch result. 
-          example: https://api.tapclicks.com/v2/categories?page=0,5
+        #     This will limit the number of rows in the fetch result. 
+        #   example: https://api.tapclicks.com/v2/categories?page=0,5
         - in: query
           name: fields
           required: false
@@ -1369,9 +1369,8 @@ paths:
           required: false
           schema:
             type: string
-          description: |
-            **row_grouping_count** must be passed in the query parameter **fields**, along with other fields the user wants to select; also the query parameter **groupby** must be used in the API call.<br>
-            This will provide grouped results and a row count on each group
+          description: Passing **row_grouping_count** along with the list of **fields** will provide grouped result and row count on each group (**groupby**)
+            
           example: https://api.tapclicks.com/v2/leads?groupby=campaign_id&fields=row_grouping_count
         - in: query
           name: nested
@@ -1390,7 +1389,7 @@ paths:
             
             
             This filters the result between the given date range (YYYY-MM-DD).
-          example: https://api.tapclicks.com/v2/leads?&daterange=2019-12-01|2019-12-31
+          example: https://api.tapclicks.com/v2/leads?&daterange=2018-12-01|2018-12-31
         
       responses:
         '200':
@@ -1636,11 +1635,67 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the service to get. If omitted, it will return all services 
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/services/108?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/services?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/services?fields=id,name
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by name.
+          example: https://api.tapclicks.com/v2/services?sort=name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/services?count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: |
+            This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!** before the value.
+            
+            
+            Example&#58; `"https://api.tapclicks.com/v2/services?id=!12"`<br>
+            This will return all services, except for the one with id = 12
+          example: https://api.tapclicks.com/v2/services?id=10,11,12
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1652,7 +1707,28 @@ paths:
                 data:
                   - service_id: 44
                     name: "Facebook Insights"
+                    original_name: "Facebook Insights"
+                    datamodel: "info/shoutletfbcgn"
+                    parsemodel: "fetcher/vendor_facebook_insights_parser"
+                    api: "1"
+                    use_id: "0"
+                    use_oauth: "1"
+                    label: ""
+                    model: "facebook"
+                    avg: "0"
+                    trend: "0"
+                    sort_order: "0"
+                    active: true
+                    active_in_development: true
+                    active_in_production: true
+                    has_margin: false
+                    color: "#4183c4"
+                    custom_color: null
+                    custom_icon: null
+                    child_of_service_id: null
+                    preferred: "0"
                     is_connected: true
+                    service_icon: "facebook"
                 error: false
                 warnings: []
                 status: 200                  
@@ -1675,7 +1751,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/error_404'
                 
-  /services{/id}/data{/data_view_id}{/field}:
+  /services{/id}/data{/data_view_id}: #{/field}
     get:
       tags:
         - SERVICES (DATA SOURCES)
@@ -1694,24 +1770,119 @@ paths:
             type: string
           required: true
           description: Data view id the column belongs to
-        - in: path
-          name: /field
+        # - in: path
+        #   name: /field
+        #   schema:
+        #     type: string
+        #   required: true
+        #   description: Field names of column to fetch
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/services/34/data/cgn?metadata=1
+        - in: query
+          name: page
+          required: false
           schema:
             type: string
-          required: true
-          description: Field names of column to fetch
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/groupby"
-        - $ref: "#/components/parameters/timegrouping"
-        - $ref: "#/components/parameters/aggregate"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/row_count"
-        - $ref: "#/components/parameters/daterange"
-        - $ref: "#/components/parameters/nested"
-        - $ref: "#/components/parameters/field_data_filter"
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/services/34/data/cgn?timegrouping=weekly&fields=log_date,ClickCount,ImpressionCount&page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/services/34/data/cgn?timegrouping=weekly&fields=ClickCount,ImpressionCount
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will alphabetically sort the results by Customer name.
+          example: https://api.tapclicks.com/v2/services/34/data/cgn?groupby=cust_id&fields=ClickCount,ImpressionCount&sort=cust_name
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: https://api.tapclicks.com/v2/services/34/data/cgn?groupby=cust_id&fields=ClickCount,ImpressionCount&sort=cust_name&count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: |
+            This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!** before the value.
+            
+            
+            Example&#58; `"http://api.tapclicks.com/v2/services/34/data/cgn?fields=client_name,ClickCount,ImpressionCount&&customer_id=!921"`<br>
+            This will return the selected fields from all Customers, except for the customer id = 921
+          example: http://api.tapclicks.com/v2/services/34/data/cgn?fields=client_name,ClickCount,ImpressionCount&&customer_id=12,13
+        - in: query
+          name: groupby
+          required: false
+          schema:
+            type: string
+          description: The results will be grouped based on the provided field
+          example: http://api.tapclicks.com/v2/services/34/data/cgn?groupby=customer_id&fields=client_name,ClickCount,ImpressionCount
+        - in: query
+          name: timegrouping
+          required: false
+          schema:
+            type: string
+          description: The results will be grouped and narrowed within the specified timegroup
+          example: https://api.tapclicks.com/v2/services/34/data/cgn?groupby=log_date&timegrouping=weekly&fields=log_date,ClickCount,Impression
+        - in: query
+          name: aggregate
+          required: false
+          schema:
+            type: boolean
+          description: The results will be the aggregated value of each field
+          example: https://api.tapclicks.com/v2/services/34/data/cgn?timegrouping=weekly&fields=log_date,ClickCount,Impressions&aggregate=true
+        - in: query
+          name: row_grouping_count
+          required: false
+          schema:
+            type: string
+          description: Passing **row_grouping_count** along with the list of **fields** will provide grouped result and row count on each group (**groupby**)
+          example: https://services/34/data/cgn?groupby=customer_id&fields=ClickCount,ImpressionCount,row_grouping_count
+        - in: query
+          name: nested
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: Fetch grouped data that nested based on the groupby expression
+          example: https://api.tapclicks.com/v2/services/34/data/cgn?groupby=customer_id&fields=ClickCount,ImpressionCount,Client_costCount&sort=-log_date&nested=1
+        - in: query
+          name: daterange
+          required: false
+          schema:
+            type: string
+          description: The example will return clicks and impressions with a timestamp for the month of December.
+            
+            
+            This filters the result between the given date range (YYYY-MM-DD).
+          example: https://api.tapclicks.com/v2/services/34/data/cgn?groupby=customer_id&fields=ClickCount,ImpressionCount&daterange=2018-12-01|2018-12-31
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1780,11 +1951,13 @@ paths:
             type: integer
           required: true
           description: Id of the service to get. If omitted, it will return all the information of all the services
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/field_data_filter"
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: This will filter the data that contains only specific values.
+          example: http://api.tapclicks.com/v2/services/info/34?fields=summary
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1848,18 +2021,67 @@ paths:
             type: integer
           required: true
           description: Numeric Id of the order item to get. If omitted, it will return all order items 
-        - $ref: "#/components/parameters/metadata"
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/groupby"
-        - $ref: "#/components/parameters/timegrouping"
-        - $ref: "#/components/parameters/aggregate"
-        - $ref: "#/components/parameters/fields"
-        - $ref: "#/components/parameters/sort"
-        - $ref: "#/components/parameters/count"
-        - $ref: "#/components/parameters/row_count"
-        - $ref: "#/components/parameters/daterange"
-        - $ref: "#/components/parameters/nested"
-        - $ref: "#/components/parameters/field_data_filter"
+        - in: query
+          name: metadata
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide more or all the info for the available fields.
+          example: https://api.tapclicks.com/v2/services/orderitems/1?metadata=1
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
+        
+        
+            This will limit the number of rows in the fetch result. 
+          example: https://api.tapclicks.com/v2/services/orderitems?page=0,5
+        - in: query
+          name: fields
+          required: false
+          schema:
+            type: string
+          description: This will filter the result data with the specific fields.
+      
+      
+            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
+          example: https://api.tapclicks.com/v2/services/orderitems?fields=id,customer_id
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+          description: Ascending by default; prefix **-** for descending.
+      
+      
+            This will sort the results by mapping date (descending).
+          example: https://api.tapclicks.com/v2/services/orderitems?page=0,5&fields=id,customer_id&sort=-mapping_date
+        - in: query
+          name: count
+          required: false
+          schema:
+            type: integer
+            enum: [0,1]
+          description: The API will provide a total number of records in the result.
+          example: http://api.tapclicks.com/v2/services/orderitems?fields=id,customer_id&sort=-mapping_date&count=1
+        - in: query
+          name: field_data_filter
+          required: false
+          schema:
+            type: string
+          description: |
+            This will filter the data that contains only specific values.
+      
+      
+            To remove items use **!** before the value.
+            
+            
+            Example&#58; `"https://api.tapclicks.com/v2/services/orderitems?customer_id=!12"`<br>
+            This will return all order items, except for the one with customer id = 12
+          example: https://api.tapclicks.com/v2/services/orderitems?fields=id,customer_id&customer_id=1,2
       responses:
         '200':
           description: Ok - Successful Operation
@@ -2237,7 +2459,7 @@ components:
       required: false
       schema:
         type: string
-      description: This will filter the result data with the specific fields
+      description: This will filter the result data with the specific fields.
       
       
         **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
@@ -3086,9 +3308,72 @@ components:
         name:
           type: string
           description: Name
+        original_name:
+          type: string
+          description: Original Name
+        datamodel:
+          type: string
+          description: Data model
+        parsemodel:
+          type: string
+          description: Parse model
+        api:
+          type: string
+          description: api
+        use_id:
+          type: string
+          description: Use Id
+        use_oauth:
+          type: string
+          description: Use oauth
+        label:
+          type: string
+          description: Label
+        model:
+          type: string
+          description: Model
+        avg:
+          type: string
+          description: Avg
+        trend:
+          type: string
+          description: Trend
+        sort_order:
+          type: string
+          description: Sort order
+        active:
+          type: boolean
+          description: Active
+        active_in_development:
+          type: boolean
+          description: Active in development
+        active_in_production:
+          type: boolean
+          description: Active in production
+        has_margin:
+          type: boolean
+          description: Has margin
+        color:
+          type: string
+          description: Color
+        custom_color:
+          type: string
+          description: Custom color
+        custom_icon:
+          type: string
+          description: Custom icon
+        child_of_service_id:
+          type: integer
+          description: Child of service Id
+        preferred:
+          type: string
+          description: Preferred
         is_connected:
           type: boolean
           description: Is connected
+        service_icon:
+          type: string
+          description: Service icon
             
 # --------------- Service Information (Data Sources) Model -----------------
     serviceInfo:
