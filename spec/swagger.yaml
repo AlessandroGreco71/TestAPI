@@ -173,7 +173,7 @@ paths:
       description: Clusters are Business Units. This returns a specific Business Unit (*cluster_id*).
       
       
-        **Note&#58;** if the path parameter *cluster_id* is omitted, this will return all the Business Units in the instance.
+        **Note&#58;** if the path parameter *cluster_id* is omitted, this will return all the Business Units in the instance (in the response, the "data" field will be an array of cluster objects).
       parameters:
         - in: path
           name: /cluster_id
@@ -252,14 +252,14 @@ paths:
                 $ref: '#/components/schemas/response_200_clusters'
               example:
                 data:
-                  - id: 1
-                    name: "West Coast Unit"
-                    has_light_logo: false
-                    has_dark_logo: false
-                    external_cluster_id: ""
-                    enable_inventory_group: false
-                    status: "active"
-                    status_display: "Active"
+                  id: 1
+                  name: "West Coast Unit"
+                  has_light_logo: false
+                  has_dark_logo: false
+                  external_cluster_id: ""
+                  enable_inventory_group: false
+                  status: "active"
+                  status_display: "Active"
                 error: false
                 warnings: []
                 status: 200
@@ -292,7 +292,7 @@ paths:
       description: Categories are Channels. This returns a specific category (*category_id*).
       
       
-        **Note&#58;** if the path parameter *category_id* is omitted, this will return all the channels in the instance.
+        **Note&#58;** if the path parameter *category_id* is omitted, this will return all the channels in the instance (in the response, the "data" field will be an array of category objects).
       parameters:
         - in: path
           name: /category_id
@@ -308,6 +308,7 @@ paths:
             enum: [0,1]
           description: The API will provide more or all the info for the available fields.
           example: https://api.tapclicks.com/v2/categories?metadata=1
+        # IMPORTANT: this will have to be fixed/checked before showing this option 
         # - in: query
         #   name: page
         #   required: false
@@ -371,19 +372,19 @@ paths:
                 $ref: '#/components/schemas/response_200_categories'
               example:
                 data:
-                  - id: "49"
-                    name: "Custom Channel"
-                    service_ids:
-                      39: 
-                        icon: "facebookads"
-                        name: "Facebook Ads"
-                        color: "#234589"
-                        is_connected: true
-                      100002:
-                        icon: "custom-icon"
-                        name: "Manually Uploaded"
-                        color: "#234511"
-                        is_connected: true
+                  id: "49"
+                  name: "Custom Channel"
+                  service_ids:
+                    39: 
+                      icon: "facebookads"
+                      name: "Facebook Ads"
+                      color: "#234589"
+                      is_connected: true
+                    100002:
+                      icon: "custom-icon"
+                      name: "Manually Uploaded"
+                      color: "#234511"
+                      is_connected: true
                 error: false
                 warnings: []
                 status: 200
@@ -416,7 +417,7 @@ paths:
       description: This returns a specific Client (*client_id*).
       
       
-        **Note&#58;** if the path parameter *client_id* is omitted, this will return all the Clients in the instance.
+        **Note&#58;** if the path parameter *client_id* is omitted, this will return all the Clients in the instance (in the response, the "data" field will be an array of client objects).
       parameters:
         - in: path
           name: /client_id
@@ -498,47 +499,47 @@ paths:
                 $ref: '#/components/schemas/response_200_clients'
               example:
                 data:
-                  - id: 1,
-                    company_name: "JP Marketing"
-                    first_name: "Jack"
-                    last_name: "Smith"
-                    email: "jsmith@JPmarketing.com"
-                    address_1: "Rue Washington 66"
-                    address_2: ""
-                    city: "Minneapolis"
-                    state: "Minnesota"
-                    zip: "54201"
-                    country: ""
-                    phone: ""
-                    fax: ""
-                    website: "jpmark.com"
-                    account_manager_user_id: null
-                    has_light_logo: false
-                    has_dark_logo: false
-                    crm_id: ""
-                    billing_id: ""
-                    additional_details_1: ""
-                    additional_details_2: ""
-                    additional_details_3: ""
-                    enable_lead_management_module: false
-                    created_by_user_id: "1"
-                    created_by_user: "jsmith@JPmarketing.com"
-                    report_language: ""
-                    source_service_id: null
-                    creation_time: 1540478543
-                    last_modification_time: 1540478543
-                    cluster_id: null
-                    default_reporting_profile_id: "1"
-                    client_category_id: null
-                    reporting_status: "active"
-                    iotool_status: "presale"
-                    has_hipaa_data: false
-                    formatted_creation_time: "Oct 25, 2018 1:15 PM"
-                    formatted_last_modification_time: "Oct 25, 2018 1:15 PM"
-                    client_group_ids: []
-                    activate_tapleads: false
-                    reporting_status_display: "active"
-                    iotool_status_display: "presale"
+                  id: 1,
+                  company_name: "JP Marketing"
+                  first_name: "Jack"
+                  last_name: "Smith"
+                  email: "jsmith@JPmarketing.com"
+                  address_1: "Rue Washington 66"
+                  address_2: ""
+                  city: "Minneapolis"
+                  state: "Minnesota"
+                  zip: "54201"
+                  country: ""
+                  phone: ""
+                  fax: ""
+                  website: "jpmark.com"
+                  account_manager_user_id: null
+                  has_light_logo: false
+                  has_dark_logo: false
+                  crm_id: ""
+                  billing_id: ""
+                  additional_details_1: ""
+                  additional_details_2: ""
+                  additional_details_3: ""
+                  enable_lead_management_module: false
+                  created_by_user_id: "1"
+                  created_by_user: "jsmith@JPmarketing.com"
+                  report_language: ""
+                  source_service_id: null
+                  creation_time: 1540478543
+                  last_modification_time: 1540478543
+                  cluster_id: null
+                  default_reporting_profile_id: "1"
+                  client_category_id: null
+                  reporting_status: "active"
+                  iotool_status: "presale"
+                  has_hipaa_data: false
+                  formatted_creation_time: "Oct 25, 2018 1:15 PM"
+                  formatted_last_modification_time: "Oct 25, 2018 1:15 PM"
+                  client_group_ids: []
+                  activate_tapleads: false
+                  reporting_status_display: "active"
+                  iotool_status_display: "presale"
                 error: false
                 warnings: []
                 status: 200    
@@ -813,7 +814,7 @@ paths:
       description: This returns a specific Group of Clients (*clientgroup_id*).
       
       
-        **Note&#58;** if the path parameter *clientgroup_id* is omitted, this will return all the Groups of Clients in the instance.
+        **Note&#58;** if the path parameter *clientgroup_id* is omitted, this will return all the Groups of Clients in the instance (in the response, the "data" field will be an array of clientGroup objects).
       parameters:
         - in: path
           name: /clientgroup_id
@@ -891,17 +892,17 @@ paths:
                 $ref: '#/components/schemas/response_200_clientgroups'
               example:
                 data:
-                  - id: "1"
-                    name: "Test Unit"
-                    cluster_id: null
-                    group_type: "group_of_clients"
-                    has_light_logo: false
-                    has_dark_logo: false
-                    created_at: 1540404023
-                    updated_at: 1540404023
-                    formatted_created_at: "Oct 24, 2018 6:00 PM"
-                    formatted_updated_at: "Oct 24, 2018 6:00 PM"
-                    client_ids: [1]
+                  id: "1"
+                  name: "Test Unit"
+                  cluster_id: null
+                  group_type: "group_of_clients"
+                  has_light_logo: false
+                  has_dark_logo: false
+                  created_at: 1540404023
+                  updated_at: 1540404023
+                  formatted_created_at: "Oct 24, 2018 6:00 PM"
+                  formatted_updated_at: "Oct 24, 2018 6:00 PM"
+                  client_ids: [1]
                 error: false
                 warnings: []
                 status: 200
@@ -934,7 +935,7 @@ paths:
       description: This returns a specific Data Profile (*profile_id*).
       
       
-        **Note&#58;** if the path parameter *profile_id* is omitted, this will return all the Data Profiles in the instance.
+        **Note&#58;** if the path parameter *profile_id* is omitted, this will return all the Data Profiles in the instance (in the response, the "data" field will be an array of dataProfile objects).
       parameters:
         - in: path
           name: /profile_id
@@ -1012,15 +1013,15 @@ paths:
                 $ref: '#/components/schemas/response_200_dataprofiles'
               example:
                 data:
-                  - id: 1
-                    name: "Default Profile"
-                    created_at: 1378100067
-                    updated_at: 1435939300
-                    enable_new_services_by_default: true
-                    enable_scores: false
-                    adwords_split_active: false
-                    hide_adwords_network: false
-                    cluster_id: null
+                  id: 1
+                  name: "Default Profile"
+                  created_at: 1378100067
+                  updated_at: 1435939300
+                  enable_new_services_by_default: true
+                  enable_scores: false
+                  adwords_split_active: false
+                  hide_adwords_network: false
+                  cluster_id: null
                 error: false
                 warnings: []
                 status: 200
@@ -1274,7 +1275,7 @@ paths:
       description: This returns a specific lead (*lead_id*). 
         
         
-        **Note&#58;** that if the path parameter *lead_id* is omitted, this will return a list of all the leads in the instance.
+        **Note&#58;** that if the path parameter *lead_id* is omitted, this will return a list of all the leads in the instance (in the response, the "data" field will be an array of lead objects).
       parameters:
         - in: path
           name: /lead_id
@@ -1400,75 +1401,75 @@ paths:
                 $ref: '#/components/schemas/response_200_leads'
               example:
                 data:
-                  - id: null
-                    lead_id: 329312
-                    client_id: 409
-                    campaign_id: "51"
-                    campaign_name: "Destination Carins Marketing"
-                    customer_number: "5555550229"
-                    customer_email: null
-                    call_status: null
-                    tracking_source: "611555782855"
-                    caller_name: null
-                    comments: null
-                    call_was_recorded: "<audio preload='none' controls><source src='portal.avanser.com/audio/555/65570421/in/rec.6900-2018-08-29-1033-115.wav' type='audio/wav'></audio>"
-                    duration: null
-                    timestamp: 1545608100
-                    third_party_id: "50114777"
-                    note_count: null
-                    is_overriden: false
-                    type: "call"
-                    service_lead_id: "91555"
-                    service_id: "69"
-                    service_name: "Call Tracking"
-                    end_customer_id: null
-                    visibility: "Visible"
-                    quality: null
-                    status: null
-                    first_name: null
-                    last_name: null
-                    address_1: null
-                    address_2: null
-                    city: null
-                    state: "NSW"
-                    zip: null
-                    deal_amount: null
-                    source_name: null
-                    source_type: null
-                    client_name: "Destination Mark"
-                    client_reporting_status: "active"
-                    client_billing_id: ""
-                    client_additional_details_1: ""
-                    client_additional_details_2: ""
-                    client_additional_details_3: ""
-                    client_crm_id: ""
-                    customer_name: null
-                    client_name_value: null
-                    client_name_value_id: null
-                    client_name_tag: "No Tag"
-                    client_name_color: null
-                    client_name_tag_id: null
-                    customer_number_value: null
-                    customer_number_value_id: null
-                    customer_number_tag: "No Tag"
-                    customer_number_color: null
-                    customer_number_tag_id: null
-                    customer_email_value: null
-                    customer_email_value_id: null
-                    customer_email_tag: "No Tag"
-                    customer_email_color: null
-                    customer_email_tag_id: null
-                    tracking_source_value: null
-                    tracking_source_value_id: null
-                    tracking_source_tag: "No Tag"
-                    tracking_source_color: null
-                    tracking_source_tag_id: null
-                    row_grouping_count: "1"
-                    formatted_customer_number: "555-555-0229"
-                    formatted_timestamp: "Jan 11, 2017 12:00 AM"
-                    has_history: false
-                    visibility_display: "Visible"
-                    tags: [ ]
+                  id: null
+                  lead_id: 329312
+                  client_id: 409
+                  campaign_id: "51"
+                  campaign_name: "Destination Carins Marketing"
+                  customer_number: "5555550229"
+                  customer_email: null
+                  call_status: null
+                  tracking_source: "611555782855"
+                  caller_name: null
+                  comments: null
+                  call_was_recorded: "<audio preload='none' controls><source src='portal.avanser.com/audio/555/65570421/in/rec.6900-2018-08-29-1033-115.wav' type='audio/wav'></audio>"
+                  duration: null
+                  timestamp: 1545608100
+                  third_party_id: "50114777"
+                  note_count: null
+                  is_overriden: false
+                  type: "call"
+                  service_lead_id: "91555"
+                  service_id: "69"
+                  service_name: "Call Tracking"
+                  end_customer_id: null
+                  visibility: "Visible"
+                  quality: null
+                  status: null
+                  first_name: null
+                  last_name: null
+                  address_1: null
+                  address_2: null
+                  city: null
+                  state: "NSW"
+                  zip: null
+                  deal_amount: null
+                  source_name: null
+                  source_type: null
+                  client_name: "Destination Mark"
+                  client_reporting_status: "active"
+                  client_billing_id: ""
+                  client_additional_details_1: ""
+                  client_additional_details_2: ""
+                  client_additional_details_3: ""
+                  client_crm_id: ""
+                  customer_name: null
+                  client_name_value: null
+                  client_name_value_id: null
+                  client_name_tag: "No Tag"
+                  client_name_color: null
+                  client_name_tag_id: null
+                  customer_number_value: null
+                  customer_number_value_id: null
+                  customer_number_tag: "No Tag"
+                  customer_number_color: null
+                  customer_number_tag_id: null
+                  customer_email_value: null
+                  customer_email_value_id: null
+                  customer_email_tag: "No Tag"
+                  customer_email_color: null
+                  customer_email_tag_id: null
+                  tracking_source_value: null
+                  tracking_source_value_id: null
+                  tracking_source_tag: "No Tag"
+                  tracking_source_color: null
+                  tracking_source_tag_id: null
+                  row_grouping_count: "1"
+                  formatted_customer_number: "555-555-0229"
+                  formatted_timestamp: "Jan 11, 2017 12:00 AM"
+                  has_history: false
+                  visibility_display: "Visible"
+                  tags: [ ]
                 error: false
                 warnings: []
                 status: 200
@@ -1506,7 +1507,7 @@ paths:
       description: This returns a specific role (*role_id*) that can be assigned to a user.
       
       
-        **Note&#58;** that if the path parameter *role_id* is omitted, this will return a list of all the roles in the instance.
+        **Note&#58;** that if the path parameter *role_id* is omitted, this will return a list of all the roles in the instance (in the response, the "data" field will be an array of role objects).
       parameters:
         - in: path
           name: /role_id
@@ -1585,14 +1586,14 @@ paths:
                 $ref: '#/components/schemas/response_200_roles'
               example:
                 data:
-                  - id: 2
-                    name: "Sales"
-                    role_type: "io_tool"
-                    cluster_id: null
-                    row_grouping_count: 1
-                    can_be_edited: true
-                    can_be_deleted: false
-                    can_be_cloned: false
+                  id: 2
+                  name: "Sales"
+                  role_type: "io_tool"
+                  cluster_id: null
+                  row_grouping_count: 1
+                  can_be_edited: true
+                  can_be_deleted: false
+                  can_be_cloned: false
                 error: false
                 warnings: []
                 status: 200
@@ -1627,7 +1628,7 @@ paths:
         This returns a specific service (*service_id*) in the instance. This can be helpful to find out if such is connected or not.
         
         
-        **Note&#58;** that if the path parameter *service_id* is omitted, this will return a list of all the services available in the instance, whether they're connected or not.
+        **Note&#58;** that if the path parameter *service_id* is omitted, this will return a list of all the services available in the instance, whether they're connected or not (in the response, the "data" field will be an array of service objects).
       parameters:
         - in: path
           name: /service_id
@@ -1705,30 +1706,30 @@ paths:
                 $ref: '#/components/schemas/response_200_services'
               example:
                 data:
-                  - service_id: 44
-                    name: "Facebook Insights"
-                    original_name: "Facebook Insights"
-                    datamodel: "info/shoutletfbcgn"
-                    parsemodel: "fetcher/vendor_facebook_insights_parser"
-                    api: "1"
-                    use_id: "0"
-                    use_oauth: "1"
-                    label: ""
-                    model: "facebook"
-                    avg: "0"
-                    trend: "0"
-                    sort_order: "0"
-                    active: true
-                    active_in_development: true
-                    active_in_production: true
-                    has_margin: false
-                    color: "#4183c4"
-                    custom_color: null
-                    custom_icon: null
-                    child_of_service_id: null
-                    preferred: "0"
-                    is_connected: true
-                    service_icon: "facebook"
+                  service_id: 44
+                  name: "Facebook Insights"
+                  original_name: "Facebook Insights"
+                  datamodel: "info/shoutletfbcgn"
+                  parsemodel: "fetcher/vendor_facebook_insights_parser"
+                  api: "1"
+                  use_id: "0"
+                  use_oauth: "1"
+                  label: ""
+                  model: "facebook"
+                  avg: "0"
+                  trend: "0"
+                  sort_order: "0"
+                  active: true
+                  active_in_development: true
+                  active_in_production: true
+                  has_margin: false
+                  color: "#4183c4"
+                  custom_color: null
+                  custom_icon: null
+                  child_of_service_id: null
+                  preferred: "0"
+                  is_connected: true
+                  service_icon: "facebook"
                 error: false
                 warnings: []
                 status: 200                  
@@ -1756,7 +1757,13 @@ paths:
       tags:
         - SERVICES (DATA SOURCES)
       summary: Data for a service
-      description: This returns the column metadata for a specific field of a specific service.
+      description: This returns the data for a specific service. This API call should utilize as many query parameters as needed to obtain the specific data available for a certain data view.
+      
+      
+        Please refer to the <a href="#tag/EXAMPLES">Examples</a> section for more specific use cases. 
+      
+        
+        **Note&#58;** the fields listed in the response example may differ depending on the service (data-source) the user is trying to pull the data from.   
       parameters:
         - in: path
           name: /id
@@ -1890,32 +1897,51 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/response_200_servicesdataview'
-              # This is an example for /services/id/data  
-              # example:
-              #   data:
-              #     customer_id: 7
-              #     campaign: 27
-              #     column1: "JL Ads"
-              #     column2: "Keebler, Windler and Yundt"
-              #     column3: "Durango"
-              #     column4: "Dodge"
-              #     AVG(score): 0.0000
-              #     client_name: "JL Ads"
-              #     _client_city: ""
-              #     _client_state: ""
-              #     _client_zip_code: ""
-              #     client_reporting_status: "active"
-              #     client_billing_id: ""
-              #     client_additional_details_1: ""
-              #     client_additional_details_2: ""
-              #     client_additional_details_3: ""
-              #     client_crm_id: ""
-              #     _client_cluster_name: null
-              #     _client_account_manager: null
-              #     _client_category: null
-              #   error: false
-              #   warnings: []
-              #   status: 200
+              example:
+                data:
+                  - customer_id: "234"
+                    campaign_id: "1"
+                    campaign_name: "Intro to Email Tool"
+                    subtype: null
+                    subject: "Read My Blog"
+                    type: "BATCH_EMAIL"
+                    ViewEvents: "<span class='button-group'><a href='#/service/details/172/event/1' clasS='button-second'>View Event</a></span>"
+                    client_name: "HubS Email Campaign - September 30 2017"
+                    _client_city: ""
+                    _client_state: ""
+                    _client_zip_code: ""
+                    client_reporting_status: "active"
+                    client_billing_id: ""
+                    client_additional_details_1: ""
+                    client_additional_details_2: ""
+                    client_additional_details_3: ""
+                    client_crm_id: ""
+                    _client_cluster_name: null
+                    _client_account_manager: null
+                    _client_category: null
+                  - customer_id: "234"
+                    campaign_id: "2"
+                    campaign_name: "Test Notification"
+                    subtype: null
+                    subject: "It's ok to say I don't know"
+                    type: "AUTOMATED_EMAIL"
+                    ViewEvents: "<span class='button-group'><a href='#/service/details/173/event/7' clasS='button-second'>View Event</a></span>"
+                    client_name: "HubS Email Campaign - August 15 2017"
+                    _client_city: ""
+                    _client_state: ""
+                    _client_zip_code: ""
+                    client_reporting_status: "active"
+                    client_billing_id: ""
+                    client_additional_details_1: ""
+                    client_additional_details_2: ""
+                    client_additional_details_3: ""
+                    client_crm_id: ""
+                    _client_cluster_name: null
+                    _client_account_manager: null
+                    _client_category: null
+                error: false
+                warnings: []
+                status: 200
         '400':
           description: Error on client's side
           content:
@@ -1943,7 +1969,7 @@ paths:
       description: This returns general information regarding a Service (*id*).
         
         
-        **Note&#58;** that if the path parameter *id* is omitted, this will return a list of all the information of all services.
+        **Note&#58;** that if the path parameter *id* is omitted, this will return a list of all the information of all services (in the response, the "data" field will be an array of infoService objects).
       parameters:
         - in: path
           name: /id
@@ -1964,7 +1990,7 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/response_200_servicesinfo'
+                $ref: '#/components/schemas/response_200_infoservices'
               example:
                 data:
                   id: 1
@@ -2013,7 +2039,7 @@ paths:
       description: This returns an order item (*order_item_id*).
           
           
-        **Note&#58;** that if the path parameter *order_item_id* is omitted, this will return a list of all the order items in the instance.
+        **Note&#58;** that if the path parameter *order_item_id* is omitted, this will return a list of all the order items in the instance (in the response, the "data" field will be an array of orderItem objects).
       parameters:
         - in: path
           name: /order_item_id
@@ -2091,14 +2117,14 @@ paths:
                 $ref: '#/components/schemas/response_200_servicesorderitem'
               example:
                 data:
-                  - id: 2
-                    service_id: 45
-                    customer_id: 5
-                    item_id: 3
-                    mapping_date: "Sept 25, 20187"
-                    connection_setting_id: 3
-                    first_level_mapping: 3
-                    second_level_mapping: ""
+                  id: 2
+                  service_id: 45
+                  customer_id: 5
+                  item_id: 3
+                  mapping_date: "Sept 25, 2018"
+                  connection_setting_id: 3
+                  first_level_mapping: 3
+                  second_level_mapping: ""
                 error: false
                 warnings: []
                 status: 200
@@ -2130,7 +2156,7 @@ paths:
       description: This returns a specific User (*user_id*).
       
       
-        **Note&#58;** if the path parameter *user_id* is omitted, this will return all the Users in the instance.
+        **Note&#58;** if the path parameter *user_id* is omitted, this will return all the Users in the instance (in the response, the "data" field will be an array of user objects).
       parameters:
         - in: path
           name: /user_id
@@ -2209,47 +2235,47 @@ paths:
                 $ref: '#/components/schemas/response_200_users'
               example:
                 data:
-                  - id: 1
-                    client_id: null
-                    user_type: "superadmin"
-                    company_name: null
-                    first_name: "Jack"
-                    last_name: "Smith"
-                    address_1: ""
-                    address_2: ""
-                    city: ""
-                    state: ""
-                    zip: ""
-                    phone: ""
-                    email: "jsmith@jpmarketing.com"
-                    cluster_id: null
-                    external_user_id: ""
-                    additional_details_1: ""
-                    additional_details_2: ""
-                    additional_details_3: ""
-                    enable_io_tool_module: true
-                    enable_lead_management_module: false
-                    has_light_logo: false
-                    has_dark_logo: false
-                    override_dashboard_pages_from_reporting_profile: false
-                    default_home_page: null
-                    io_tool_notification_frequency: null
-                    country: ""
-                    timezone: "default"
-                    status: "active"
-                    hipaa_acknowledgement_timestamp: null
-                    creation_time: 1540403488
-                    show_services_overview: "default"
-                    show_categories_overview: "default"
-                    role_id: null
-                    io_tool_role_id: 6
-                    client_group_id: null
-                    reporting_profile_id: 8
-                    user_type_display: "Super Admin"
-                    country_display: ""
-                    timezone_display: "default"
-                    status_display: "active"
-                    formatted_creation_time: "Sept 24, 2018 2:14 PM"
+                  id: 1
+                  client_id: null
+                  user_type: "superadmin"
+                  company_name: null
+                  first_name: "Jack"
+                  last_name: "Smith"
+                  address_1: ""
+                  address_2: ""
+                  city: ""
+                  state: ""
+                  zip: ""
+                  phone: ""
+                  email: "jsmith@jpmarketing.com"
+                  cluster_id: null
+                  external_user_id: ""
+                  additional_details_1: ""
+                  additional_details_2: ""
+                  additional_details_3: ""
+                  enable_io_tool_module: true
+                  enable_lead_management_module: false
+                  has_light_logo: false
+                  has_dark_logo: false
+                  override_dashboard_pages_from_reporting_profile: false
+                  default_home_page: null
+                  io_tool_notification_frequency: null
+                  country: ""
+                  timezone: "default"
+                  status: "active"
+                  hipaa_acknowledgement_timestamp: null
+                  creation_time: 1540403488
+                  show_services_overview: "default"
+                  show_categories_overview: "default"
+                  role_id: null
+                  io_tool_role_id: 6
+                  client_group_id: null
+                  reporting_profile_id: 8
+                  user_type_display: "Super Admin"
+                  country_display: ""
+                  timezone_display: "default"
+                  status_display: "active"
+                  formatted_creation_time: "Sept 24, 2018 2:14 PM"
                 error: false
                 warnings: []
                 status: 200 
@@ -3298,8 +3324,8 @@ components:
           
 
             
-# --------------- Simple Service (Data Sources) Model -----------------  
-    simpleService:
+# --------------- Service (Data Sources) Model -----------------  
+    service:
       type: object
       properties:
         service_id:
@@ -3375,8 +3401,8 @@ components:
           type: string
           description: Service icon
             
-# --------------- Service Information (Data Sources) Model -----------------
-    serviceInfo:
+# --------------- Information about Service (Data Sources) Model -----------------
+    infoService:
       type: object
       properties:
         id:
@@ -3430,163 +3456,71 @@ components:
                   type: string
                   description: Properties 
                   
-# --------------- ServiceDataViewField (Data Sources) Model -----------------                  
-    serviceDataViewField:
+# --------------- ServiceDataView (Data Sources) Model -----------------                  
+    serviceDataView:
       type: object
       properties: 
-        is_href:
-          type: string
-        callback_fn:
-          type: string
-        is_callback_only:
-          type: string
-        extra_settings:
-          type: string
-        sub_columns:
-          type: string
-        attribute_for_categories:
-          type: string
-        field:
-          type: string
-        label:
-          type: string
-        format:
-          type: string
-        values:
-          type: array
-          items: 
-            type: string
-        has_set_values:
-          type: boolean
-        value_data_source_type:
-          type: string
-        order: 
+        customer_id:
           type: integer
-        summary_order:
+          description: Customer Id
+        campaign_id:
           type: integer
-        sortable: 
-          type: boolean
-        custom_sort:
+          description: Campaign Id
+        campaign_name:
           type: string
-        tooltip: 
+          description: Campaign name
+        subtype:
           type: string
-        placeholder:
+          description: Subtype
+        subject:
           type: string
-        custom_error_ms:
+          description: Subject
+        type: 
           type: string
-        preprocess_type:
+          description: Type
+        ViewEvents:
           type: string
-        postprocess_type:
+          description: View Events
+        client_name:
           type: string
-        edit_control_type: 
+          description: Client name
+        _client_city:
           type: string
-        is_custom_edit_control:
-          type: boolean
-        ignore_save:
-          type: boolean
-        ignore_set_data:
-          type: boolean
-        is_unique: 
-          type: boolean
-        is_required: 
-          type: boolean
-        is_read_only: 
-          type: boolean
-        is_selectable:
-          type: boolean
-        allows_null_value: 
-          type: boolean
-        return_null_values:
-          type: boolean
-        is_summary: 
-          type: boolean
-        is_hidden: 
-          type: boolean
-        is_hidden_in_details: 
-          type: boolean
-        is_primary_key: 
-          type: boolean
-        is_primary_name_field: 
-          type: boolean
-        is_primary_date_field: 
-          type: boolean
-        is_foreign_key: 
-          type: boolean
-        is_foreign_field: 
-          type: boolean
-        foreign_mapping: 
+          description: Client city
+        _client_state:
           type: string
-        alternate_field: 
+          description: Client state
+        _client_zip_code:
           type: string
-        field_alias:
+          description: Client zip code/postal code
+        client_reporting_status:
           type: string
-        is_pseudo:
-          type: boolean
-        is_helper:
-          type: boolean
-        is_virtual:
-          type: boolean
-        is_extra:
-          type: boolean
-        is_api_safe:
-          type: boolean
-        is_groupable:
-          type: boolean
-        is_filterable:
-          type: boolean
-        groupby_id_field:
+          description: Client reporting status
+        client_billing_id:
+          type: integer
+          description: Client billing Id
+        client_additional_details_1:
           type: string
-        groupby_name_field:
+          description: Client additional details 1
+        client_additional_details_2:
           type: string
-        groupby_field_format:
+          description: Client additional details 2
+        client_additional_details_3:
           type: string
-        is_groupby_name_field:
-          type: boolean
-        show_on_group_by:
-          type: boolean
-        query:
+          description: Client additional details 3
+        client_crm_id:
+          type: integer
+          description: Client CRM Id
+        _client_cluster_name:
           type: string
-        aggregate_query:
+          description: Client cluster name
+        _client_account_manager:
           type: string
-        table_relationship:
+          description: Client account manager
+        _client_category:
           type: string
-        table_prefix: 
-          type: string
-        is_metric:
-          type: boolean
-        is_numeric:
-          type: boolean
-        precision: 
-          type: string          
-        is_required_field:
-          type: boolean
-        extra_parameters:       
-          type: array
-          items:
-            type: string
-        force_in_select:
-          type: boolean
-        is_private:
-          type: boolean
-        enable_history:
-          type: boolean
-        is_taggable:
-          type: boolean
-        tag_default_value:
-          type: string
-        custom_distinct_values: 
-          type: string
-        is_naming_convention_identifier:
-          type: boolean
-        error:
-          type: boolean
-        owa_field_alias:
-          type: string
-        dependencies: 
-          type: array
-          items:
-            type: string
-            
+          description: Client Category
+          
               
 
 # --------------- DataView Result Model ----------------- 
@@ -3997,7 +3931,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/cluster'
         error:
           type: boolean
@@ -4015,7 +3948,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/category'
         error:
           type: boolean
@@ -4033,7 +3965,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/client'
         error:
           type: boolean
@@ -4072,8 +4003,9 @@ components:
       type: object
       properties:
         data:
-          type: object
-          $ref: '#/components/schemas/clientCategory'
+          type: array
+          items:
+            $ref: '#/components/schemas/clientCategory'
         error:
           type: boolean
           description: Error
@@ -4090,7 +4022,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/clientGroup'
         error:
           type: boolean
@@ -4108,7 +4039,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/dataProfile'
         error:
           type: boolean
@@ -4126,8 +4056,9 @@ components:
       type: object
       properties:
         data:
-          type: object
-          $ref: '#/components/schemas/dataType'
+          type: array
+          items:
+            $ref: '#/components/schemas/dataType'
         error:
           type: boolean
           description: Error
@@ -4144,7 +4075,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/dateRange'
         error:
           type: boolean
@@ -4162,8 +4092,9 @@ components:
       type: object
       properties:
         data:
-          type: object
-          $ref: '#/components/schemas/language'
+          type: array
+          items:
+           $ref: '#/components/schemas/language'
         error:
           type: boolean
           description: Error
@@ -4180,7 +4111,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/lead'
         error:
           type: boolean
@@ -4198,7 +4128,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/role'
         error:
           type: boolean
@@ -4216,8 +4145,7 @@ components:
       type: object
       properties:
         data:
-          type: object
-          $ref: '#/components/schemas/simpleService'
+          $ref: '#/components/schemas/service'
         error:
           type: boolean
           description: Error
@@ -4234,11 +4162,9 @@ components:
       type: object
       properties:
         data:
-          type: object
-          # IMPORTANT:
-          # this reference Model is incorrect, please create a new Model once
-          # you can test the response
-          $ref: '#/components/schemas/serviceDataViewField'
+          type: array
+          items:
+            $ref: '#/components/schemas/serviceDataView'
         error:
           type: boolean
           description: Error
@@ -4251,12 +4177,11 @@ components:
           type: integer
           description: Status
           
-    response_200_servicesinfo:
+    response_200_infoservices:
       type: object
       properties:
         data:
-          type: object
-          $ref: '#/components/schemas/serviceInfo'
+          $ref: '#/components/schemas/infoService'
         error:
           type: boolean
           description: Error
@@ -4273,7 +4198,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/orderItem'
         error:
           type: boolean
@@ -4291,7 +4215,6 @@ components:
       type: object
       properties:
         data:
-          type: object
           $ref: '#/components/schemas/user'
         error:
           type: boolean
