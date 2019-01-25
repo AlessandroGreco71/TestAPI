@@ -106,7 +106,7 @@ tags:
       | **6. Get campaign level data paginated and grouped yearly**                           | 
       | https://api.tapclicks.com/v2/services/{id}/data/cgn?page=0,10&timegrouping=yearly     | 
       | **7. Get certain metrics only**                                                       | 
-      | https://api.tapclicks.com/v2/services/{id}/data/cgn?page=0,10&groupby=customer_id&fields=customer_id,row_count,CTR,AverageCPC,ClickCount&sort=customer_id                                 | 
+      | https://api.tapclicks.com/v2/services/{id}/data/cgn?page=0,10&groupby=customer_id&fields=customer_id,CTR,AverageCPC,ClickCount&sort=customer_id                                 | 
       
       
   
@@ -2428,130 +2428,6 @@ paths:
 
 # ---------------- QUERY PARAMETERS ------------------------
 components:
-  parameters:
-    metadata:  
-      in: query
-      name: metadata
-      required: false
-      schema:
-        type: integer
-        enum: [0,1]
-      description: The API will provide more or all the info for the available fields.
-      example: https://api.tapclicks.com/v2/services/34?metadata=1
-
-    page:
-      in: query
-      name: page
-      required: false
-      schema:
-        type: string
-      description: The example will return the first five records
-        
-        
-        This will limit the number of rows in the fetch result
-      example: https://api.tapclicks.com/v2/34/data/cgn?page=0,5
-        
-    groupby:
-      in: query
-      name: groupby
-      required: false
-      schema:
-        type: string
-      description: The results will be grouped based on the provided field
-      example: https://api.tapclicks.com/v2/services?groupby=name,customer_id
-      
-    timegrouping:
-      in: query
-      name: timegrouping
-      required: false
-      schema:
-        type: string
-        enum: [yearly,monthly,weekly,daily,hourly]
-      description: The results will be narrowed within the specified timegroup
-      example: https://[...]/v2/services/34/data/cgn=?timegrouping=weekly
-      
-    aggregate:
-      in: query
-      name: aggregate
-      required: false
-      schema:
-        type: boolean
-      description: The results will be the aggregated value of each field
-      example: https://api.tapclicks.com/v2/services/34/data/cgn?aggregate=true
-      
-    fields:
-      in: query
-      name: fields
-      required: false
-      schema:
-        type: string
-      description: This will filter the result data with the specific fields.
-      
-      
-        **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
-      example: https://api.tapclicks.com/v2/34/data/cgn?fields=CTR,ClickCount
-      
-    sort:
-      in: query
-      name: sort
-      required: false
-      schema: 
-        type: string
-      description: Ascending by default; prefix **-** for descending
-      
-      
-        This will sort the results based on the specific field and sort order.
-      example: https://api.tapclicks.com/v2/34/data/cgn?sort=-ClickCount
-      
-    count:
-      in: query
-      name: count
-      required: false
-      schema:
-        type: integer
-        enum: [0,1]
-      description: The API will provide a total number of records in the result
-      example: http://api.tapclicks.com/34/data/cgn?count=1
-      
-    row_count:
-      in: query
-      name: row_count
-      required: false
-      schema:
-        type: string
-      description: Passing **row_count** along with the list of fields will provide grouped result and row count on each group
-      example: https://[...]/cgn=?groupby=campaign_id&fields=ClickCount,row_count
-      
-    daterange:
-      in: query
-      name: daterange
-      required: false
-      schema:
-        type: string
-      description: This filters the result between the given date range
-      example: https://[...]/cgn?daterange=2018-06-02|2018-10-22
-      
-    nested:
-      in: query
-      name: nested
-      required: false
-      schema:
-        type: integer
-        enum: [0,1]
-      description: Fetch grouped data that nested based on the groupby expression
-      example: https://[...]/cgn?groupby=campaign_name&nested=1
-      
-    field_data_filter:
-      in: query
-      name: field data filter
-      required: false
-      schema:
-        type: string
-      description: This will filter the data that contains only specific values.
-      
-      
-        To remove items use **!** before the value.
-      example: https://[...]/cgn?customer_id=4,!3,8
 
 
   schemas:
