@@ -135,7 +135,7 @@ paths:
                     type: array
                     description: Warnings
                     items:
-                      type: integer
+                      type: string
                   status:
                     type: integer
                     description: Status
@@ -252,12 +252,12 @@ paths:
                 $ref: '#/components/schemas/response_200_clusters'
               example:
                 data:
-                  id: 1
+                  id: "1"
                   name: "West Coast Unit"
                   has_light_logo: false
                   has_dark_logo: false
                   external_cluster_id: ""
-                  enable_inventory_group: false
+                  is_cluster_group: false
                   status: "active"
                   status_display: "Active"
                 error: false
@@ -499,7 +499,7 @@ paths:
                 $ref: '#/components/schemas/response_200_clients'
               example:
                 data:
-                  id: 1,
+                  id: "1"
                   company_name: "JP Marketing"
                   first_name: "Jack"
                   last_name: "Smith"
@@ -601,7 +601,7 @@ paths:
                 $ref: '#/components/schemas/response_200_new_edit_client_user'
               example:
                 data:
-                  id: 35
+                  id: "35"
                 error: false
                 warnings: []
                 status: 200
@@ -657,7 +657,7 @@ paths:
                 $ref: '#/components/schemas/response_200_new_edit_client_user'
               example:
                 data:
-                  id: 35
+                  id: "35"
                 error: false
                 warnings: []
                 status: 200
@@ -742,45 +742,45 @@ paths:
                 $ref: '#/components/schemas/response_200_clientcategories'
               example:
                 data:
-                  - id: 1
+                  - id: "1"
                     name: "General"
-                  - id: 2
+                  - id: "2"
                     name: "Wholesale"
-                  - id: 3
+                  - id: "3"
                     name: "Retailer"
-                  - id: 4
+                  - id: "4"
                     name: "Restaurants"
-                  - id: 5
+                  - id: "5"
                     name: "Auto Dealerships"
-                  - id: 6
+                  - id: "6"
                     name: "Arts & Entertainment"
-                  - id: 7
+                  - id: "7"
                     name: "Automotive"
-                  - id: 8
+                  - id: "8"
                     name: "Beauty & Fitness" 
-                  - id: 9
+                  - id: "9"
                     name: "Community, Clubs & Organizations"
-                  - id: 10
+                  - id: "10"
                     name: "Computers & Electronics"
-                  - id: 11
+                  - id: "11"
                     name: "Education"
-                  - id: 12
+                  - id: "12"
                     name: "Food & Dining"
-                  - id: 13
+                  - id: "13"
                     name: "Health Care"
-                  - id: 14
+                  - id: "14"
                     name: "Home & Garden"
-                  - id: 15
+                  - id: "15"
                     name: "Real Estate & Rentals"
-                  - id: 16
+                  - id: "16"
                     name: "Recreation & Sporting Goods"
-                  - id: 17
+                  - id: "17"
                     name: "Travel & Accomodations"
-                  - id: 18
+                  - id: "18"
                     name: "Services"
-                  - id: 20
+                  - id: "20"
                     name: "Home Applicances"
-                  - id: 21
+                  - id: "21"
                     name: "Agricultural"
                 error: false
                 warnings: []
@@ -902,7 +902,7 @@ paths:
                   updated_at: 1540404023
                   formatted_created_at: "Oct 24, 2018 6:00 PM"
                   formatted_updated_at: "Oct 24, 2018 6:00 PM"
-                  client_ids: [1]
+                  client_ids: ["1"]
                 error: false
                 warnings: []
                 status: 200
@@ -1013,7 +1013,7 @@ paths:
                 $ref: '#/components/schemas/response_200_dataprofiles'
               example:
                 data:
-                  id: 1
+                  id: "1"
                   name: "Default Profile"
                   created_at: 1378100067
                   updated_at: 1435939300
@@ -1402,7 +1402,7 @@ paths:
               example:
                 data:
                   id: null
-                  lead_id: 329312
+                  lead_id: "329312"
                   client_id: 409
                   campaign_id: "51"
                   campaign_name: "Destination Carins Marketing"
@@ -1586,14 +1586,13 @@ paths:
                 $ref: '#/components/schemas/response_200_roles'
               example:
                 data:
-                  id: 2
+                  id: "2"
                   name: "Sales"
                   role_type: "io_tool"
                   cluster_id: null
-                  row_grouping_count: 1
-                  can_be_edited: true
-                  can_be_deleted: false
-                  can_be_cloned: false
+                  reporting_template_ids: ["1"]
+                  manage_dashboard: false
+                  can_manage_alerts: false
                 error: false
                 warnings: []
                 status: 200
@@ -1706,7 +1705,7 @@ paths:
                 $ref: '#/components/schemas/response_200_services'
               example:
                 data:
-                  service_id: 44
+                  service_id: "44"
                   name: "Facebook Insights"
                   original_name: "Facebook Insights"
                   datamodel: "info/shoutletfbcgn"
@@ -1993,8 +1992,8 @@ paths:
                 $ref: '#/components/schemas/response_200_infoservices'
               example:
                 data:
-                  id: 1
-                  service_id: 110
+                  id: "1"
+                  service_id: "110"
                   connect_steps: null
                   categories: "display, demand side platform (dsp), ad server, yield management tools, programmatic"
                   keywords: "ad serving, advertising technology, ad operations, demand-side platform"
@@ -2117,13 +2116,13 @@ paths:
                 $ref: '#/components/schemas/response_200_servicesorderitem'
               example:
                 data:
-                  id: 2
-                  service_id: 45
-                  customer_id: 5
-                  item_id: 3
+                  id: "2"
+                  service_id: "45"
+                  customer_id: "5"
+                  item_id: "3"
                   mapping_date: "Sept 25, 2018"
-                  connection_setting_id: 3
-                  first_level_mapping: 3
+                  connection_setting_id: "3"
+                  first_level_mapping: "3"
                   second_level_mapping: ""
                 error: false
                 warnings: []
@@ -2235,7 +2234,7 @@ paths:
                 $ref: '#/components/schemas/response_200_users'
               example:
                 data:
-                  id: 1
+                  id: "1"
                   client_id: null
                   user_type: "superadmin"
                   company_name: null
@@ -2268,9 +2267,9 @@ paths:
                   show_services_overview: "default"
                   show_categories_overview: "default"
                   role_id: null
-                  io_tool_role_id: 6
+                  io_tool_role_id: "6"
                   client_group_id: null
-                  reporting_profile_id: 8
+                  reporting_profile_id: "8"
                   user_type_display: "Super Admin"
                   country_display: ""
                   timezone_display: "default"
@@ -2342,7 +2341,7 @@ paths:
                 $ref: '#/components/schemas/response_200_new_edit_client_user'
               example:
                 data:
-                  id: 35
+                  id: "35"
                 error: false
                 warnings: []
                 status: 200  
@@ -2375,7 +2374,7 @@ paths:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
-              $ref: "#/components/schemas/user"
+              $ref: "#/components/schemas/createUser"
             examples:
               '0':
                 value: |-
@@ -2403,7 +2402,7 @@ paths:
                 $ref: '#/components/schemas/response_200_new_edit_client_user'
               example:
                 data:
-                  id: 35
+                  id: "35"
                 error: false
                 warnings: []
                 status: 200
@@ -2436,7 +2435,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Business Unit Id
         name:
           type: string
@@ -2448,7 +2447,7 @@ components:
           type: boolean
           description: Has dark logo
         external_cluster_id:
-          type: integer
+          type: string
           description: External Business Unit Id
         enable_inventory_calendar:
           type: boolean
@@ -2473,7 +2472,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Channel Id
         name:
           type: string
@@ -2568,13 +2567,13 @@ components:
           type: string
           description: Website
         account_manager_user_id:
-          type: integer
+          type: string
           description: Account Manager User Id
         crm_id:
-          type: integer
+          type: string
           description: CRM Id
         billing_id:
-          type: integer
+          type: string
           description: Billing Id
         additional_details_1:
           type: string
@@ -2593,16 +2592,16 @@ components:
           type: string
           description: Report language
         source_service_id:
-          type: integer
+          type: string
           description: Source service Id
         cluster_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Client's-Categories">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
@@ -2620,7 +2619,7 @@ components:
         client_group_ids:
           type: array
           items: 
-            type: integer
+            type: string
             description: Please refer to <a href="#tag/Client-Group">Client Group</a> to obtain all existing Client Group Ids
         activate_tapleads:
           type: boolean
@@ -2631,7 +2630,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Client Id
         company_name:
           type: string
@@ -2673,7 +2672,7 @@ components:
           type: string
           description: Website
         account_manager_user_id:
-          type: integer
+          type: string
           description: Account Manager User Id
         has_light_logo:
           type: boolean
@@ -2684,10 +2683,10 @@ components:
           default: false
           description: Has dark logo
         crm_id:
-          type: integer
+          type: string
           description: CRM Id
         billing_id:
-          type: integer
+          type: string
           description: Billing Id
         additional_details_1:
           type: string
@@ -2703,7 +2702,7 @@ components:
           default: false
           description: Enable Lead Management Module
         created_by_user_id:
-          type: integer
+          type: string
           description: Created by User Id; please refer to <a href="#tag/Users">User Id</a> to obtain all existing User Ids
         created_by_user:
           type: string
@@ -2712,7 +2711,7 @@ components:
           type: string
           description: Report language (if available)
         source_service_id:
-          type: integer
+          type: string
           description: Source service Id
         creation_time:
           type: integer
@@ -2721,13 +2720,13 @@ components:
           type: integer
           description: Time of last modification
         cluster_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Client's-Categories">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
@@ -2751,7 +2750,7 @@ components:
         client_group_ids:
           type: array
           items: 
-            type: integer
+            type: string
             description: Please refer to <a href="#tag/Client-Group">Client Group</a> to obtain all existing Client Group Ids
         activate_tapleads:
           type: boolean
@@ -2771,7 +2770,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Client Category Id
         name:
           type: string
@@ -2782,13 +2781,13 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Client Group Id
         name:
           type: string
           description: Client Group
         cluster_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
         group_type:
           type: string
@@ -2815,28 +2814,15 @@ components:
         client_ids:
           type: array
           items: 
-            type: integer
+            type: string
           description: Please refer to <a href="#tag/Clients">Clients</a> to obtain all existing Client Ids
-      example:
-        data:
-          id: "1"
-          name: "Test Unit"
-          cluster_id: null
-          group_type: "group_of_clients"
-          has_light_logo: false
-          has_dark_logo: false
-          created_at: 1540404023
-          updated_at: 1540404023
-          formatted_created_at: "Oct 24, 2018 6:00 PM"
-          formatted_updated_at: "Oct 24, 2018 6:00 PM"
-          client_ids: [1]      
   
 # --------------- Data Profile Model -----------------          
     dataProfile:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Data Profile Id
         name:
           type: string
@@ -2860,7 +2846,7 @@ components:
           type: boolean
           description: Hide adwords active
         cluster_id:
-          type: integer
+          type: string
           description: Business Unit Id
         
 # --------------- Data Type Model -----------------         
@@ -2930,16 +2916,16 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Id
         lead_id:
-          type: integer
+          type: string
           description: Lead Id
         client_id:
           type: integer
           description: Client Id
         campaign_id:
-          type: integer
+          type: string
           description: Campaign Id
         campaign_name:
           type: string
@@ -2972,7 +2958,7 @@ components:
           type: integer
           description: Timestamp - Unix Time Stamp
         third_party_id:
-          type: integer
+          type: string
           description: Third party id
         note_count:
           type: string
@@ -2984,16 +2970,16 @@ components:
           type: string
           description: Type
         service_lead_id:
-          type: integer
+          type: string
           description: Service lead Id
         service_id:
-          type: integer
+          type: string
           description: Service Id
         service_name:
           type: string
           description: Service name
         end_customer_id:
-          type: integer
+          type: string
           description: End Customer Id
         visibility:
           type: string
@@ -3041,7 +3027,7 @@ components:
           type: string
           description: string
         client_billing_id:
-          type: integer
+          type: string
           description: Client billing Id
         client_additional_details_1:
           type: string
@@ -3053,7 +3039,7 @@ components:
           type: string
           description: Client additional details 3
         client_crm_id:
-          type: integer
+          type: string
           description: client crm Id
         customer_name:
           type: string
@@ -3062,7 +3048,7 @@ components:
           type: string
           description: Client name value
         client_name_value_id:
-          type: integer
+          type: string
           description: Client name value Id
         client_name_tag:
           type: string
@@ -3071,13 +3057,13 @@ components:
           type: string
           description: Client name color
         client_name_tag_id:
-          type: integer
+          type: string
           description: Client name tag Id
         customer_number_value:
           type: string
           description: Customer number value
         customer_number_value_id:
-          type: integer
+          type: string
           description: Customer number value Id
         customer_number_tag:
           type: string
@@ -3086,13 +3072,13 @@ components:
           type: string
           description: Customer number color
         customer_number_tag_id:
-          type: integer
+          type: string
           description: Customer number tag Id
         customer_email_value:
           type: string
           description: Customer email value
         customer_email_value_id:
-          type: integer
+          type: string
           description: Customer email value Id
         customer_email_tag:
           type: string
@@ -3101,13 +3087,13 @@ components:
           type: string
           description: Customer email color
         customer_email_tag_id:
-          type: integer
+          type: string
           description: Customer email tag Id
         tracking_source_value:
           type: string
           description: Tracking source value
         tracking_source_value_id:
-          type: integer
+          type: string
           description: Tracking source value Id
         tracking_source_tag:
           type: string
@@ -3116,7 +3102,7 @@ components:
           type: string
           description: Tracking source color
         tracking_source_tag_id:
-          type: integer
+          type: string
           description: Tracking source tag Id
         row_grouping_count:
           type: string
@@ -3145,28 +3131,28 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Order item Id
         service_id:
-          type: integer
+          type: string
           description: Service Id
         customer_id:
-          type: integer
+          type: string
           description: Customer Id
         item_id:
-          type: integer
+          type: string
           description: Item Id
         mapping_date:
           type: string
           description: Mapping date
         connection_setting_id:
-          type: integer
+          type: string
           description: Connection setting Id
         first_level_mapping:
-          type: integer
+          type: string
           description: First level mapping
         second_level_mapping:
-          type: integer
+          type: string
           description: Second level mapping
 
           
@@ -3175,7 +3161,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Role Id
         name:
           type: string
@@ -3184,12 +3170,12 @@ components:
           type: string
           description: Role type
         cluster_id:
-          type: integer
+          type: string
           description: Business Unit Id
         reporting_template_ids:
           type: array
           items:
-            type: integer
+            type: string
           description: Reporting Template Ids
         manage_dashboard:
           type: boolean
@@ -3205,7 +3191,7 @@ components:
       type: object
       properties:
         service_id:
-          type: integer
+          type: string
           description: Service Id
         name:
           type: string
@@ -3265,7 +3251,7 @@ components:
           type: string
           description: Custom icon
         child_of_service_id:
-          type: integer
+          type: string
           description: Child of service Id
         preferred:
           type: string
@@ -3282,10 +3268,10 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: Id
         service_id:
-          type: integer
+          type: string
           description: Service Id
         connect_steps:
           type: string
@@ -3337,10 +3323,10 @@ components:
       type: object
       properties: 
         customer_id:
-          type: integer
+          type: string
           description: Customer Id
         campaign_id:
-          type: integer
+          type: string
           description: Campaign Id
         campaign_name:
           type: string
@@ -3373,7 +3359,7 @@ components:
           type: string
           description: Client reporting status
         client_billing_id:
-          type: integer
+          type: string
           description: Client billing Id
         client_additional_details_1:
           type: string
@@ -3385,7 +3371,7 @@ components:
           type: string
           description: Client additional details 3
         client_crm_id:
-          type: integer
+          type: string
           description: Client CRM Id
         _client_cluster_name:
           type: string
@@ -3419,7 +3405,7 @@ components:
         - reporting_profile_id
       properties:
         client_id: 
-          type: integer
+          type: string
           description: Client Id - This is **mandatory** when user_type = "client"
         user_type:
           type: string
@@ -3461,10 +3447,10 @@ components:
           type: string
           description: Password
         cluster_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all of the exisiting business unit id
         external_user_id:
-          type: integer
+          type: string
           description: External User Id
         additional_details_1:
           type: string
@@ -3513,27 +3499,27 @@ components:
           default: default
           description: Show categories overview
         role_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
         io_tool_role_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
         client_group_id:
-          type: integer
+          type: string
           description: This is mandatory when user_type = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
-          type: integer
-          default: 1
+          type: string
+          default: "1"
           description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all of the exisiting data profile id 
 # --------------- User Model (GET) -----------------    
     user:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           description: User Id
         client_id: 
-          type: integer
+          type: string
           description: Client Id - This is mandatory when user_type = "client"
         user_type:
           type: string
@@ -3572,10 +3558,10 @@ components:
           type: string
           description: Email address
         cluster_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all of the exisiting business unit id
         external_user_id:
-          type: integer
+          type: string
           description: External User Id
         additional_details_1:
           type: string
@@ -3636,16 +3622,16 @@ components:
           default: default
           description: Show categories overview
         role_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
         io_tool_role_id:
-          type: integer
+          type: string
           description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
         client_group_id:
-          type: integer
+          type: string
           description: This is mandatory when user_type = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
-          type: integer
+          type: string
           default: 1
           description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all of the exisiting data profile id
         user_type_display: 
@@ -3861,7 +3847,7 @@ components:
           type: object
           properties:
             id:
-              type: integer
+              type: string
               description: Id
         error:
           type: boolean
