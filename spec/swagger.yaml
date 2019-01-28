@@ -587,7 +587,7 @@ paths:
 
                   {
                   "company_name": "JP Marketing",
-                  "default_reporting_profile_id": 1,
+                  "default_reporting_profile_id": "1",
                   "reporting_status": "pending_mapping",
                   "iotool_status": "presale"
                   }
@@ -643,7 +643,7 @@ paths:
 
                   {
                   "company_name": "JP Marketing",
-                  "default_reporting_profile_id": 1,
+                  "default_reporting_profile_id": "1",
                   "reporting_status": "pending_mapping",
                   "iotool_status": "presale"
                   }
@@ -2326,9 +2326,9 @@ paths:
                   "password": "user1234",
                   "first_name": "John",
                   "last_name": "Doe",
-                  "reporting_profile_id": 1,
-                  "client_group_id": 1,
-                  "role_id": 1,
+                  "reporting_profile_id": "1",
+                  "client_group_id": "1",
+                  "role_id": "1",
                   "status": "active"
                   }
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
@@ -2383,13 +2383,13 @@ paths:
 
                   {
                   "user_type": "agent",
-                  "email": "TestingFromSwaggerInsp@email.com",
+                  "email": "user@email.com",
                   "password": "user1234",
                   "first_name": "John",
                   "last_name": "Doe",
-                  "reporting_profile_id": 1,
-                  "client_group_id": 1,
-                  "role_id": 1,
+                  "reporting_profile_id": "1",
+                  "client_group_id": "1",
+                  "role_id": "1",
                   "status": "active"
                   }
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
@@ -3632,7 +3632,7 @@ components:
           description: This is mandatory when user_type = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
           type: string
-          default: 1
+          default: "1"
           description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all of the exisiting data profile id
         user_type_display: 
           type: string
@@ -3640,12 +3640,18 @@ components:
           description: User type display
         default_home_page_display:
           type: string
-          description: Default Home Page Display - This field will be returned only if the value is set
+          description: Default Home Page Display
+          
+          
+            **Note&#58;**This field will be returned only if the field *default_home_page* is set
         io_tool_notification_frequency_display:
           type: string
           enum: [Never,Real-time]
           default: null
           description: IOTool notification frequency display 
+          
+          
+            **Note&#58;** This field will be returned only if the field *io_tool_notification_frequency* is set
         country_display:
           type: string
           description: Country display
