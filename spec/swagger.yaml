@@ -4107,15 +4107,15 @@ components:
         
         As a first step, you can request your OAuth client credentials by sending an email to api-developer@tapclicks.com.<br>
         You will need to provide a valid and active TapClicks account *email address* and the complete domain name that you have access to (*https://<span></span>your_instance.tapclicks.com*).<br>
-        This request will be answered by assigning to you a unique Client ID (`<client_id>`) and a unique Client Secret (`<client_secret>`). Make sure to store your Client Secret securely.
+        This request will be answered by assigning to you a unique Client Id (`CLIENT_ID`) and a unique Client Secret (`CLIENT_SECRET`). Make sure to store your Client Secret securely.
 
-        This set of values will allow you to obtain an Access Token (`<access_token>`) that will grant you access to the API.
+        This set of values will allow you to obtain an Access Token (`ACCESS_TOKEN`) that will grant you access to the API.
         
         **To obtain the Access Token:**
 
         ```
         curl -X POST \
-        -d "client_id=<client_id>&client_secret=<client_secret>&grant_type=client_credentials" \
+        -d "client_id=CLIENT_ID&client_secret=CLIENT_SECRET&grant_type=client_credentials" \
         "https://api.tapclicks.com/oauth/accesstoken"
         
         ```
@@ -4127,7 +4127,7 @@ components:
         
         ```
         curl -X GET https://api.tapclicks.com/v2/ \
-        -H "Authorization: Bearer <access_token>"
+        -H "Authorization: Bearer ACCESS_TOKEN"
         
         ```
         
@@ -4136,7 +4136,7 @@ components:
         
         ```
         curl -X POST -d \
-        "client_id=<client_id>&client_secret=<client_secret>&grant_type=client_credentials" \
+        "client_id=CLIENT_ID&client_secret=CLIENT_SECRET&grant_type=client_credentials" \
         "https://api.tapclicks.com/oauth/refresh_accesstoken"
         
         ```
