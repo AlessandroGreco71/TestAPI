@@ -68,7 +68,7 @@ tags:
   - name: CHANNELS
     description: A way to bring in metrics from multiple data sources and show the performance of your campaign across these data sources.
   - name: CLIENTS
-    description: Refers to the Clients in the instance.
+    description: Clients in the instance.
   - name: CLIENT'S CATEGORIES
     description: Refers to the categories that be assigned to a Client (For example&#58; Services, Automotive, Retailer, Restaurant...).
   - name: CLIENT GROUPS
@@ -1275,7 +1275,7 @@ paths:
       description: This returns a specific lead (*lead_id*). 
         
         
-        **Note&#58;** that if the path parameter *lead_id* is omitted, this will return a list of all the leads in the instance (in the response, the "data" field will be an array of lead objects).
+        **Note&#58;** if the path parameter *lead_id* is omitted, this will return a list of all the leads in the instance (in the response, the "data" field will be an array of lead objects).
       parameters:
         - in: path
           name: /lead_id
@@ -1507,7 +1507,7 @@ paths:
       description: This returns a specific role (*role_id*) that can be assigned to a user.
       
       
-        **Note&#58;** that if the path parameter *role_id* is omitted, this will return a list of all the roles in the instance (in the response, the "data" field will be an array of role objects).
+        **Note&#58;** if the path parameter *role_id* is omitted, this will return a list of all the roles in the instance (in the response, the "data" field will be an array of role objects).
       parameters:
         - in: path
           name: /role_id
@@ -1627,7 +1627,7 @@ paths:
         This returns a specific service (*service_id*) in the instance. This can be helpful to find out if such is connected or not.
         
         
-        **Note&#58;** that if the path parameter *service_id* is omitted, this will return a list of all the services available in the instance, whether they're connected or not (in the response, the "data" field will be an array of service objects).
+        **Note&#58;** if the path parameter *service_id* is omitted, this will return a list of all the services available in the instance, whether they're connected or not (in the response, the "data" field will be an array of service objects).
       parameters:
         - in: path
           name: /service_id
@@ -1968,7 +1968,7 @@ paths:
       description: This returns general information regarding a Service (*id*).
         
         
-        **Note&#58;** that if the path parameter *id* is omitted, this will return a list of all the information of all services (in the response, the "data" field will be an array of infoService objects).
+        **Note&#58;** if the path parameter *id* is omitted, this will return a list of all the information of all services (in the response, the "data" field will be an array of infoService objects).
       parameters:
         - in: path
           name: /id
@@ -2038,7 +2038,7 @@ paths:
       description: This returns an order item (*order_item_id*).
           
           
-        **Note&#58;** that if the path parameter *order_item_id* is omitted, this will return a list of all the order items in the instance (in the response, the "data" field will be an array of orderItem objects).
+        **Note&#58;** if the path parameter *order_item_id* is omitted, this will return a list of all the order items in the instance (in the response, the "data" field will be an array of orderItem objects).
       parameters:
         - in: path
           name: /order_item_id
