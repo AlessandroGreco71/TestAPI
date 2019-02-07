@@ -11,9 +11,14 @@ info:
 
   version: '0.1'
   termsOfService: 'https://www.tapclicks.com/terms-of-use/'
+  contact:
+    # name: 
+    url: https://www.tapclicks.com/
+    # email: aesf
   x-logo:
-    url: 'https://jobs.mindtheproduct.com/wp-content/uploads/company_logos/2018/04/tapclicks_logo_png-250x93.png'
-    # url: 'https://www.tapclicks.com/static-templates/img/tapclicks-logo-color.png'
+    # url: 'https://jobs.mindtheproduct.com/wp-content/uploads/company_logos/2018/04/tapclicks_logo_png-250x93.png'
+    url: 'https://www.tapclicks.com/static-templates/img/tapclicks-logo-color.png'
+    backgroundColor: "#283237"
 
   
 servers:
