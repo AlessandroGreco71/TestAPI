@@ -91,7 +91,7 @@ tags:
     description: Users in the instance.
   - name: EXAMPLES
     description: |
-      | Replace the the {id} in the URL with a service_id from the list of all <a href="#tag/Services-(Data-Sources)/paths/~1services~1{service_id}/get">Services (Data Sources)</a> |  
+      | Replace the the {id} in the URL with a service_id from the list of all <a href="#tag/SERVICES-(DATA-SOURCES)/paths/~1services{~1service_id}/get">Services (Data Sources)</a> |  
       | --------------------------------------------------------------------------------------|   
       | **1. Get API version**                                                                | 
       | https://api.tapclicks.com/v2/                                                         | 
@@ -286,14 +286,14 @@ paths:
       tags:
         - BUSINESS UNITS
       summary: Edit an existing Business Unit
-      description: Clusters are Business Units. This creates a new Business Unit.
+      description: Clusters are Business Units. This edits an existing Business Unit.
       parameters:
         - in: path
           name: /cluster_id
           schema:
             type: integer
           required: true
-          description: Numeric Id of the cluster to get. If omitted, it will return all Business Units.      
+          description: Numeric Id of the cluster to edit.     
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -352,7 +352,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the cluster to get.  
+          description: Numeric Id of the cluster to delete.  
       responses:
         '200':
           description: Ok - Successful Operation
@@ -581,7 +581,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the Client to get. Please refer to <a href="#tag/Clients">Clients</a> to obtain the correct Id
+          description: Numeric Id of the Client to get. Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain the correct Id
           
           
             If omitted, it will return all Clients
@@ -730,7 +730,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the Client to get. Please refer to <a href="#tag/Clients">Clients</a> to obtain the correct Id
+          description: Numeric Id of the Client to get. Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain the correct Id
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -1081,6 +1081,166 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+                
+    post:
+      tags:
+        - CLIENT GROUPS
+      summary: Edit an existing Client Group
+      description: This edits an existing Client Group
+      parameters:
+        - in: path
+          name: /clientgroup_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the Group of Client to edit.
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema: 
+              $ref: "#/components/schemas/createClientGroup"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
+                  {
+                    "name":"Boston",
+                    "type":"group_of_clients",
+                    "cluster_id":"1",
+                    "member_client_ids":"1,2,34"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--         
+      responses:
+        '200':
+          description: Ok - Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200_successful_post_delete'
+              example:
+                data:
+                  id: "35"
+                error: false
+                warnings: []
+                status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400' 
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'       
+                
+    delete:
+      tags:
+        - CLIENT GROUPS
+      summary: Delete a Client Group
+      description: This deletes a Client Group
+      parameters:
+        - in: path
+          name: /clientgroup_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the Group of Client to delete.
+      responses:
+        '200':
+          description: Ok - Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200_successful_post_delete'
+              example:
+                data:
+                  id: "35"
+                error: false
+                warnings: []
+                status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400' 
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404' 
+          
+  /clientgroups:
+    post:
+      tags:
+        - CLIENT GROUPS
+      summary: Create a Client Group
+      description: This creates a new Client Group
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema:
+              $ref: "#/components/schemas/createClientGroup"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
+                  {
+                    "name":"Boston",
+                    "type":"group_of_client_groups",
+                    "cluster_id":"1",
+                    "member_client_group_ids":"77,81,10"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--  
+      responses:
+        '200':
+          description: Ok - Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200_successful_post_delete'
+              example:
+                data:
+                  id: "35"
+                error: false
+                warnings: []
+                status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400' 
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'        
         
 # --------------------- Data Profiles -------------------------- 
 
@@ -2636,6 +2796,9 @@ components:
         type:
           type: string
           description: Type - When type is "group" please refer to the field *member_cluster_ids*
+            
+            
+            **Note&#58;** Once this field is set, it cannot be edited to a different type
           enum: [single,group]
         external_cluster_id:
           type: string
@@ -2645,7 +2808,7 @@ components:
           description: Member cluster Ids
           
           
-            **Note&#58;** This field is ONLY to be entered (and <font color="red">required</font>) when *type* = "group"
+            **Note&#58;** This field is ONLY to be entered (and <font color="red">required</font>) when *type* = "group".
           items:
             type: integer
         enable_inventory_calendar:
@@ -2658,6 +2821,7 @@ components:
         enable_in_out_status_board:
           type: integer
           description: Enable In/Out status board
+          enum: [0,1]
         status:
           type: string
           enum: [active,inactive]
@@ -2679,7 +2843,7 @@ components:
           properties:
             service_id:
               type: object
-              description: Service Id; Please refer to <a href="#tag/Services-(Data-Sources)/paths/~1services~1info~1{id}/get">Services (Data Sources)</a> for general information on these Services
+              description: Service Id; Please refer to <a href="#tag/SERVICES-(DATA-SOURCES)/paths/~1services~1info{~1id}/get">Services (Data Sources)</a> for general information on these Services
               properties:
                 icon:
                   type: string
@@ -2792,13 +2956,13 @@ components:
           description: Source service Id
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
+          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
           type: string
-          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all existing Data Profile Ids
+          description: Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
           type: string
-          description: Please refer to <a href="#tag/Client's-Categories">Client's Categories</a> to obtain all existing Client Category Ids
+          description: Please refer to <a href="#tag/CLIENT'S-CATEGORIES">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
           enum: [pending_mapping,active,hold,terminated]
@@ -2816,7 +2980,7 @@ components:
           type: array
           items: 
             type: string
-            description: Please refer to <a href="#tag/Client-Group">Client Group</a> to obtain all existing Client Group Ids
+            description: Please refer to <a href="#tag/CLIENT-GROUPS">Client Group</a> to obtain all existing Client Group Ids
         activate_tapleads:
           type: boolean
           description: Activate TapLeads
@@ -2899,7 +3063,7 @@ components:
           description: Enable Lead Management Module
         created_by_user_id:
           type: string
-          description: Created by User Id; please refer to <a href="#tag/Users">User Id</a> to obtain all existing User Ids
+          description: Created by User Id; please refer to <a href="#tag/USERS">User Id</a> to obtain all existing User Ids
         created_by_user:
           type: string
           description: Created by User
@@ -2917,13 +3081,13 @@ components:
           description: Time of last modification
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
+          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
           type: string
-          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all existing Data Profile Ids
+          description: Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
           type: string
-          description: Please refer to <a href="#tag/Client's-Categories">Client's Categories</a> to obtain all existing Client Category Ids
+          description: Please refer to <a href="#tag/CLIENT'S-CATEGORIES">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
           enum: [pending_mapping,active,hold,terminated]
@@ -2947,7 +3111,7 @@ components:
           type: array
           items: 
             type: string
-            description: Please refer to <a href="#tag/Client-Group">Client Group</a> to obtain all existing Client Group Ids
+            description: Please refer to <a href="#tag/CLIENT-GROUPS">Client Group</a> to obtain all existing Client Group Ids
         activate_tapleads:
           type: boolean
           description: Activate TapLeads
@@ -2984,10 +3148,10 @@ components:
           description: Client Group
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all existing Business Unit Ids
+          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
         group_type:
           type: string
-          enum: [group_of_clients,group_of_client_group]
+          enum: [group_of_clients,group_of_client_groups]
           description: Type
         has_light_logo:
           type: boolean
@@ -3011,7 +3175,45 @@ components:
           type: array
           items: 
             type: string
-          description: Please refer to <a href="#tag/Clients">Clients</a> to obtain all existing Client Ids
+          description: Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain all existing Client Ids
+  
+# --------------- Create Client Group Model -----------------   
+    createClientGroup:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+          description: Client Group
+        type: 
+          type: string
+          description: Type
+          
+          
+            **Note&#58;** Once this field is set, it cannot be edited to a different type
+          enum: [group_of_clients,group_of_client_groups]
+        cluster_id:
+          type: string
+          description: Type - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
+        member_client_ids:
+          type: array
+          items: 
+            type: string
+          description: Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain all existing Client Ids  
+          
+          
+            **Note&#58;**  This field is ONLY to be entered (and <font color="red">required</font>) when *type* = "group_of_clients"
+        member_client_group_ids:
+          type: array
+          items:
+            type: string
+          description: Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Groups Ids  
+          
+          
+            **Note&#58;**  This field is ONLY to be entered (and <font color="red">required</font>) when *type* = "group_of_client_groups"
+  
   
 # --------------- Data Profile Model -----------------          
     dataProfile:
@@ -3608,7 +3810,7 @@ components:
           enum: [client,agent,superadmin,clusteradmin]
           default: client
           description: User type
-          # description: Link to be added here "Please refer to <a href="#tag/Roles">TYPE</a> to obtain all possible role types and ids"
+          # description: Link to be added here "Please refer to <a href="#tag/ROLES">TYPE</a> to obtain all possible role types and ids"
         company_name: 
           type: string
           description: Company Name
@@ -3644,7 +3846,7 @@ components:
           description: Password
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all of the exisiting business unit id
+          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all of the exisiting business unit id
         external_user_id:
           type: string
           description: External User Id
@@ -3696,17 +3898,17 @@ components:
           description: Show categories overview
         role_id:
           type: string
-          description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
+          description: Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
         io_tool_role_id:
           type: string
-          description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
+          description: Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
         client_group_id:
           type: string
-          description: This is **REQUIRED** when *user_type* = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
+          description: This is **REQUIRED** when *user_type* = "agent". Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
           type: string
           default: "1"
-          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all of the exisiting data profile id 
+          description: Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all of the exisiting data profile id 
 # --------------- User Model (GET) -----------------    
     user:
       type: object
@@ -3722,7 +3924,7 @@ components:
           enum: [client,agent,superadmin,clusteradmin]
           default: client
           description: User type
-          # description: Link to be added here please refer to <a href="#tag/Roles">TYPE</a> to obtain all user types, once that endpoints starts working again
+          # description: Link to be added here please refer to <a href="#tag/ROLES">TYPE</a> to obtain all user types, once that endpoints starts working again
         company_name: 
           type: string
           description: Company Name
@@ -3755,7 +3957,7 @@ components:
           description: Email address
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/Business-Units">Business Units</a> to obtain all of the exisiting business unit id
+          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all of the exisiting business unit id
         external_user_id:
           type: string
           description: External User Id
@@ -3819,17 +4021,17 @@ components:
           description: Show categories overview
         role_id:
           type: string
-          description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
+          description: Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
         io_tool_role_id:
           type: string
-          description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
+          description: Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
         client_group_id:
           type: string
-          description: This is **REQUIRED** when *user_type* = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
+          description: This is **REQUIRED** when *user_type* = "agent". Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
           type: string
           default: "1"
-          description: Please refer to <a href="#tag/Data-Profiles">Data Profiles</a> to obtain all of the exisiting data profile id
+          description: Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all of the exisiting data profile id
         user_type_display: 
           type: string
           enum: [Super Admin,Business Unit Admin,Agent,Client]
