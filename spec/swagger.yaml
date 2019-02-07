@@ -282,6 +282,163 @@ paths:
               schema:
                 $ref: '#/components/schemas/error_404'
                 
+    post:
+      tags:
+        - BUSINESS UNITS
+      summary: Edit an existing Business Unit
+      description: Clusters are Business Units. This creates a new Business Unit.
+      parameters:
+        - in: path
+          name: /cluster_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the cluster to get. If omitted, it will return all Business Units.      
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema:
+              $ref: "#/components/schemas/createCluster"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
+                  {
+                    "type": "group",
+                    "name": "East Coast Unit",
+                    "member_cluster_ids": "6,23"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--         
+      responses:
+        '200':
+          description: Ok - Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200_successful_post_delete'
+              example:
+                data:
+                  id: "35"
+                error: false
+                warnings: []
+                status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400' 
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'    
+    delete:
+      tags:
+        - BUSINESS UNITS
+      summary: Delete a Business Unit
+      description: Clusters are Business Units. This deletes a new Business Unit.
+      parameters:
+        - in: path
+          name: /cluster_id
+          schema:
+            type: integer
+          required: true
+          description: Numeric Id of the cluster to get.  
+      responses:
+        '200':
+          description: Ok - Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200_successful_post_delete'
+              example:
+                data:
+                  id: "51"
+                error: false
+                warnings: []
+                status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400' 
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'          
+                
+  /clusters:
+    post:
+      tags:
+        - BUSINESS UNITS
+      summary: Create a Business Unit
+      description: Clusters are Business Units. This creates a new Business Unit.
+      requestBody:
+        content:
+          'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
+            schema:
+              $ref: "#/components/schemas/createCluster"
+            examples:
+              '0':
+                value: |-
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
+                  Content-Disposition: form-data; name="model"
+                  {
+                    "type": "single",
+                    "name": "West Coast Unit"
+                  }
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--  
+      responses:
+        '200':
+          description: Ok - Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200_successful_post_delete'
+              example:
+                data:
+                  id: "35"
+                error: false
+                warnings: []
+                status: 200
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400' 
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'            
+                
+                
 # --------------------- Channels (Categories) --------------------------                
       
   /categories{/category_id}:
@@ -598,7 +755,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200_new_edit_client_user'
+                $ref: '#/components/schemas/response_200_successful_post_delete'
               example:
                 data:
                   id: "35"
@@ -654,7 +811,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200_new_edit_client_user'
+                $ref: '#/components/schemas/response_200_successful_post_delete'
               example:
                 data:
                   id: "35"
@@ -2338,7 +2495,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200_new_edit_client_user'
+                $ref: '#/components/schemas/response_200_successful_post_delete'
               example:
                 data:
                   id: "35"
@@ -2399,7 +2556,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/response_200_new_edit_client_user'
+                $ref: '#/components/schemas/response_200_successful_post_delete'
               example:
                 data:
                   id: "35"
@@ -2466,6 +2623,45 @@ components:
           type: string
           enum: [Active,Inactive]
           description: Status display
+          
+# --------------- Create Business Unit Model -----------------  
+    createCluster:
+      type: object
+      required: 
+        - name
+      properties:
+        name:
+          type: string
+          description: Business Unit Name
+        type:
+          type: string
+          description: Type - When type is "group" please refer to the field *member_cluster_ids*
+          enum: [single,group]
+        external_cluster_id:
+          type: string
+          description: External Business Unit Id
+        member_cluster_ids:
+          type: array
+          description: Member cluster Ids
+          
+          
+            **Note&#58;** This field is ONLY to be entered (and <font color="red">required</font>) when *type* = "group"
+          items:
+            type: integer
+        enable_inventory_calendar:
+          type: integer
+          description: Enable inventory calendar 
+          
+          
+            **Note&#58;** This field is enabled only if the TapOrders module is active
+          enum: [0,1]
+        enable_in_out_status_board:
+          type: integer
+          description: Enable In/Out status board
+        status:
+          type: string
+          enum: [active,inactive]
+          description: Status
             
 # --------------- Channel Model ----------------- 
     category:
@@ -3406,7 +3602,7 @@ components:
       properties:
         client_id: 
           type: string
-          description: Client Id - This is **mandatory** when user_type = "client"
+          description: Client Id - This is **REQUIRED** when *user_type* = "client"
         user_type:
           type: string
           enum: [client,agent,superadmin,clusteradmin]
@@ -3506,7 +3702,7 @@ components:
           description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
         client_group_id:
           type: string
-          description: This is mandatory when user_type = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
+          description: This is **REQUIRED** when *user_type* = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
           type: string
           default: "1"
@@ -3520,7 +3716,7 @@ components:
           description: User Id
         client_id: 
           type: string
-          description: Client Id - This is mandatory when user_type = "client"
+          description: Client Id - This is **REQUIRED** when *user_type* = "client"
         user_type:
           type: string
           enum: [client,agent,superadmin,clusteradmin]
@@ -3629,7 +3825,7 @@ components:
           description: Please refer to <a href="#tag/Roles">Roles</a> to obtain all possible role types and ids
         client_group_id:
           type: string
-          description: This is mandatory when user_type = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
+          description: This is **REQUIRED** when *user_type* = "agent". Please refer to <a href="#tag/Client-Groups">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
           type: string
           default: "1"
@@ -3846,7 +4042,7 @@ components:
           type: integer 
           description: Status
           
-    response_200_new_edit_client_user:
+    response_200_successful_post_delete:
       type: object
       properties:
         data:
