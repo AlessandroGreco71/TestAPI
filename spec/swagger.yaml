@@ -509,21 +509,22 @@ paths:
             enum: [0,1]
           description: The API will provide a total number of records in the result.
           example: http://api.tapclicks.com/v2/categories?count=1
-        - in: query
-          name: field_data_filter
-          required: false
-          schema:
-            type: string
-          description: |
-            This will filter the data that contains only specific values.
+          # CHECK/FIX THIS before it becomes available again!
+        # - in: query
+        #   name: field_data_filter
+        #   required: false
+        #   schema:
+        #     type: string
+        #   description: |
+        #     This will filter the data that contains only specific values.
       
       
-            To remove items use **!** before the value.
+        #     To remove items use **!** before the value.
             
               
-            Example&#58; `"https://api.tapclicks.com/v2/categories?id=!12"`<br>
-            This will return all channels, except for the one with id = 12
-          example: https://api.tapclicks.com/v2/categories?name=Social%20Services,Display%20Services
+        #     Example&#58; `"https://api.tapclicks.com/v2/categories?id=!12"`<br>
+        #     This will return all channels, except for the one with id = 12
+        #   example: https://api.tapclicks.com/v2/categories?name=Social%20Services,Display%20Services
 
       responses:
         '200':
