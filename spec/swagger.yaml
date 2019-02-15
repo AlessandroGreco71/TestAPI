@@ -2591,7 +2591,7 @@ paths:
           schema:
             type: string
             enum: [timezone,user_type]
-          description: For this particular call, this path parameter must be equal to `timezone`   
+          description: This is required for the endpoint to return valid data  
       responses:
         '200':
           description: Ok Successful Operation
@@ -3617,7 +3617,7 @@ components:
           type: string
           enum: [client,agent,superadmin,cluster_admin]
           default: client
-          description: User type - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all user types
+          description: User type - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all available user types
         company_name: 
           type: string
           description: Company Name
@@ -3696,8 +3696,7 @@ components:
         timezone:
           type: string 
           default: default
-          description: Timezone
-          # link to another endpoint (all available user timezones), once that starts working
+          description: Refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Timezones</a> to obtain all available user timezones
         status:
           type: string
           enum: [active,inactive]
@@ -3747,7 +3746,7 @@ components:
           type: string
           enum: [client,agent,superadmin,cluster_admin]
           default: client
-          description: User type - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all user types
+          description: User type - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all available user types
         company_name: 
           type: string
           description: Company Name
@@ -3821,9 +3820,8 @@ components:
           description: Country
         timezone:
           type: string 
-          # link to another endpoint (all available user timezones), once that starts working
           default: default
-          description: Timezone
+          description: Refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Timezones</a> to obtain all available user timezones
         status:
           type: string
           enum: [active,inactive]
@@ -3860,7 +3858,7 @@ components:
         user_type_display: 
           type: string
           enum: [Super Admin,Business Unit Admin,Agent,Client]
-          description: User type display - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all user types
+          description: User type display - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all available user types
         default_home_page_display:
           type: string
           description: Default Home Page Display
@@ -3878,15 +3876,9 @@ components:
         country_display:
           type: string
           description: Country display
-            
-            
-            **Note&#58;** This field is NOT returned if the *user_type* is "agent"
         timezone_display: 
           type: string
-          description: Timezone display
-          
-          
-            **Note&#58;** This field is NOT returned if the *user_type* is "agent"
+          description: Refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Timezones</a> to obtain all available user timezones
         status_display:
           type: string
           enum: [active,inactive]
