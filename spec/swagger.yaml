@@ -9,7 +9,7 @@ info:
     The **TapClicks** API uses the OAuth 2.0 protocol for authentication and authorization (<a href="https://tools.ietf.org/html/rfc6749#section-4.4">Client Credentials Grant</a>).<br>
     All requests must be authenticated and must include a valid access token.
 
-  version: '0.1'
+  version: '2.6.20'
   termsOfService: 'https://www.tapclicks.com/terms-of-use/'
   contact:
     # name: 
@@ -149,12 +149,6 @@ paths:
                   error: false
                   warning: []
                   status: 200
-        '400':
-          description: Error on client's side
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_400'
         '401':
           description: Invalid access token
           content:
@@ -185,7 +179,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the cluster to get. If omitted, it will return all Business Units.
+          description: Numeric Id of the Business Unit to get. If omitted, it will return all Business Units.
         - in: query
           name: metadata
           required: false
@@ -273,7 +267,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'
+                $ref: '#/components/schemas/error_400'    
         '401':
           description: Invalid access token
           content:
@@ -298,7 +292,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the cluster to edit.     
+          description: Numeric Id of the Business Unit to edit.     
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -322,18 +316,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
-                data:
-                  id: "35"
-                error: false
-                warnings: []
-                status: 200
         '400':
           description: Error on client's side
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_400' 
+              example:
+                error: true
+                data: 
+                  - Business Unit type missing
+                  - Business Unit name missing
+                warnings: []
+                status: 400
         '401':
           description: Invalid access token
           content:
@@ -357,7 +352,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the cluster to delete.  
+          description: Numeric Id of the Business Unit to delete.  
       responses:
         '200':
           description: Ok - Successful Operation
@@ -365,18 +360,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
-                data:
-                  id: "51"
-                error: false
-                warnings: []
-                status: 200
-        '400':
-          description: Error on client's side
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_400' 
         '401':
           description: Invalid access token
           content:
@@ -418,18 +401,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
-                data:
-                  id: "35"
-                error: false
-                warnings: []
-                status: 200
         '400':
           description: Error on client's side
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_400' 
+              example:
+                error: true
+                data: 
+                  - The Business Unit type cannot be changed
+                warnings: []
+                status: 400              
         '401':
           description: Invalid access token
           content:
@@ -461,7 +444,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric Id of the category to get. If omitted, it will return all Channels.
+          description: Numeric Id of the Channel to get. If omitted, it will return all Channels.
         - in: query
           name: metadata
           required: false
@@ -556,7 +539,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'                    
+                $ref: '#/components/schemas/error_400'  
         '401':
           description: Invalid access token
           content:
@@ -711,7 +694,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'                
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -730,6 +713,9 @@ paths:
         - CLIENTS
       summary: Edit existing Client
       description: This modifies the information of an existing Client.
+      
+        
+        Note that the payload of this POST is the same as <a href="#tag/CLIENTS/paths/~1clients/post">Create a new Client</a>.
       parameters:
         - in: path
           name: /client_id
@@ -763,17 +749,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
               example:
-                data:
-                  id: "35"
-                error: false
-                warnings: []
-                status: 200
         '400':
           description: Error on client's side
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_400'
+              example:
+                error: true
+                data: 
+                  - Company name missing
+                  - Default data profile missing
+                  - Reporting Status missing or invalid
+                  - TapOrders status missing or invalid
+                warnings: []
+                status: 400 
         '401':
           description: Invalid access token
           content:
@@ -793,6 +783,9 @@ paths:
         - CLIENTS
       summary: Create a new Client
       description: This creates a new Client.
+      
+      
+        Note that the payload of this POST is the same as <a href="#tag/CLIENTS/paths/~1clients{~1client_id}/post">Edit existing Client</a>.
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -818,18 +811,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
-                data:
-                  id: "35"
-                error: false
-                warnings: []
-                status: 200
         '400':
           description: Error on client's side
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_400'
+              example:
+                error: true
+                data: 
+                  - That company name is already in use by another Client
+                warnings: []
+                status: 400 
         '401':
           description: Invalid access token
           content:
@@ -842,6 +835,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      # x-code-samples:
+      #   - lang: 'C#'
+      #     source: |
+      #       PetStore.v1.Pet pet = new PetStore.v1.Pet();
+      #       pet.setApiKey("your api key");
+      #       pet.petType = PetStore.v1.Pet.TYPE_DOG;
+      #       pet.name = "Rex";
+      #       // set other fields
+      #       PetStoreResponse response = pet.create();
+      #       if (response.statusCode == HttpStatusCode.Created)
+      #       {
+      #         // Successfully created
+      #       }
+      #       else
+      #       {
+      #         // Something wrong -- check response for errors
+      #         Console.WriteLine(response.getRawResponse());
+      #       }                
 # --------------------- Client's Categories --------------------------  
   
   /clientcategories:
@@ -953,7 +964,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'                
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -1074,7 +1085,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -1124,18 +1135,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
-                data:
-                  id: "35"
-                error: false
-                warnings: []
-                status: 200
         '400':
           description: Error on client's side
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_400' 
+              example:
+                error: true
+                data: 
+                  - Client Group type missing
+                  - Client Group name missing
+                warnings: []
+                status: 400
         '401':
           description: Invalid access token
           content:
@@ -1168,18 +1180,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
-                data:
-                  id: "35"
-                error: false
-                warnings: []
-                status: 200
-        '400':
-          description: Error on client's side
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_400' 
         '401':
           description: Invalid access token
           content:
@@ -1223,18 +1223,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
-                data:
-                  id: "35"
-                error: false
-                warnings: []
-                status: 200
         '400':
           description: Error on client's side
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_400' 
+              example:
+                error: true
+                data: 
+                  - That Client Group name is already in use.
+                warnings: []
+                status: 400
         '401':
           description: Invalid access token
           content:
@@ -1255,7 +1255,7 @@ paths:
       tags:
         - DATA PROFILES
       summary: Data Profiles
-      description: This returns a specific Data Profile (*profile_id*).
+      description: Reporting Profiles are Data Profiles. This returns a specific Data Profile (*profile_id*).
       
       
         **Note&#58;** if the path parameter *profile_id* is omitted, this will return all the Data Profiles in the instance (in the response, the "data" field will be an array of dataProfile objects).
@@ -1353,7 +1353,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -1482,7 +1482,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -1527,7 +1527,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'            
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -1575,7 +1575,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'                
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -1801,7 +1801,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'                
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -1924,7 +1924,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'                
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -2054,13 +2054,13 @@ paths:
                   service_icon: "facebook"
                 error: false
                 warnings: []
-                status: 200                  
+                status: 200   
         '400':
           description: Error on client's side
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_400'                
+                $ref: '#/components/schemas/error_400'                  
         '401':
           description: Invalid access token
           content:
@@ -2282,192 +2282,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
-       
-  /services/info{/id}:
-    get:
-      tags:
-        - SERVICES (DATA SOURCES)
-      summary: Information on Services
-      description: This returns general information regarding a Service (*id*).
-        
-        
-        **Note&#58;** if the path parameter *id* is omitted, this will return a list of all the information of all services (in the response, the "data" field will be an array of infoService objects).
-      parameters:
-        - in: path
-          name: /id
-          schema:
-            type: integer
-          required: true
-          description: Id of the service to get. If omitted, it will return all the information of all the services
-        - in: query
-          name: field_data_filter
-          required: false
-          schema:
-            type: string
-          description: This will filter the data that contains only specific values.
-          example: http://api.tapclicks.com/v2/services/info/34?fields=summary
-      responses:
-        '200':
-          description: Ok - Successful Operation
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/response_200_infoservices'
-              example:
-                data:
-                  id: "1"
-                  service_id: "110"
-                  connect_steps: null
-                  categories: "display, demand side platform (dsp), ad server, yield management tools, programmatic"
-                  keywords: "ad serving, advertising technology, ad operations, demand-side platform"
-                  summary: "AdGear Technologies, Inc. is a digital advertising technology company, providing software and services for the digital media industry. The company's full-stack advertising platform offers customers advanced advertising analytics, attribution measurement, ad serving, real-time bidding and exchange technology. AdGear"
-                  company_size: "11-50 employees"
-                  links:
-                    Website: "www.adgear.com"
-                    Sign Up: ""
-                    Contact: "http://adgear.com/company/offices"
-                    Newsletter: ""
-                    Demo Request: ""
-                    Free Trial: ""
-                    Promotions:
-                      null: ""
-                error: false
-                warnings: []
-                status: 200
-        '400':
-          description: Error on client's side
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_400'                
-        '401':
-          description: Invalid access token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_401' 
-        '404':
-          description: API Route not found 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_404'
-        
-  /services/orderitems{/order_item_id}:
-    get:
-      tags:
-        - SERVICES (DATA SOURCES)
-      summary: Order items of a Service
-      description: This returns an order item (*order_item_id*).
-          
-          
-        **Note&#58;** if the path parameter *order_item_id* is omitted, this will return a list of all the order items in the instance (in the response, the "data" field will be an array of orderItem objects).
-      parameters:
-        - in: path
-          name: /order_item_id
-          schema:
-            type: integer
-          required: true
-          description: Numeric Id of the order item to get. If omitted, it will return all order items 
-        - in: query
-          name: metadata
-          required: false
-          schema:
-            type: integer
-            enum: [0,1]
-          description: The API will provide more or all the info for the available fields.
-          example: https://api.tapclicks.com/v2/services/orderitems/1?metadata=1
-        - in: query
-          name: page
-          required: false
-          schema:
-            type: string
-          description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
-        
-        
-            This will limit the number of rows in the fetch result. 
-          example: https://api.tapclicks.com/v2/services/orderitems?page=0,5
-        - in: query
-          name: fields
-          required: false
-          schema:
-            type: string
-          description: This will filter the result data with the specific fields.
-      
-      
-            **Note&#58;** when using this query parameter, other than the ones specified, more fields may be returned as well.
-          example: https://api.tapclicks.com/v2/services/orderitems?fields=id,customer_id
-        - in: query
-          name: sort
-          required: false
-          schema:
-            type: string
-          description: Ascending by default; prefix **-** for descending.
-      
-      
-            This will sort the results by mapping date (descending).
-          example: https://api.tapclicks.com/v2/services/orderitems?page=0,5&fields=id,customer_id&sort=-mapping_date
-        - in: query
-          name: count
-          required: false
-          schema:
-            type: integer
-            enum: [0,1]
-          description: The API will provide a total number of records in the result.
-          example: http://api.tapclicks.com/v2/services/orderitems?fields=id,customer_id&sort=-mapping_date&count=1
-        - in: query
-          name: field_data_filter
-          required: false
-          schema:
-            type: string
-          description: |
-            This will filter the data that contains only specific values.
-      
-      
-            To remove items use **!** before the value.
-            
-            
-            Example&#58; `"https://api.tapclicks.com/v2/services/orderitems?customer_id=!12"`<br>
-            This will return all order items, except for the one with customer id = 12
-          example: https://api.tapclicks.com/v2/services/orderitems?fields=id,customer_id&customer_id=1,2
-      responses:
-        '200':
-          description: Ok - Successful Operation
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/response_200_servicesorderitem'
-              example:
-                data:
-                  id: "2"
-                  service_id: "45"
-                  customer_id: "5"
-                  item_id: "3"
-                  mapping_date: "Sept 25, 2018"
-                  connection_setting_id: "3"
-                  first_level_mapping: "3"
-                  second_level_mapping: ""
-                error: false
-                warnings: []
-                status: 200
-        '400':
-          description: Error on client's side
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_400'                
-        '401':
-          description: Invalid access token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_401'   
-        '404':
-          description: API Route not found 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_404'
      
 # --------------------- Users --------------------------  
   /users{/user_id}:
@@ -2625,6 +2439,9 @@ paths:
         - USERS
       summary: Edit an existing user
       description: This modifies the information of an existing User.
+      
+      
+        Note that the payload of this POST is the same as <a href="#tag/USERS/paths/~1users/post">Create a new user</a>.
       parameters:
         - in: path
           name: /user_id
@@ -2662,18 +2479,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
-                data:
-                  id: "35"
-                error: false
-                warnings: []
-                status: 200  
         '400':
           description: Error on client's side
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_400'  
+              example:
+                error: true
+                data: 
+                  - User type missing
+                warnings: []
+                status: 400
         '401':
           description: Invalid access token
           content:
@@ -2693,6 +2510,9 @@ paths:
         - USERS
       summary: Create a new user
       description: This creates a new User.
+      
+      
+        Note that the payload of this POST is the same as <a href="#tag/USERS/paths/~1users{~1user_id}/post">Edit an existing user</a>.
       requestBody:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
@@ -2723,24 +2543,76 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
-                data:
-                  id: "35"
-                error: false
-                warnings: []
-                status: 200
         '400':
           description: Error on client's side
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_400' 
+              example:
+                error: true
+                data: 
+                  - That email is already in use
+                warnings: []
+                status: 400                
         '401':
           description: Invalid access token
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401' 
+        '404':
+          description: API Route not found 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_404'
+                
+  /users/values/set:
+    get:
+      tags: 
+        - USERS
+      summary: User Types / User Timezones
+      description: |
+        **Note&#58;** This endpoint must be used with the query parameter "fields".<br>
+        
+        
+        This will return all available user types <br>
+        *fields*=**user_type -**  `(https://api.tapclicks.com/v2/users/values/set?fields=user_type)`
+        
+        
+        This will return all available user timezones <br>
+        *fields*=**timezone -**  `(https://api.tapclicks.com/v2/users/values/set?fields=timezone)`
+        
+      parameters:
+        - in: path
+          name: fields
+          required: true
+          schema:
+            type: string
+            enum: [timezone,user_type]
+          description: For this particular call, this path parameter must be equal to `timezone`   
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/userTypes'  
+                  - $ref: '#/components/schemas/timezones' 
+        '400':
+          description: Error on client's side
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_400'                
+        '401':
+          description: Invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_401'
         '404':
           description: API Route not found 
           content:
@@ -2799,22 +2671,25 @@ components:
         name:
           type: string
           description: Business Unit Name
+          
+          
+            **Note&#58;** The Business Unit's name must be a unique entry
         type:
           type: string
-          description: Type - When type is "group" please refer to the field *member_cluster_ids*
+          description: Type - When type is "group" please refer to the field *member_cluster_ids*.
             
             
-            **Note&#58;** Once this field is set, it cannot be edited to a different type
+            **Note&#58;** Once this field is set, it cannot be edited to a different type.
           enum: [single,group]
         external_cluster_id:
           type: string
           description: External Business Unit Id
         member_cluster_ids:
           type: array
-          description: Member cluster Ids
+          description: Member Business Unit Ids
           
           
-            **Note&#58;** This field is ONLY to be entered (and <font color="red">required</font>) when *type* = "group".
+            **Note&#58;** This field is ONLY to be entered (and <font color="red">**required**</font>) when *type* = "group"
           items:
             type: integer
         enable_inventory_calendar:
@@ -2849,7 +2724,7 @@ components:
           properties:
             service_id:
               type: object
-              description: Service Id; Please refer to <a href="#tag/SERVICES-(DATA-SOURCES)/paths/~1services~1info{~1id}/get">Services (Data Sources)</a> for general information on these Services
+              description: Service Id; Please refer to <a href="#tag/SERVICES-(DATA-SOURCES)/paths/~1services{~1service_id}/get">Services (Data Sources)</a> to obtain all existing Service Ids
               properties:
                 icon:
                   type: string
@@ -2896,6 +2771,9 @@ components:
         company_name:
           type: string
           description: Company Name
+          
+          
+            **Note&#58;** The Company Name must be a unique entry
         first_name:
           type: string
           description: First Name
@@ -2934,7 +2812,7 @@ components:
           description: Website
         account_manager_user_id:
           type: string
-          description: Account Manager User Id
+          description: Account Manager User Id - Please refer to <a href="#tag/USERS">User Id</a> to obtain all existing User Ids
         crm_id:
           type: string
           description: CRM Id
@@ -3039,7 +2917,7 @@ components:
           description: Website
         account_manager_user_id:
           type: string
-          description: Account Manager User Id
+          description: Account Manager User Id - Please refer to <a href="#tag/USERS">User Id</a> to obtain all existing User Ids
         has_light_logo:
           type: boolean
           description: Has light logo
@@ -3171,6 +3049,12 @@ components:
         updated at:
           type: integer
           description: Updated time
+        # reporting_language:
+        #   type: string
+        #   description: Reporting Language
+          
+          
+        #     **Note&#58;** This field is returned only if the Multi-language Reports module is active
         formatted_created_at: 
           type: string
           description: Formatted creation time
@@ -3193,6 +3077,9 @@ components:
         name:
           type: string
           description: Client Group
+          
+          
+            **Note&#58;** The name must be unique within the instance
         type: 
           type: string
           description: Type
@@ -3207,18 +3094,18 @@ components:
           type: array
           items: 
             type: string
-          description: Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain all existing Client Ids  
+          description: Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain all existing Client Ids.
           
           
-            **Note&#58;**  This field is ONLY to be entered (and <font color="red">required</font>) when *type* = "group_of_clients"
+            **Note&#58;**  This field is ONLY to be entered (and <font color="red">**required**</font>) when *type* = "group_of_clients"
         member_client_group_ids:
           type: array
           items:
             type: string
-          description: Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Groups Ids  
+          description: Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Groups Ids.  
           
           
-            **Note&#58;**  This field is ONLY to be entered (and <font color="red">required</font>) when *type* = "group_of_client_groups"
+            **Note&#58;**  This field is ONLY to be entered (and <font color="red">**required**</font>) when *type* = "group_of_client_groups"
   
   
 # --------------- Data Profile Model -----------------          
@@ -3230,7 +3117,7 @@ components:
           description: Data Profile Id
         name:
           type: string
-          description: Data Profile
+          description: Data Profile Name
         created_at:
           type: integer
           description: Creation time
@@ -3528,37 +3415,6 @@ components:
           items:
             type: string
           description: Tags 
-        
-
-# --------------- Order Item Model ----------------- 
-    orderItem:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Order item Id
-        service_id:
-          type: string
-          description: Service Id
-        customer_id:
-          type: string
-          description: Customer Id
-        item_id:
-          type: string
-          description: Item Id
-        mapping_date:
-          type: string
-          description: Mapping date
-        connection_setting_id:
-          type: string
-          description: Connection setting Id
-        first_level_mapping:
-          type: string
-          description: First level mapping
-        second_level_mapping:
-          type: string
-          description: Second level mapping
-
           
 # --------------- Role Model -----------------            
     role:
@@ -3666,61 +3522,6 @@ components:
         service_icon:
           type: string
           description: Service icon
-            
-# --------------- Information about Service (Data Sources) Model -----------------
-    infoService:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id
-        service_id:
-          type: string
-          description: Service Id
-        connect_steps:
-          type: string
-          description: Connect steps
-        categories:
-          type: string
-          description: Categories
-        keywords:
-          type: string
-          description: Keywords
-        summary:
-          type: string
-          description: Summary
-        company_size:
-          type: string
-          description: Company size
-        links:
-          type: object
-          description: Links
-          properties:
-            Website:
-              type: string
-              description: Website
-            Sign Up:
-              type: string
-              description: Sign Up
-            Contact:
-              type: string
-              description: Contact
-            Newsletter:
-              type: string
-              description: Newsletter
-            Demo Request:
-              type: string
-              description: Demo request
-            Free Trial:
-              type: string
-              description: Free trial
-            Promotions:
-              type: object
-              description: Promotions
-              properties:
-                null:
-                  type: string
-                  description: Properties 
                   
 # --------------- ServiceDataView (Data Sources) Model -----------------                  
     serviceDataView:
@@ -3803,20 +3604,20 @@ components:
         - user_type
         - email
         - password
-        - client_group_id
         - status
-        - role_id
         - reporting_profile_id
       properties:
         client_id: 
           type: string
-          description: Client Id - This is **REQUIRED** when *user_type* = "client"
+          description: Client Id
+          
+          
+            **Note&#58;** This field is (and <font color="red">**required**</font>) when *user_type* = "client"
         user_type:
           type: string
-          enum: [client,agent,superadmin,clusteradmin]
+          enum: [client,agent,superadmin,cluster_admin]
           default: client
-          description: User type
-          # description: Link to be added here "Please refer to <a href="#tag/ROLES">TYPE</a> to obtain all possible role types and ids"
+          description: User type - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all user types
         company_name: 
           type: string
           description: Company Name
@@ -3847,12 +3648,19 @@ components:
         email:
           type: string
           description: Email address
+          
+          
+            **Note&#58;** The email address must be a unique entry
         password:
           type: string
           description: Password
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all of the exisiting business unit id
+          description: Business Unit Id
+          
+          
+            **Note&#58;** This field is (and <font color="red">**required**</font>) when *user_type* = "cluster_admin".<br>
+            Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all of the exisiting Business Unit Ids
         external_user_id:
           type: string
           description: External User Id
@@ -3898,23 +3706,33 @@ components:
           type: string
           default: default
           description: Show services overview
+          enum: [default,yes,no]
         show_categories_overview:
           type: string
           default: default
           description: Show categories overview
+          enum: [default,yes,no]
         role_id:
           type: string
-          description: Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
+          description: Role Id
+          
+          
+            **Note&#58;** This field is (and <font color="red">**required**</font>) when *user_type* = "agent".<br>
+            Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
         io_tool_role_id:
           type: string
-          description: Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
+          description: Io tool role Id - Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
         client_group_id:
           type: string
-          description: This is **REQUIRED** when *user_type* = "agent". Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing client group id
+          description: Client group Id 
+          
+            
+            **Note&#58;** This field is (and <font color="red">**required**</font>) when *user_type* = "agent". <br>
+            Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
           type: string
           default: "1"
-          description: Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all of the exisiting data profile id 
+          description: Reporting Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all of the exisiting data profile id 
 # --------------- User Model (GET) -----------------    
     user:
       type: object
@@ -3924,13 +3742,12 @@ components:
           description: User Id
         client_id: 
           type: string
-          description: Client Id - This is **REQUIRED** when *user_type* = "client"
+          description: Client Id
         user_type:
           type: string
-          enum: [client,agent,superadmin,clusteradmin]
+          enum: [client,agent,superadmin,cluster_admin]
           default: client
-          description: User type
-          # description: Link to be added here please refer to <a href="#tag/ROLES">TYPE</a> to obtain all user types, once that endpoints starts working again
+          description: User type - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all user types
         company_name: 
           type: string
           description: Company Name
@@ -4020,20 +3837,22 @@ components:
         show_services_overview: 
           type: string
           default: default
+          enum: [default,yes,no]
           description: Show services overview
         show_categories_overview:
           type: string
           default: default
+          enum: [default,yes,no]
           description: Show categories overview
         role_id:
           type: string
-          description: Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
+          description: Role Id - Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
         io_tool_role_id:
           type: string
-          description: Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
+          description: Io tool role Id - Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
         client_group_id:
           type: string
-          description: This is **REQUIRED** when *user_type* = "agent". Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing client group id
+          description: Client Group Id - Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing client group id
         reporting_profile_id:
           type: string
           default: "1"
@@ -4041,7 +3860,7 @@ components:
         user_type_display: 
           type: string
           enum: [Super Admin,Business Unit Admin,Agent,Client]
-          description: User type display
+          description: User type display - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all user types
         default_home_page_display:
           type: string
           description: Default Home Page Display
@@ -4075,28 +3894,55 @@ components:
         formatted_creation_time:
           type: string
           description: Formatted creation time
+          
+# --------------- Timezone -----------------          
+    timezone:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Value
+        label:
+          type: string
+          description: Label
+          
+# --------------- Usertype -----------------           
+    userType:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Key
+        value:
+          type: string
+          description: Value
+          
 # --------------- Error Msg/Responses Model-----------------  
     error_400:
       type: object
       properties:
-        fault:
-          type: object
-          properties:
-            faultstring:
-              type: string
-              description: Faultstring
-            detail:
-              type: object
-              properties:
-                errorcode:
-                  type: string
-                  description: Errorcode
-      # REVIEW THIS EXAMPLE            
-      example: 
-        fault:
-          faultstring: 'Unable to identify proxy for host: https_vhost and url/: /v'
-          detail:
-            errorcode: 'keymanagement.service.invalid_access_token'
+        error:
+          type: boolean
+          description: Error
+        data:
+          type: array
+          description: Data
+          items:
+            type: string
+        warnings:
+          type: array
+          description: Warnings
+          items:
+            type: string
+        status:
+          type: integer
+          description: Status
+      example:
+        error: true
+        data: 
+          - item cannot be selected
+        warnings: []
+        status: 400
     error_401:
       type: object
       properties:
@@ -4168,36 +4014,6 @@ components:
         data: ['API Route not found']
         warnings: []
         status: 404
-    # response_200:
-    #   type: object
-    #   properties:
-    #     data:
-    #       type: object
-    #       oneOf: 
-    #         - $ref: '#/components/schemas/clientGroup'
-    #         - $ref: '#/components/schemas/user'
-    #         - $ref: '#/components/schemas/clientCategory'
-    #         - $ref: '#/components/schemas/client'
-    #         - $ref: '#/components/schemas/cluster'
-    #         - $ref: '#/components/schemas/dataType'
-    #         - $ref: '#/components/schemas/dateRange'
-    #         - $ref: '#/components/schemas/dataProfile'
-    #         - $ref: '#/components/schemas/category'
-    #         - $ref: '#/components/schemas/language'
-    #         - $ref: '#/components/schemas/lead'
-    #         - $ref: '#/components/schemas/role'
-    #         - $ref: '#/components/schemas/simpleService'
-    #         - $ref: '#/components/schemas/serviceInfo'
-    #         - $ref: '#/components/schemas/orderItem'
-    #         - $ref: '#/components/schemas/serviceData'
-    #     error:
-    #       type: boolean
-    #     warnings:
-    #       type: array
-    #       items:
-    #         type: string
-    #     status: 
-    #       type: integer
           
     response_200_clusters:
       type: object
@@ -4270,6 +4086,13 @@ components:
         status: 
           type: integer 
           description: Status
+      example:
+        data:
+          id: "35"
+        error: false
+        warnings: []
+        status: 200
+          
 
     response_200_clientcategories:
       type: object
@@ -4449,40 +4272,6 @@ components:
           type: integer
           description: Status
           
-    response_200_infoservices:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/infoService'
-        error:
-          type: boolean
-          description: Error
-        warnings:
-          type: array
-          description: Warnings
-          items:
-            type: string
-        status: 
-          type: integer
-          description: Status
-          
-    response_200_servicesorderitem:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/orderItem'
-        error:
-          type: boolean
-          description: Error
-        warnings:
-          type: array
-          description: Warnings
-          items:
-            type: string
-        status: 
-          type: integer
-          description: Status
-          
     response_200_users:
       type: object
       properties:
@@ -4500,7 +4289,237 @@ components:
           type: integer
           description: Status
           
-
+    timezones:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/timezone'
+        error:
+          type: boolean
+          description: Error
+        warnings:
+          type: array
+          description: Warnings
+          items:
+            type: string
+        status:
+          type: integer
+          description: Status
+      example:
+        data:
+          - value: Australia/Darwin
+            label: AUS Central Standard Time (Australia/Darwin)
+          - value: Australia/Sydney
+            label: AUS Eastern Standard Time (Australia/Sydney)
+          - value: Asia/Kabul
+            label: Afghanistan Standard Time (Asia/Kabul)
+          - value: America/Anchorage
+            label: Alaskan Standard Time (America/Anchorage)
+          - value: Asia/Riyadh
+            label: Arab Standard Time (Asia/Riyadh)
+          - value: Asia/Dubai
+            label: Arabian Standard Time (Asia/Dubai)
+          - value: Asia/Baghdad
+            label: Arabic Standard Time (Asia/Baghdad)
+          - value: America/Buenos_Aires
+            label: Argentina Standard Time (America/Buenos_Aires)
+          - value: Asia/Yerevan
+            label: Armenian Standard Time (Asia/Yerevan)
+          - value: America/Halifax
+            label: Atlantic Standard Time (America/Halifax)
+          - value: Asia/Baku
+            label: Azerbaijan Standard Time (Asia/Baku)
+          - value: Atlantic/Azores
+            label: Azores Standard Time (Atlantic/Azores)
+          - value: America/Regina
+            label: Canada Central Standard Time (America/Regina)
+          - value: Atlantic/Cape_Verde
+            label: Cape Verde Standard Time (Atlantic/Cape_Verde)
+          - value: Australia/Adelaide
+            label: Cen. Australia Standard Time (Australia/Adelaide)
+          - value: America/Guatemala
+            label: Central America Standard Time (America/Guatemala)
+          - value: Asia/Dhaka
+            label: Central Asia Standard Time (Asia/Dhaka)
+          - value: America/Manaus
+            label: Central Brazilian Standard Time (America/Manaus)
+          - value: Europe/Budapest
+            label: Central Europe Standard Time (Europe/Budapest)
+          - value: Europe/Warsaw
+            label: Central European Standard Time (Europe/Warsaw)
+          - value: Pacific/Guadalcanal
+            label: Central Pacific Standard Time (Pacific/Guadalcanal)
+          - value: America/Chicago
+            label: Central Standard Time (America/Chicago)
+          - value: America/Mexico_City
+            label: Central Standard Time (Mexico) (America/Mexico_City)
+          - value: Asia/Shanghai
+            label: China Standard Time (Asia/Shanghai)
+          - value: Etc/GMT+12
+            label: Dateline Standard Time (Etc/GMT+12)
+          - value: Africa/Nairobi
+            label: E. Africa Standard Time (Africa/Nairobi)
+          - value: Australia/Brisbane
+            label: E. Australia Standard Time (Australia/Brisbane)
+          - value: Europe/Minsk
+            label: E. Europe Standard Time (Europe/Minsk)
+          - value: America/Sao_Paulo
+            label: E. South America Standard Time (America/Sao_Paulo)
+          - value: America/New_York
+            label: Eastern Standard Time (America/New_York)
+          - value: Africa/Cairo
+            label: Egypt Standard Time (Africa/Cairo)
+          - value: Asia/Yekaterinburg
+            label: Ekaterinburg Standard Time (Asia/Yekaterinburg)
+          - value: Europe/Kiev
+            label: FLE Standard Time (Europe/Kiev)
+          - value: Pacific/Fiji
+            label: Fiji Standard Time (Pacific/Fiji)
+          - value: Europe/London
+            label: GMT Standard Time (Europe/London)
+          - value: Europe/Istanbul
+            label: GTB Standard Time (Europe/Istanbul)
+          - value: Etc/GMT-3
+            label: Georgian Standard Time (Etc/GMT-3)
+          - value: America/Godthab
+            label: Greenland Standard Time (America/Godthab)
+          - value: Atlantic/Reykjavik
+            label: Greenwich Standard Time (Atlantic/Reykjavik)
+          - value: Pacific/Honolulu
+            label: Hawaiian Standard Time (Pacific/Honolulu)
+          - value: Asia/Calcutta
+            label: India Standard Time (Asia/Calcutta)
+          - value: Asia/Tehran
+            label: Iran Standard Time (Asia/Tehran)
+          - value: Asia/Jerusalem
+            label: Israel Standard Time (Asia/Jerusalem)
+          - value: Asia/Amman
+            label: Jordan Standard Time (Asia/Amman)
+          - value: Asia/Seoul
+            label: Korea Standard Time (Asia/Seoul)
+          - value: Indian/Mauritius
+            label: Mauritius Standard Time (Indian/Mauritius)
+          - value: America/Chihuahua
+            label: Mexico Standard Time 2 (America/Chihuahua)
+          - value: Atlantic/South_Georgia
+            label: Mid-Atlantic Standard Time (Atlantic/South_Georgia)
+          - value: Asia/Beirut
+            label: Middle East Standard Time (Asia/Beirut)
+          - value: America/Montevideo
+            label: Montevideo Standard Time (America/Montevideo)
+          - value: Africa/Casablanca
+            label: Morocco Standard Time (Africa/Casablanca)
+          - value: America/Denver
+            label: Mountain Standard Time (America/Denver)
+          - value: Asia/Rangoon
+            label: Myanmar Standard Time (Asia/Rangoon)
+          - value: Asia/Novosibirsk
+            label: N. Central Asia Standard Time (Asia/Novosibirsk)
+          - value: Africa/Windhoek
+            label: Namibia Standard Time (Africa/Windhoek)
+          - value: Asia/Katmandu
+            label: Nepal Standard Time (Asia/Katmandu)
+          - value: Pacific/Auckland
+            label: New Zealand Standard Time (Pacific/Auckland)
+          - value: America/St_Johns
+            label: Newfoundland Standard Time (America/St_Johns)
+          - value: Asia/Irkutsk
+            label: North Asia East Standard Time (Asia/Irkutsk)
+          - value: Asia/Krasnoyarsk
+            label: North Asia Standard Time (Asia/Krasnoyarsk)
+          - value: America/Santiago
+            label: Pacific SA Standard Time (America/Santiago)
+          - value: America/Los_Angeles
+            label: Pacific Standard Time (America/Los_Angeles)
+          - value: America/Tijuana
+            label: Pacific Standard Time (Mexico) (America/Tijuana)
+          - value: Asia/Karachi
+            label: Pakistan Standard Time (Asia/Karachi)
+          - value: Europe/Paris
+            label: Romance Standard Time (Europe/Paris)
+          - value: Europe/Moscow
+            label: Russian Standard Time (Europe/Moscow)
+          - value: Etc/GMT+3
+            label: SA Eastern Standard Time (Etc/GMT+3)
+          - value: America/Bogota
+            label: SA Pacific Standard Time (America/Bogota)
+          - value: America/La_Paz
+            label: SA Western Standard Time (America/La_Paz)
+          - value: Asia/Bangkok
+            label: SE Asia Standard Time (Asia/Bangkok)
+          - value: Pacific/Apia
+            label: Samoa Standard Time (Pacific/Apia)
+          - value: Asia/Singapore
+            label: Singapore Standard Time (Asia/Singapore)
+          - value: Africa/Johannesburg
+            label: South Africa Standard Time (Africa/Johannesburg)
+          - value: Asia/Colombo
+            label: Sri Lanka Standard Time (Asia/Colombo)
+          - value: Asia/Taipei
+            label: Taipei Standard Time (Asia/Taipei)
+          - value: Australia/Hobart
+            label: Tasmania Standard Time (Australia/Hobart)
+          - value: Asia/Tokyo
+            label: Tokyo Standard Time (Asia/Tokyo)
+          - value: Pacific/Tongatapu
+            label: Tonga Standard Time (Pacific/Tongatapu)
+          - value: Etc/GMT+5
+            label: US Eastern Standard Time (Etc/GMT+5)
+          - value: America/Phoenix
+            label: US Mountain Standard Time (America/Phoenix)
+          - value: America/Caracas
+            label: Venezuela Standard Time (America/Caracas)
+          - value: Asia/Vladivostok
+            label: Vladivostok Standard Time (Asia/Vladivostok)
+          - value: Australia/Perth
+            label: W. Australia Standard Time (Australia/Perth)
+          - value: Africa/Lagos
+            label: W. Central Africa Standard Time (Africa/Lagos)
+          - value: Europe/Berlin
+            label: W. Europe Standard Time (Europe/Berlin)
+          - value: Asia/Tashkent
+            label: West Asia Standard Time (Asia/Tashkent)
+          - value: Pacific/Port_Moresby
+            label: West Pacific Standard Time (Pacific/Port_Moresby)
+          - value: Asia/Yakutsk
+            label: Yakutsk Standard Time (Asia/Yakutsk)                      
+        error: false
+        warnings: []
+        status: 200  
+          
+    userTypes:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/userType'
+        error:
+          type: boolean
+          description: Error
+        warnings:
+          type: array
+          description: Warnings
+          items:
+            type: string
+        status:
+          type: integer
+          description: Status     
+      example:
+        data:
+          - key: "superadmin"
+            value: "Super Admin"
+          - key: "cluster_admin"
+            value: "Business Unit Admin"
+          - key: "agent"
+            value: "Agent"
+          - key: "client"
+            value: "Client"
+        error: false
+        warnings: []
+        status: 200        
         
         
 
