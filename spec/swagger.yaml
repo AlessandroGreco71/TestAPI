@@ -3,7 +3,7 @@ info:
   title: TAPCLICKS
   description: |-
   
-    This is the first version of the API Specification for TapClicks.
+    This is the 2.6.20 version of the API Specification for TapClicks.
 
     # AUTHENTICATION
     The **TapClicks** API uses the OAuth 2.0 protocol for authentication and authorization (<a href="https://tools.ietf.org/html/rfc6749#section-4.4">Client Credentials Grant</a>).<br>
@@ -366,6 +366,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401' 
+              example:
+                error: true
+                data: 
+                  -  cannot be deleted
+                warnings: []
+                status: 401              
         '404':
           description: API Route not found 
           content:
@@ -1186,6 +1192,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_401' 
+              example:
+                error: true
+                data: 
+                  -  cannot be deleted
+                warnings: []
+                status: 401                 
         '404':
           description: API Route not found 
           content:
