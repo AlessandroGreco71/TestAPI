@@ -14,7 +14,7 @@ info:
   contact:
     # name: 
     url: https://www.tapclicks.com/
-    # email: aesf
+    # email: 
   x-logo:
     # url: 'https://jobs.mindtheproduct.com/wp-content/uploads/company_logos/2018/04/tapclicks_logo_png-250x93.png'
     url: 'https://www.tapclicks.com/static-templates/img/tapclicks-logo-color.png'
@@ -75,9 +75,9 @@ tags:
   - name: CLIENTS
     description: Clients in the instance.
   - name: CLIENT'S CATEGORIES
-    description: Refers to the categories that be assigned to a Client (For example&#58; Services, Automotive, Retailer, Restaurant...).
+    description: Refers to the categories that can be assigned to a Client (example&#58; Services, Automotive, Retailer, Restaurant...).
   - name: CLIENT GROUPS
-    description: Client Groups allow you to group Clients together. This way you can grant an agent access to all of their reports. These groups can be used with Clients who have multiple locations that require individual reporting, but also require one person to have complete data access. You can also create groups of Client groups if the need is there.
+    description: Client Groups allow you to group Clients together. This way you can grant an agent access to all of their reports. These groups can be used with Clients who have multiple locations that require individual reporting, but also require one person to have complete data access. You can also create Groups of ClientGroups if the need is there.
   - name: DATA PROFILES
     description: Data Profiles help you control the types of campaigns, data and metric you want each User to have access to.
   - name: DATA TYPES
@@ -91,7 +91,7 @@ tags:
   - name: ROLES
     description: Roles are used to control the access of Agents and Business Unit Admins. If the TapOrders module is active, IOTool roles can be assigned to “Super Admin”, “Agent” and “Business Unit Admin” type of user as well.
   - name: SERVICES (DATA SOURCES)
-    description: Services are the Data Sources that a client can connect to pull data into TapClicks; these also include all the resources that were created with the Smart Connector.
+    description: Services are the Data Sources that a client can connect to pull data into TapClicks; these also include all the resources that are created with the Smart Connector.
   - name: USERS
     description: Users in the instance.
   - name: EXAMPLES
@@ -172,7 +172,7 @@ paths:
       description: Clusters are Business Units. This returns a specific Business Unit (*cluster_id*).
       
       
-        **Note&#58;** if the path parameter *cluster_id* is omitted, this will return all the Business Units in the instance (in the response, the "data" field will be an array of cluster objects).
+        **Note&#58;** if the path parameter *cluster_id* is omitted, this will return all the Business Units in the instance (in the response, the *data* field will be an array of cluster objects).
       parameters:
         - in: path
           name: /cluster_id
@@ -446,7 +446,7 @@ paths:
       description: Categories are Channels. This returns a specific category (*category_id*).
       
       
-        **Note&#58;** if the path parameter *category_id* is omitted, this will return all the channels in the instance (in the response, the "data" field will be an array of category objects).
+        **Note&#58;** if the path parameter *category_id* is omitted, this will return all the channels in the instance (in the response, the *data* field will be an array of category objects).
       parameters:
         - in: path
           name: /category_id
@@ -462,17 +462,6 @@ paths:
             enum: [0,1]
           description: The API will provide more or all the info for the available fields.
           example: https://api.tapclicks.com/v2/categories?metadata=1
-        # IMPORTANT: this will have to be fixed/checked before showing this option 
-        # - in: query
-        #   name: page
-        #   required: false
-        #   schema:
-        #     type: string
-        #   description: The example will return the first five records. Please refer to <a href="#tag/PAGINATION">Pagination</a> for more examples.
-        
-        
-        #     This will limit the number of rows in the fetch result. 
-        #   example: https://api.tapclicks.com/v2/categories?page=0,5
         - in: query
           name: fields
           required: false
@@ -501,22 +490,6 @@ paths:
             enum: [0,1]
           description: The API will provide a total number of records in the result.
           example: http://api.tapclicks.com/v2/categories?count=1
-          # CHECK/FIX THIS before it becomes available again!
-        # - in: query
-        #   name: field_data_filter
-        #   required: false
-        #   schema:
-        #     type: string
-        #   description: |
-        #     This will filter the data that contains only specific values.
-      
-      
-        #     To remove items use **!** before the value.
-            
-              
-        #     Example&#58; `"https://api.tapclicks.com/v2/categories?id=!12"`<br>
-        #     This will return all channels, except for the one with id = 12
-        #   example: https://api.tapclicks.com/v2/categories?name=Social%20Services,Display%20Services
 
       responses:
         '200':
@@ -572,7 +545,7 @@ paths:
       description: This returns a specific Client (*client_id*).
       
       
-        **Note&#58;** if the path parameter *client_id* is omitted, this will return all the Clients in the instance (in the response, the "data" field will be an array of client objects).
+        **Note&#58;** if the path parameter *client_id* is omitted, this will return all the Clients in the instance (in the response, the *data* field will be an array of client objects).
       parameters:
         - in: path
           name: /client_id
@@ -843,24 +816,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
-      # x-code-samples:
-      #   - lang: 'C#'
-      #     source: |
-      #       PetStore.v1.Pet pet = new PetStore.v1.Pet();
-      #       pet.setApiKey("your api key");
-      #       pet.petType = PetStore.v1.Pet.TYPE_DOG;
-      #       pet.name = "Rex";
-      #       // set other fields
-      #       PetStoreResponse response = pet.create();
-      #       if (response.statusCode == HttpStatusCode.Created)
-      #       {
-      #         // Successfully created
-      #       }
-      #       else
-      #       {
-      #         // Something wrong -- check response for errors
-      #         Console.WriteLine(response.getRawResponse());
-      #       }                
+             
 # --------------------- Client's Categories --------------------------  
   
   /clientcategories:
@@ -996,7 +952,7 @@ paths:
       description: This returns a specific Group of Clients (*clientgroup_id*).
       
       
-        **Note&#58;** if the path parameter *clientgroup_id* is omitted, this will return all the Groups of Clients in the instance (in the response, the "data" field will be an array of clientGroup objects).
+        **Note&#58;** if the path parameter *clientgroup_id* is omitted, this will return all the Groups of Clients in the instance (in the response, the *data* field will be an array of clientGroup objects).
       parameters:
         - in: path
           name: /clientgroup_id
@@ -1273,7 +1229,7 @@ paths:
       description: Reporting Profiles are Data Profiles. This returns a specific Data Profile (*profile_id*).
       
       
-        **Note&#58;** if the path parameter *profile_id* is omitted, this will return all the Data Profiles in the instance (in the response, the "data" field will be an array of dataProfile objects).
+        **Note&#58;** if the path parameter *profile_id* is omitted, this will return all the Data Profiles in the instance (in the response, the *data* field will be an array of dataProfile objects).
       parameters:
         - in: path
           name: /profile_id
@@ -1613,7 +1569,7 @@ paths:
       description: This returns a specific lead (*lead_id*). 
         
         
-        **Note&#58;** if the path parameter *lead_id* is omitted, this will return a list of all the leads in the instance (in the response, the "data" field will be an array of lead objects).
+        **Note&#58;** if the path parameter *lead_id* is omitted, this will return a list of all the leads in the instance (in the response, the *data* field will be an array of lead objects).
       parameters:
         - in: path
           name: /lead_id
@@ -1845,7 +1801,7 @@ paths:
       description: This returns a specific role (*role_id*) that can be assigned to a user.
       
       
-        **Note&#58;** if the path parameter *role_id* is omitted, this will return a list of all the roles in the instance (in the response, the "data" field will be an array of role objects).
+        **Note&#58;** if the path parameter *role_id* is omitted, this will return a list of all the roles in the instance (in the response, the *data* field will be an array of role objects).
       parameters:
         - in: path
           name: /role_id
@@ -1965,7 +1921,7 @@ paths:
         This returns a specific service (*service_id*) in the instance. This can be helpful to find out if such is connected or not.
         
         
-        **Note&#58;** if the path parameter *service_id* is omitted, this will return a list of all the services available in the instance, whether they're connected or not (in the response, the "data" field will be an array of service objects).
+        **Note&#58;** if the path parameter *service_id* is omitted, this will return a list of all the services available in the instance, whether they're connected or not (in the response, the *data* field will be an array of service objects).
       parameters:
         - in: path
           name: /service_id
@@ -2113,13 +2069,7 @@ paths:
           schema:
             type: string
           required: true
-          description: Data view id the column belongs to
-        # - in: path
-        #   name: /field
-        #   schema:
-        #     type: string
-        #   required: true
-        #   description: Field names of column to fetch
+          description: Data view id that the column belongs to
         - in: query
           name: metadata
           required: false
@@ -2307,7 +2257,7 @@ paths:
       description: This returns a specific User (*user_id*).
       
       
-        **Note&#58;** if the path parameter *user_id* is omitted, this will return all the Users in the instance (in the response, the "data" field will be an array of user objects).
+        **Note&#58;** if the path parameter *user_id* is omitted, this will return all the Users in the instance (in the response, the *data* field will be an array of user objects).
       parameters:
         - in: path
           name: /user_id
@@ -2681,7 +2631,7 @@ components:
           description: Member Business Unit Ids - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
           
           
-            **Note&#58;** This field is returned only if "type" is `group`
+            **Note&#58;** This field is returned only if *type* = `group`
         status_display:
           type: string
           enum: [Active,Inactive]
@@ -2701,7 +2651,7 @@ components:
             **Note&#58;** The Business Unit's name must be a unique entry
         type:
           type: string
-          description: Type - When type is "group" please refer to the field *member_cluster_ids*.
+          description: Type - When this is `group` please refer to the field *member_cluster_ids*.
             
             
             **Note&#58;** Once this field is set, it cannot be edited to a different type.
@@ -2714,7 +2664,7 @@ components:
           description: Member Business Unit Ids
           
           
-            **Note&#58;** This field is ONLY to be entered (and <font color="red">**required**</font>) when *type* = "group"
+            **Note&#58;** This field is ONLY to be entered (and <font color="red">**required**</font>) when *type* = `group`
           items:
             type: integer
         enable_inventory_calendar:
@@ -2784,7 +2734,7 @@ components:
       
       
 
-# --------------- Creates New Client Model - (missing: id, has_light_logo, has_dark_logo, created_by_user, created_by_user_id, formatted_creation_time, formatted_last_modification_time, creation_time, last_modification_time, reporting_status_display, io_tool_status_display)  ----------------- 
+# --------------- Creates New Client Model  ------------------ 
     createClient:
       type: object
       required:
@@ -2859,7 +2809,11 @@ components:
           description: Enable Lead Management Module
         report_language:
           type: string
-          description: Report language
+          description: Report language - Please refer to <a href="#tag/LANGUAGES">Languages</a> to obtain a list of all supported languages
+          
+          
+            **Note&#58;** This field is available only if the Multi-language Reports Module is active
+          enum: ["en_US","fr_CA","hi_IN","id_ID","es_ES"]  
         source_service_id:
           type: string
           description: Source service Id
@@ -2868,7 +2822,7 @@ components:
           description: Business Unit Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
           type: string
-          description: Data Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
+          description: Default Data Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
           type: string
           description: Client Category Id - Please refer to <a href="#tag/CLIENT'S-CATEGORIES">Client's Categories</a> to obtain all existing Client Category Ids
@@ -2973,10 +2927,14 @@ components:
           description: Created by User Id - Please refer to <a href="#tag/USERS">User Id</a> to obtain all existing User Ids
         created_by_user:
           type: string
-          description: Created by User
+          description: Created by User - Please refer to <a href="#tag/USERS">User Id</a> to obtain all existing Users
         report_language:
           type: string
-          description: Report language (if available)
+          description: Report language - Please refer to <a href="#tag/LANGUAGES">Languages</a> to obtain a list of all supported languages
+          
+          
+            **Note&#58;** This field is returned only if the Multi-language Reports Module is active
+          enum: ["en_US","fr_CA","hi_IN","id_ID","es_ES"]   
         source_service_id:
           type: string
           description: Source service Id
@@ -2991,7 +2949,7 @@ components:
           description: Business Unit Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
           type: string
-          description: Data Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
+          description: Default Data Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
           type: string
           description: Client Category Id - Please refer to <a href="#tag/CLIENT'S-CATEGORIES">Client's Categories</a> to obtain all existing Client Category Ids
@@ -3039,7 +2997,7 @@ components:
           description: Client Category Id
         name:
           type: string
-          description: Client Category
+          description: Client Category Name
       
 # --------------- Client Group Model -----------------         
     clientGroup:
@@ -3075,7 +3033,7 @@ components:
           description: Report Language - Please refer to <a href="#tag/LANGUAGES">Languages</a> to obtain a list of all supported languages
           
           
-            **Note&#58;** This field is returned only if the Multi-language Reports module is active
+            **Note&#58;** This field is returned only if the Multi-language Reports Module is active
           enum: ["en_US","fr_CA","hi_IN","id_ID","es_ES"]
         formatted_created_at: 
           type: string
@@ -3128,7 +3086,7 @@ components:
           description: Report Language - Please refer to <a href="#tag/LANGUAGES">Languages</a> to obtain a list of all supported languages
           
           
-            **Note&#58;** This field is available only if the Multi-language Reports module is active
+            **Note&#58;** This field is available only if the Multi-language Reports Module is active
           enum: ["en_US","fr_CA","hi_IN","id_ID","es_ES"]          
         client_ids:
           type: array
@@ -3137,7 +3095,7 @@ components:
           description: Client Ids - Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain all existing Client Ids.
           
           
-            **Note&#58;**  This field is ONLY to be entered (and <font color="red">**required**</font>) when *group_type* = `group_of_clients`
+            **Note&#58;** This field is ONLY to be entered (and <font color="red">**required**</font>) when *group_type* = `group_of_clients`
         client_group_ids:
           type: array
           items:
@@ -3145,7 +3103,7 @@ components:
           description: Client Group Ids - Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Groups Ids.
             
             
-            **Note&#58;**  This field is ONLY to be entered (and <font color="red">**required**</font>) when *group_type* = `group_of_client_groups`
+            **Note&#58;** This field is ONLY to be entered (and <font color="red">**required**</font>) when *group_type* = `group_of_client_groups`
   
   
 # --------------- Data Profile Model -----------------          
@@ -3356,7 +3314,7 @@ components:
           description: Client name
         client_reporting_status:
           type: string
-          description: string
+          description: Client reporting status
         client_billing_id:
           type: string
           description: Client billing Id
@@ -3465,7 +3423,7 @@ components:
           description: Role Id
         name:
           type: string
-          description: Name
+          description: Role Name
         role_type:
           type: string
           description: Role type
@@ -3495,7 +3453,7 @@ components:
           description: Service Id
         name:
           type: string
-          description: Name
+          description: Service Name
         original_name:
           type: string
           description: Original Name
@@ -3627,15 +3585,8 @@ components:
         _client_category:
           type: string
           description: Client Category
-          
-              
-
-# --------------- DataView Result Model ----------------- 
-
-# --------------- Field Result Model ----------------- 
-
             
-# --------------- CreateUser Model (fields NOT displayed: id, has_light_logo, has_dark_logo, creation_time, user_type_display, country_display, timezone_display, status_display, formatted_creation-time, hipaa_acknowledgement_timestamp) ------------------            
+# --------------- CreateUser Model  ------------------            
     createUser:
       type: object
       required: 
@@ -3765,7 +3716,7 @@ components:
         reporting_profile_id:
           type: string
           default: "1"
-          description: Reporting Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all of the exisiting data profile id 
+          description: Data Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all of the exisiting data profile id 
 # --------------- User Model (GET) -----------------    
     user:
       type: object
@@ -3899,7 +3850,7 @@ components:
         io_tool_notification_frequency_display:
           type: string
           enum: [Never,Real-time]
-          description: IOTool notification frequency display 
+          description: IOTool notification frequency display
           
           
             **Note&#58;** This field is returned only if *io_tool_notification_frequency* is set
@@ -4586,7 +4537,7 @@ components:
         
         ```
 
-        The Refresh Token also has a limited lifetime. The lifetime (expires_in) is expressed in seconds
+        The Refresh Token also has a limited lifetime. The lifetime (*expires_in*) is expressed in seconds
 
 
         **Possible responses:**
@@ -4644,7 +4595,7 @@ components:
           tokenUrl: https://api.tapclicks.com/oauth/accesstoken
           refreshUrl: https://api.tapclicks.com/oauth/refresh_accesstoken
           scopes: {}
-    bearerAuth:            # arbitrary name for the security scheme
+    bearerAuth:            
       type: http
       scheme: bearer
       bearerFormat: JWT           
