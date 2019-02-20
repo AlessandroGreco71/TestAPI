@@ -757,7 +757,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response_200_successful_post_delete'
-              example:
         '400':
           description: Error on client's side
           content:
@@ -2679,7 +2678,7 @@ components:
           enum: [single,group]
         member_cluster_ids:
           type: string
-          description: Member Cluster Ids - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
+          description: Member Business Unit Ids - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
           
           
             **Note&#58;** This field is returned only if "type" is `group`
@@ -2750,7 +2749,7 @@ components:
           properties:
             service_id:
               type: object
-              description: Service Id; Please refer to <a href="#tag/SERVICES-(DATA-SOURCES)/paths/~1services{~1service_id}/get">Services (Data Sources)</a> to obtain all existing Service Ids
+              description: Service Id - Please refer to <a href="#tag/SERVICES-(DATA-SOURCES)/paths/~1services{~1service_id}/get">Services (Data Sources)</a> to obtain all existing Service Ids
               properties:
                 icon:
                   type: string
@@ -2866,31 +2865,29 @@ components:
           description: Source service Id
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
+          description: Business Unit Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
           type: string
-          description: Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
+          description: Data Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
           type: string
-          description: Please refer to <a href="#tag/CLIENT'S-CATEGORIES">Client's Categories</a> to obtain all existing Client Category Ids
+          description: Client Category Id - Please refer to <a href="#tag/CLIENT'S-CATEGORIES">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
           enum: [pending_mapping,active,hold,terminated]
-          default: pending_mapping
           description: Reporting status
         iotool_status:
           type: string
           enum: [presale,active,inactive,terminated]
-          default: presale
           description: TapOrders status
         has_hipaa_data:
           type: boolean
           description: Has HIPAA data
         client_group_ids:
           type: array
+          description: Client Group Ids - Please refer to <a href="#tag/CLIENT-GROUPS">Client Group</a> to obtain all existing Client Group Ids
           items: 
             type: string
-            description: Please refer to <a href="#tag/CLIENT-GROUPS">Client Group</a> to obtain all existing Client Group Ids
         activate_tapleads:
           type: boolean
           description: Activate TapLeads
@@ -2973,7 +2970,7 @@ components:
           description: Enable Lead Management Module
         created_by_user_id:
           type: string
-          description: Created by User Id; please refer to <a href="#tag/USERS">User Id</a> to obtain all existing User Ids
+          description: Created by User Id - Please refer to <a href="#tag/USERS">User Id</a> to obtain all existing User Ids
         created_by_user:
           type: string
           description: Created by User
@@ -2991,22 +2988,20 @@ components:
           description: Time of last modification
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
+          description: Business Unit Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
         default_reporting_profile_id:
           type: string
-          description: Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
+          description: Data Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all existing Data Profile Ids
         client_category_id:
           type: string
-          description: Please refer to <a href="#tag/CLIENT'S-CATEGORIES">Client's Categories</a> to obtain all existing Client Category Ids
+          description: Client Category Id - Please refer to <a href="#tag/CLIENT'S-CATEGORIES">Client's Categories</a> to obtain all existing Client Category Ids
         reporting_status:
           type: string
           enum: [pending_mapping,active,hold,terminated]
-          default: pending_mapping
           description: Reporting status
         iotool_status:
           type: string
           enum: [presale,active,inactive,terminated]
-          default: presale
           description: TapOrders status
         has_hipaa_data:
           type: boolean
@@ -3055,10 +3050,10 @@ components:
           description: Client Group Id
         name:
           type: string
-          description: Client Group
+          description: Client Group Name
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
+          description: Business Unit Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
         group_type:
           type: string
           enum: [group_of_clients,group_of_client_groups]
@@ -3077,10 +3072,9 @@ components:
           description: Updated time
         report_language:
           type: string
-          description: Report Language
+          description: Report Language - Please refer to <a href="#tag/LANGUAGES">Languages</a> to obtain a list of all supported languages
           
           
-            Please refer to <a href="#tag/LANGUAGES">Languages</a> to obtain a list of all supported languages<br>
             **Note&#58;** This field is returned only if the Multi-language Reports module is active
           enum: ["en_US","fr_CA","hi_IN","id_ID","es_ES"]
         formatted_created_at: 
@@ -3115,10 +3109,10 @@ components:
       properties:
         name:
           type: string
-          description: Client Group
+          description: Client Group Name
           
-          
-            **Note&#58;** The name must be unique within the instance
+            
+            **Note&#58;** The Client Group name must be a unique entry
         group_type: 
           type: string
           description: Group type
@@ -3128,13 +3122,12 @@ components:
           enum: [group_of_clients,group_of_client_groups]
         cluster_id:
           type: string
-          description: Cluster Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
+          description: Business Unit Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all existing Business Unit Ids
         report_language:
           type: string
-          description: Report Language
+          description: Report Language - Please refer to <a href="#tag/LANGUAGES">Languages</a> to obtain a list of all supported languages
           
           
-            Please refer to <a href="#tag/LANGUAGES">Languages</a> to obtain a list of all supported languages<br>
             **Note&#58;** This field is available only if the Multi-language Reports module is active
           enum: ["en_US","fr_CA","hi_IN","id_ID","es_ES"]          
         client_ids:
@@ -3144,15 +3137,15 @@ components:
           description: Client Ids - Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain all existing Client Ids.
           
           
-            **Note&#58;**  This field is ONLY to be entered (and <font color="red">**required**</font>) when *type* = `group_of_clients`
+            **Note&#58;**  This field is ONLY to be entered (and <font color="red">**required**</font>) when *group_type* = `group_of_clients`
         client_group_ids:
           type: array
           items:
             type: string
-          description: Client Group Ids - Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Groups Ids.  
-          
-          
-            **Note&#58;**  This field is ONLY to be entered (and <font color="red">**required**</font>) when *type* = `group_of_client_groups`
+          description: Client Group Ids - Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Groups Ids.
+            
+            
+            **Note&#58;**  This field is ONLY to be entered (and <font color="red">**required**</font>) when *group_type* = `group_of_client_groups`
   
   
 # --------------- Data Profile Model -----------------          
@@ -3659,11 +3652,10 @@ components:
           description: Client Id
           
           
-            **Note&#58;** This field is (and <font color="red">**required**</font>) when *user_type* = "client"
+            **Note&#58;** This field is <font color="red">**required**</font> when *user_type* = `client`
         user_type:
           type: string
           enum: [client,agent,superadmin,cluster_admin]
-          default: client
           description: User type - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all available user types
         company_name: 
           type: string
@@ -3703,11 +3695,10 @@ components:
           description: Password
         cluster_id:
           type: string
-          description: Business Unit Id
+          description: Business Unit Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all of the exisiting Business Unit Ids
           
           
-            **Note&#58;** This field is (and <font color="red">**required**</font>) when *user_type* = "cluster_admin".<br>
-            Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all of the exisiting Business Unit Ids
+            **Note&#58;** This field is <font color="red">**required**</font> when *user_type* = `cluster_admin`
         external_user_id:
           type: string
           description: External User Id
@@ -3735,14 +3726,12 @@ components:
         io_tool_notification_frequency:
           type: string
           enum: [never,real_time,daily,weekly,monthly]
-          default: null
           description: IOTool notification frequency
         country:
           type: string
           description: Country
         timezone:
           type: string 
-          default: default
           description: Refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Timezones</a> to obtain all available user timezones
         status:
           type: string
@@ -3760,21 +3749,19 @@ components:
           enum: [default,yes,no]
         role_id:
           type: string
-          description: Role Id
+          description: Role Id - Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and Ids
           
           
-            **Note&#58;** This field is (and <font color="red">**required**</font>) when *user_type* = "agent".<br>
-            Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
+            **Note&#58;** This field is <font color="red">**required**</font> when *user_type* = `agent`
         io_tool_role_id:
           type: string
-          description: Io tool role Id - Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
+          description: Io tool role Id - Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and Ids
         client_group_id:
           type: string
-          description: Client group Id 
+          description: Client Group Id - Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Group Ids
           
             
-            **Note&#58;** This field is (and <font color="red">**required**</font>) when *user_type* = "agent". <br>
-            Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing client group id
+            **Note&#58;** This field is <font color="red">**required**</font> when *user_type* = `agent`
         reporting_profile_id:
           type: string
           default: "1"
@@ -3792,7 +3779,6 @@ components:
         user_type:
           type: string
           enum: [client,agent,superadmin,cluster_admin]
-          default: client
           description: User type - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all available user types
         company_name: 
           type: string
@@ -3826,7 +3812,7 @@ components:
           description: Email address
         cluster_id:
           type: string
-          description: Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all of the exisiting business unit id
+          description: Business Unit Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all of the exisiting Business Unit Ids
         external_user_id:
           type: string
           description: External User Id
@@ -3860,15 +3846,13 @@ components:
         io_tool_notification_frequency:
           type: string
           enum: [never,real_time]
-          default: null
           description: IOTool notification frequency
         country:
           type: string
           description: Country
         timezone:
-          type: string 
-          default: default
-          description: Refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Timezones</a> to obtain all available user timezones
+          type: string
+          description: Timezone - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Timezones</a> to obtain all available user timezones
         status:
           type: string
           enum: [active,inactive]
@@ -3897,15 +3881,15 @@ components:
           description: Io tool role Id - Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and ids
         client_group_id:
           type: string
-          description: Client Group Id - Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing client group id
+          description: Client Group Id - Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Group Ids
         reporting_profile_id:
           type: string
           default: "1"
-          description: Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all of the exisiting data profile id
+          description: Data Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all of the exisiting data profile Ids
         user_type_display: 
           type: string
           enum: [Super Admin,Business Unit Admin,Agent,Client]
-          description: User type display - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all available user types
+          description: User type display - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all available User types values
         default_home_page_display:
           type: string
           description: Default Home Page Display
@@ -3915,7 +3899,6 @@ components:
         io_tool_notification_frequency_display:
           type: string
           enum: [Never,Real-time]
-          default: null
           description: IOTool notification frequency display 
           
           
@@ -3925,7 +3908,7 @@ components:
           description: Country display
         timezone_display: 
           type: string
-          description: Refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Timezones</a> to obtain all available user timezones
+          description: Timezone display - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Timezones</a> to obtain all available user timezones
         status_display:
           type: string
           enum: [active,inactive]
