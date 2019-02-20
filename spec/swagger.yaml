@@ -2692,7 +2692,7 @@ components:
           description: Channel Id
         name:
           type: string
-          description: Channel Nane
+          description: Channel Name
         services_ids:
           type: object
           description: Service Ids in the Channel
