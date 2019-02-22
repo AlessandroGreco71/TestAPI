@@ -22,6 +22,9 @@ info:
 
   
 servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/AlessandroGreco71/default-title/2.6.20
   - url: 'https://api.tapclicks.com/v2'
   
 tags:
@@ -2418,7 +2421,7 @@ paths:
         content:
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
-              $ref: "#/components/schemas/createUser"
+              $ref: "#/components/schemas/editUser"
             examples:
               '0':
                 value: |-
@@ -3585,8 +3588,139 @@ components:
         _client_category:
           type: string
           description: Client Category
+          
+# --------------- Edit an existing User Model ---------------------
+    editUser:
+      type: object
+      required: 
+        - first_name
+        - last_name
+        - user_type
+        - email
+        - status
+        - reporting_profile_id
+      properties:
+        client_id: 
+          type: string
+          description: Client Id
+          
+          
+            **Note&#58;** This field is <font color="red">**required**</font> when *user_type* = `client`
+        user_type:
+          type: string
+          enum: [client,agent,superadmin,cluster_admin]
+          description: User type - Please refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Types</a> to obtain all available user types
+        company_name: 
+          type: string
+          description: Company Name
+        first_name:
+          type: string
+          description: First Name
+        last_name:
+          type: string
+          description: Last Name
+        address_1:
+          type: string
+          description: Address 1
+        address_2:
+          type: string
+          description: Address 2
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State
+        zip:
+          type: string
+          description: Zip/Postal Code
+        phone:
+          type: string
+          description: Phone number
+        email:
+          type: string
+          description: Email address
+          
+          
+            **Note&#58;** The email address must be a unique entry
+        password:
+          type: string
+          description: Password
+        cluster_id:
+          type: string
+          description: Business Unit Id - Please refer to <a href="#tag/BUSINESS-UNITS">Business Units</a> to obtain all of the exisiting Business Unit Ids
+          
+          
+            **Note&#58;** This field is <font color="red">**required**</font> when *user_type* = `cluster_admin`
+        external_user_id:
+          type: string
+          description: External User Id
+        additional_details_1:
+          type: string
+          description: Additional Details 1
+        additional_details_2:
+          type: string
+          description: Additional Details 2
+        additional_details_3:
+          type: string
+          description: Additional Details 3
+        enable_io_tool_module:
+          type: boolean
+          description: Enable IOTool Module
+        enable_lead_management_module:
+          type: boolean
+          description: Enable Lead Management Module
+        override_dashboard_pages_from_reporting_profile:
+          type: boolean
+          description: Override dashboard pages from reporting profile
+        default_home_page:
+          type: string
+          description: Default home page
+        io_tool_notification_frequency:
+          type: string
+          enum: [never,real_time,daily,weekly,monthly]
+          description: IOTool notification frequency
+        country:
+          type: string
+          description: Country
+        timezone:
+          type: string 
+          description: Refer to <a href="#tag/USERS/paths/~1users~1values~1set/get">User Timezones</a> to obtain all available user timezones
+        status:
+          type: string
+          enum: [active,inactive]
+          description: Status
+        show_services_overview: 
+          type: string
+          default: default
+          description: Show services overview
+          enum: [default,yes,no]
+        show_categories_overview:
+          type: string
+          default: default
+          description: Show categories overview
+          enum: [default,yes,no]
+        role_id:
+          type: string
+          description: Role Id - Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and Ids
+          
+          
+            **Note&#58;** This field is <font color="red">**required**</font> when *user_type* = `agent`
+        io_tool_role_id:
+          type: string
+          description: Io tool role Id - Please refer to <a href="#tag/ROLES">Roles</a> to obtain all possible role types and Ids
+        client_group_id:
+          type: string
+          description: Client Group Id - Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Group Ids
+          
             
-# --------------- CreateUser Model  ------------------            
+            **Note&#58;** This field is <font color="red">**required**</font> when *user_type* = `agent`
+        reporting_profile_id:
+          type: string
+          default: "1"
+          description: Data Profile Id - Please refer to <a href="#tag/DATA-PROFILES">Data Profiles</a> to obtain all of the exisiting data profile id 
+            
+# --------------- Create a NEW User Model  ------------------            
     createUser:
       type: object
       required: 
@@ -3889,6 +4023,248 @@ components:
         value:
           type: string
           description: Value
+          
+    timezones:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/timezone'
+        error:
+          type: boolean
+          description: Error
+        warnings:
+          type: array
+          description: Warnings
+          items:
+            type: string
+        status:
+          type: integer
+          description: Status
+      example:
+        data:
+          - value: Australia/Darwin
+            label: AUS Central Standard Time (Australia/Darwin)
+          - value: Australia/Sydney
+            label: AUS Eastern Standard Time (Australia/Sydney)
+          - value: Asia/Kabul
+            label: Afghanistan Standard Time (Asia/Kabul)
+          - value: America/Anchorage
+            label: Alaskan Standard Time (America/Anchorage)
+          - value: Asia/Riyadh
+            label: Arab Standard Time (Asia/Riyadh)
+          - value: Asia/Dubai
+            label: Arabian Standard Time (Asia/Dubai)
+          - value: Asia/Baghdad
+            label: Arabic Standard Time (Asia/Baghdad)
+          - value: America/Buenos_Aires
+            label: Argentina Standard Time (America/Buenos_Aires)
+          - value: Asia/Yerevan
+            label: Armenian Standard Time (Asia/Yerevan)
+          - value: America/Halifax
+            label: Atlantic Standard Time (America/Halifax)
+          - value: Asia/Baku
+            label: Azerbaijan Standard Time (Asia/Baku)
+          - value: Atlantic/Azores
+            label: Azores Standard Time (Atlantic/Azores)
+          - value: America/Regina
+            label: Canada Central Standard Time (America/Regina)
+          - value: Atlantic/Cape_Verde
+            label: Cape Verde Standard Time (Atlantic/Cape_Verde)
+          - value: Australia/Adelaide
+            label: Cen. Australia Standard Time (Australia/Adelaide)
+          - value: America/Guatemala
+            label: Central America Standard Time (America/Guatemala)
+          - value: Asia/Dhaka
+            label: Central Asia Standard Time (Asia/Dhaka)
+          - value: America/Manaus
+            label: Central Brazilian Standard Time (America/Manaus)
+          - value: Europe/Budapest
+            label: Central Europe Standard Time (Europe/Budapest)
+          - value: Europe/Warsaw
+            label: Central European Standard Time (Europe/Warsaw)
+          - value: Pacific/Guadalcanal
+            label: Central Pacific Standard Time (Pacific/Guadalcanal)
+          - value: America/Chicago
+            label: Central Standard Time (America/Chicago)
+          - value: America/Mexico_City
+            label: Central Standard Time (Mexico) (America/Mexico_City)
+          - value: Asia/Shanghai
+            label: China Standard Time (Asia/Shanghai)
+          - value: Etc/GMT+12
+            label: Dateline Standard Time (Etc/GMT+12)
+          - value: Africa/Nairobi
+            label: E. Africa Standard Time (Africa/Nairobi)
+          - value: Australia/Brisbane
+            label: E. Australia Standard Time (Australia/Brisbane)
+          - value: Europe/Minsk
+            label: E. Europe Standard Time (Europe/Minsk)
+          - value: America/Sao_Paulo
+            label: E. South America Standard Time (America/Sao_Paulo)
+          - value: America/New_York
+            label: Eastern Standard Time (America/New_York)
+          - value: Africa/Cairo
+            label: Egypt Standard Time (Africa/Cairo)
+          - value: Asia/Yekaterinburg
+            label: Ekaterinburg Standard Time (Asia/Yekaterinburg)
+          - value: Europe/Kiev
+            label: FLE Standard Time (Europe/Kiev)
+          - value: Pacific/Fiji
+            label: Fiji Standard Time (Pacific/Fiji)
+          - value: Europe/London
+            label: GMT Standard Time (Europe/London)
+          - value: Europe/Istanbul
+            label: GTB Standard Time (Europe/Istanbul)
+          - value: Etc/GMT-3
+            label: Georgian Standard Time (Etc/GMT-3)
+          - value: America/Godthab
+            label: Greenland Standard Time (America/Godthab)
+          - value: Atlantic/Reykjavik
+            label: Greenwich Standard Time (Atlantic/Reykjavik)
+          - value: Pacific/Honolulu
+            label: Hawaiian Standard Time (Pacific/Honolulu)
+          - value: Asia/Calcutta
+            label: India Standard Time (Asia/Calcutta)
+          - value: Asia/Tehran
+            label: Iran Standard Time (Asia/Tehran)
+          - value: Asia/Jerusalem
+            label: Israel Standard Time (Asia/Jerusalem)
+          - value: Asia/Amman
+            label: Jordan Standard Time (Asia/Amman)
+          - value: Asia/Seoul
+            label: Korea Standard Time (Asia/Seoul)
+          - value: Indian/Mauritius
+            label: Mauritius Standard Time (Indian/Mauritius)
+          - value: America/Chihuahua
+            label: Mexico Standard Time 2 (America/Chihuahua)
+          - value: Atlantic/South_Georgia
+            label: Mid-Atlantic Standard Time (Atlantic/South_Georgia)
+          - value: Asia/Beirut
+            label: Middle East Standard Time (Asia/Beirut)
+          - value: America/Montevideo
+            label: Montevideo Standard Time (America/Montevideo)
+          - value: Africa/Casablanca
+            label: Morocco Standard Time (Africa/Casablanca)
+          - value: America/Denver
+            label: Mountain Standard Time (America/Denver)
+          - value: Asia/Rangoon
+            label: Myanmar Standard Time (Asia/Rangoon)
+          - value: Asia/Novosibirsk
+            label: N. Central Asia Standard Time (Asia/Novosibirsk)
+          - value: Africa/Windhoek
+            label: Namibia Standard Time (Africa/Windhoek)
+          - value: Asia/Katmandu
+            label: Nepal Standard Time (Asia/Katmandu)
+          - value: Pacific/Auckland
+            label: New Zealand Standard Time (Pacific/Auckland)
+          - value: America/St_Johns
+            label: Newfoundland Standard Time (America/St_Johns)
+          - value: Asia/Irkutsk
+            label: North Asia East Standard Time (Asia/Irkutsk)
+          - value: Asia/Krasnoyarsk
+            label: North Asia Standard Time (Asia/Krasnoyarsk)
+          - value: America/Santiago
+            label: Pacific SA Standard Time (America/Santiago)
+          - value: America/Los_Angeles
+            label: Pacific Standard Time (America/Los_Angeles)
+          - value: America/Tijuana
+            label: Pacific Standard Time (Mexico) (America/Tijuana)
+          - value: Asia/Karachi
+            label: Pakistan Standard Time (Asia/Karachi)
+          - value: Europe/Paris
+            label: Romance Standard Time (Europe/Paris)
+          - value: Europe/Moscow
+            label: Russian Standard Time (Europe/Moscow)
+          - value: Etc/GMT+3
+            label: SA Eastern Standard Time (Etc/GMT+3)
+          - value: America/Bogota
+            label: SA Pacific Standard Time (America/Bogota)
+          - value: America/La_Paz
+            label: SA Western Standard Time (America/La_Paz)
+          - value: Asia/Bangkok
+            label: SE Asia Standard Time (Asia/Bangkok)
+          - value: Pacific/Apia
+            label: Samoa Standard Time (Pacific/Apia)
+          - value: Asia/Singapore
+            label: Singapore Standard Time (Asia/Singapore)
+          - value: Africa/Johannesburg
+            label: South Africa Standard Time (Africa/Johannesburg)
+          - value: Asia/Colombo
+            label: Sri Lanka Standard Time (Asia/Colombo)
+          - value: Asia/Taipei
+            label: Taipei Standard Time (Asia/Taipei)
+          - value: Australia/Hobart
+            label: Tasmania Standard Time (Australia/Hobart)
+          - value: Asia/Tokyo
+            label: Tokyo Standard Time (Asia/Tokyo)
+          - value: Pacific/Tongatapu
+            label: Tonga Standard Time (Pacific/Tongatapu)
+          - value: Etc/GMT+5
+            label: US Eastern Standard Time (Etc/GMT+5)
+          - value: America/Phoenix
+            label: US Mountain Standard Time (America/Phoenix)
+          - value: America/Caracas
+            label: Venezuela Standard Time (America/Caracas)
+          - value: Asia/Vladivostok
+            label: Vladivostok Standard Time (Asia/Vladivostok)
+          - value: Australia/Perth
+            label: W. Australia Standard Time (Australia/Perth)
+          - value: Africa/Lagos
+            label: W. Central Africa Standard Time (Africa/Lagos)
+          - value: Europe/Berlin
+            label: W. Europe Standard Time (Europe/Berlin)
+          - value: Asia/Tashkent
+            label: West Asia Standard Time (Asia/Tashkent)
+          - value: Pacific/Port_Moresby
+            label: West Pacific Standard Time (Pacific/Port_Moresby)
+          - value: Asia/Yakutsk
+            label: Yakutsk Standard Time (Asia/Yakutsk)                      
+        error: false
+        warnings: []
+        status: 200  
+          
+    userTypes:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/userType'
+        error:
+          type: boolean
+          description: Error
+        warnings:
+          type: array
+          description: Warnings
+          items:
+            type: string
+        status:
+          type: integer
+          description: Status     
+      example:
+        data:
+          - key: "superadmin"
+            value: "Super Admin"
+          - key: "cluster_admin"
+            value: "Business Unit Admin"
+          - key: "agent"
+            value: "Agent"
+          - key: "client"
+            value: "Client"
+        error: false
+        warnings: []
+        status: 200               
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
           
 # --------------- Error Msg/Responses Model-----------------  
     error_400:
@@ -4261,238 +4637,6 @@ components:
         status: 
           type: integer
           description: Status
-          
-    timezones:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/timezone'
-        error:
-          type: boolean
-          description: Error
-        warnings:
-          type: array
-          description: Warnings
-          items:
-            type: string
-        status:
-          type: integer
-          description: Status
-      example:
-        data:
-          - value: Australia/Darwin
-            label: AUS Central Standard Time (Australia/Darwin)
-          - value: Australia/Sydney
-            label: AUS Eastern Standard Time (Australia/Sydney)
-          - value: Asia/Kabul
-            label: Afghanistan Standard Time (Asia/Kabul)
-          - value: America/Anchorage
-            label: Alaskan Standard Time (America/Anchorage)
-          - value: Asia/Riyadh
-            label: Arab Standard Time (Asia/Riyadh)
-          - value: Asia/Dubai
-            label: Arabian Standard Time (Asia/Dubai)
-          - value: Asia/Baghdad
-            label: Arabic Standard Time (Asia/Baghdad)
-          - value: America/Buenos_Aires
-            label: Argentina Standard Time (America/Buenos_Aires)
-          - value: Asia/Yerevan
-            label: Armenian Standard Time (Asia/Yerevan)
-          - value: America/Halifax
-            label: Atlantic Standard Time (America/Halifax)
-          - value: Asia/Baku
-            label: Azerbaijan Standard Time (Asia/Baku)
-          - value: Atlantic/Azores
-            label: Azores Standard Time (Atlantic/Azores)
-          - value: America/Regina
-            label: Canada Central Standard Time (America/Regina)
-          - value: Atlantic/Cape_Verde
-            label: Cape Verde Standard Time (Atlantic/Cape_Verde)
-          - value: Australia/Adelaide
-            label: Cen. Australia Standard Time (Australia/Adelaide)
-          - value: America/Guatemala
-            label: Central America Standard Time (America/Guatemala)
-          - value: Asia/Dhaka
-            label: Central Asia Standard Time (Asia/Dhaka)
-          - value: America/Manaus
-            label: Central Brazilian Standard Time (America/Manaus)
-          - value: Europe/Budapest
-            label: Central Europe Standard Time (Europe/Budapest)
-          - value: Europe/Warsaw
-            label: Central European Standard Time (Europe/Warsaw)
-          - value: Pacific/Guadalcanal
-            label: Central Pacific Standard Time (Pacific/Guadalcanal)
-          - value: America/Chicago
-            label: Central Standard Time (America/Chicago)
-          - value: America/Mexico_City
-            label: Central Standard Time (Mexico) (America/Mexico_City)
-          - value: Asia/Shanghai
-            label: China Standard Time (Asia/Shanghai)
-          - value: Etc/GMT+12
-            label: Dateline Standard Time (Etc/GMT+12)
-          - value: Africa/Nairobi
-            label: E. Africa Standard Time (Africa/Nairobi)
-          - value: Australia/Brisbane
-            label: E. Australia Standard Time (Australia/Brisbane)
-          - value: Europe/Minsk
-            label: E. Europe Standard Time (Europe/Minsk)
-          - value: America/Sao_Paulo
-            label: E. South America Standard Time (America/Sao_Paulo)
-          - value: America/New_York
-            label: Eastern Standard Time (America/New_York)
-          - value: Africa/Cairo
-            label: Egypt Standard Time (Africa/Cairo)
-          - value: Asia/Yekaterinburg
-            label: Ekaterinburg Standard Time (Asia/Yekaterinburg)
-          - value: Europe/Kiev
-            label: FLE Standard Time (Europe/Kiev)
-          - value: Pacific/Fiji
-            label: Fiji Standard Time (Pacific/Fiji)
-          - value: Europe/London
-            label: GMT Standard Time (Europe/London)
-          - value: Europe/Istanbul
-            label: GTB Standard Time (Europe/Istanbul)
-          - value: Etc/GMT-3
-            label: Georgian Standard Time (Etc/GMT-3)
-          - value: America/Godthab
-            label: Greenland Standard Time (America/Godthab)
-          - value: Atlantic/Reykjavik
-            label: Greenwich Standard Time (Atlantic/Reykjavik)
-          - value: Pacific/Honolulu
-            label: Hawaiian Standard Time (Pacific/Honolulu)
-          - value: Asia/Calcutta
-            label: India Standard Time (Asia/Calcutta)
-          - value: Asia/Tehran
-            label: Iran Standard Time (Asia/Tehran)
-          - value: Asia/Jerusalem
-            label: Israel Standard Time (Asia/Jerusalem)
-          - value: Asia/Amman
-            label: Jordan Standard Time (Asia/Amman)
-          - value: Asia/Seoul
-            label: Korea Standard Time (Asia/Seoul)
-          - value: Indian/Mauritius
-            label: Mauritius Standard Time (Indian/Mauritius)
-          - value: America/Chihuahua
-            label: Mexico Standard Time 2 (America/Chihuahua)
-          - value: Atlantic/South_Georgia
-            label: Mid-Atlantic Standard Time (Atlantic/South_Georgia)
-          - value: Asia/Beirut
-            label: Middle East Standard Time (Asia/Beirut)
-          - value: America/Montevideo
-            label: Montevideo Standard Time (America/Montevideo)
-          - value: Africa/Casablanca
-            label: Morocco Standard Time (Africa/Casablanca)
-          - value: America/Denver
-            label: Mountain Standard Time (America/Denver)
-          - value: Asia/Rangoon
-            label: Myanmar Standard Time (Asia/Rangoon)
-          - value: Asia/Novosibirsk
-            label: N. Central Asia Standard Time (Asia/Novosibirsk)
-          - value: Africa/Windhoek
-            label: Namibia Standard Time (Africa/Windhoek)
-          - value: Asia/Katmandu
-            label: Nepal Standard Time (Asia/Katmandu)
-          - value: Pacific/Auckland
-            label: New Zealand Standard Time (Pacific/Auckland)
-          - value: America/St_Johns
-            label: Newfoundland Standard Time (America/St_Johns)
-          - value: Asia/Irkutsk
-            label: North Asia East Standard Time (Asia/Irkutsk)
-          - value: Asia/Krasnoyarsk
-            label: North Asia Standard Time (Asia/Krasnoyarsk)
-          - value: America/Santiago
-            label: Pacific SA Standard Time (America/Santiago)
-          - value: America/Los_Angeles
-            label: Pacific Standard Time (America/Los_Angeles)
-          - value: America/Tijuana
-            label: Pacific Standard Time (Mexico) (America/Tijuana)
-          - value: Asia/Karachi
-            label: Pakistan Standard Time (Asia/Karachi)
-          - value: Europe/Paris
-            label: Romance Standard Time (Europe/Paris)
-          - value: Europe/Moscow
-            label: Russian Standard Time (Europe/Moscow)
-          - value: Etc/GMT+3
-            label: SA Eastern Standard Time (Etc/GMT+3)
-          - value: America/Bogota
-            label: SA Pacific Standard Time (America/Bogota)
-          - value: America/La_Paz
-            label: SA Western Standard Time (America/La_Paz)
-          - value: Asia/Bangkok
-            label: SE Asia Standard Time (Asia/Bangkok)
-          - value: Pacific/Apia
-            label: Samoa Standard Time (Pacific/Apia)
-          - value: Asia/Singapore
-            label: Singapore Standard Time (Asia/Singapore)
-          - value: Africa/Johannesburg
-            label: South Africa Standard Time (Africa/Johannesburg)
-          - value: Asia/Colombo
-            label: Sri Lanka Standard Time (Asia/Colombo)
-          - value: Asia/Taipei
-            label: Taipei Standard Time (Asia/Taipei)
-          - value: Australia/Hobart
-            label: Tasmania Standard Time (Australia/Hobart)
-          - value: Asia/Tokyo
-            label: Tokyo Standard Time (Asia/Tokyo)
-          - value: Pacific/Tongatapu
-            label: Tonga Standard Time (Pacific/Tongatapu)
-          - value: Etc/GMT+5
-            label: US Eastern Standard Time (Etc/GMT+5)
-          - value: America/Phoenix
-            label: US Mountain Standard Time (America/Phoenix)
-          - value: America/Caracas
-            label: Venezuela Standard Time (America/Caracas)
-          - value: Asia/Vladivostok
-            label: Vladivostok Standard Time (Asia/Vladivostok)
-          - value: Australia/Perth
-            label: W. Australia Standard Time (Australia/Perth)
-          - value: Africa/Lagos
-            label: W. Central Africa Standard Time (Africa/Lagos)
-          - value: Europe/Berlin
-            label: W. Europe Standard Time (Europe/Berlin)
-          - value: Asia/Tashkent
-            label: West Asia Standard Time (Asia/Tashkent)
-          - value: Pacific/Port_Moresby
-            label: West Pacific Standard Time (Pacific/Port_Moresby)
-          - value: Asia/Yakutsk
-            label: Yakutsk Standard Time (Asia/Yakutsk)                      
-        error: false
-        warnings: []
-        status: 200  
-          
-    userTypes:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/userType'
-        error:
-          type: boolean
-          description: Error
-        warnings:
-          type: array
-          description: Warnings
-          items:
-            type: string
-        status:
-          type: integer
-          description: Status     
-      example:
-        data:
-          - key: "superadmin"
-            value: "Super Admin"
-          - key: "cluster_admin"
-            value: "Business Unit Admin"
-          - key: "agent"
-            value: "Agent"
-          - key: "client"
-            value: "Client"
-        error: false
-        warnings: []
-        status: 200        
         
         
 
