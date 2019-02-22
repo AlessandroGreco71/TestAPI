@@ -22,9 +22,6 @@ info:
 
   
 servers:
-# Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/AlessandroGreco71/default-title/2.6.20
   - url: 'https://api.tapclicks.com/v2'
   
 tags:
