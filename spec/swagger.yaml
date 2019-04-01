@@ -161,6 +161,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/ \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'       
                 
 # --------------------- Business Units --------------------------
 
@@ -283,12 +289,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/clusters/1 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
                 
     post:
       tags:
         - BUSINESS UNITS
       summary: Edit an existing Business Unit
       description: Clusters are Business Units. This edits an existing Business Unit.
+      
+      
+        Any field that is not provided will be set to *null*. For example, if you need to edit only one field of the specified Business Unit, while leaving all other fields unchanged, you would need to pass all the parameters that were previosly set, otherwise they'll be reset to *null*.
       parameters:
         - in: path
           name: /cluster_id
@@ -298,6 +313,18 @@ paths:
           description: Numeric Id of the Business Unit to edit.     
       requestBody:
         content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/createCluster"
+            examples:
+              '0':
+                value: |-
+                  model={
+                    "type": "group",
+                    "name": "East Coast Unit",
+                    "member_cluster_ids": "6,23"
+                  }
+                  
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
               $ref: "#/components/schemas/createCluster"
@@ -311,7 +338,8 @@ paths:
                     "name": "East Coast Unit",
                     "member_cluster_ids": "6,23"
                   }
-                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--         
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--
+                  
       responses:
         '200':
           description: Ok - Successful Operation
@@ -343,7 +371,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_404'    
+                $ref: '#/components/schemas/error_404' 
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X POST \
+            https://api.tapclicks.com/v2/clusters/35 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -d 'model={"type": "group","name": "East Coast Unit","member_cluster_ids": "6,23"}'
     delete:
       tags:
         - BUSINESS UNITS
@@ -380,7 +416,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_404'          
+                $ref: '#/components/schemas/error_404'   
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X DELETE \
+            https://api.tapclicks.com/v2/clusters/35 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
                 
   /clusters:
     post:
@@ -390,6 +432,16 @@ paths:
       description: Clusters are Business Units. This creates a new Business Unit.
       requestBody:
         content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/createCluster"
+            examples:
+              '0':
+                value: |-
+                  model={
+                    "type": "single",
+                    "name": "West Coast Unit"
+                  }
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
               $ref: "#/components/schemas/createCluster"
@@ -402,7 +454,7 @@ paths:
                     "type": "single",
                     "name": "West Coast Unit"
                   }
-                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--  
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--           
       responses:
         '200':
           description: Ok - Successful Operation
@@ -434,7 +486,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'            
-                
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X POST \
+            https://api.tapclicks.com/v2/clusters \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -d 'model={"type": "single","name": "West Coast Unit"}'
                 
 # --------------------- Channels (Categories) --------------------------                
       
@@ -534,6 +593,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/categories/49 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
 
 # --------------------- Clients --------------------------                  
 
@@ -689,14 +754,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/clients/1 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'                
                 
     post:
       tags:
         - CLIENTS
       summary: Edit existing Client
-      description: This modifies the information of an existing Client.
+      description: This edits the information of an existing Client.
       
-        
+      
+        Any field that is not provided will be set to *null*. For example, if you need to edit only one field of the specified Client, while leaving all other fields unchanged, you would need to pass all the parameters that were previosly set, otherwise they'll be reset to *null*.<br><br>        
         Note that the payload of this POST is the same as <a href="#tag/CLIENTS/paths/~1clients/post">Create a new Client</a>.
       parameters:
         - in: path
@@ -707,6 +779,18 @@ paths:
           description: Numeric Id of the Client to get. Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain the correct Id
       requestBody:
         content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/createClient"
+            examples:
+              '0':
+                value: |-
+                  model={
+                  "company_name": "JP Marketing",
+                  "default_reporting_profile_id": "1",
+                  "reporting_status": "pending_mapping",
+                  "iotool_status": "presale"
+                  }
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
               $ref: "#/components/schemas/createClient"
@@ -715,7 +799,6 @@ paths:
                 value: |-
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
                   Content-Disposition: form-data; name="model"
-
                   {
                   "company_name": "JP Marketing",
                   "default_reporting_profile_id": "1",
@@ -757,6 +840,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X POST \
+            https://api.tapclicks.com/v2/clients/35 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -d 'model={"company_name": "JP Marketing","default_reporting_profile_id": "1","reporting_status": "pending_mapping","iotool_status": "presale"}'
                 
   /clients:
     post:
@@ -769,6 +860,18 @@ paths:
         Note that the payload of this POST is the same as <a href="#tag/CLIENTS/paths/~1clients{~1client_id}/post">Edit existing Client</a>.
       requestBody:
         content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/createClient"
+            examples:
+              '0':
+                value: |-
+                  model={
+                  "company_name": "JP Marketing",
+                  "default_reporting_profile_id": "1",
+                  "reporting_status": "pending_mapping",
+                  "iotool_status": "presale"
+                  }
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
               $ref: "#/components/schemas/createClient"
@@ -777,7 +880,6 @@ paths:
                 value: |-
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
                   Content-Disposition: form-data; name="model"
-
                   {
                   "company_name": "JP Marketing",
                   "default_reporting_profile_id": "1",
@@ -816,6 +918,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X POST \
+            https://api.tapclicks.com/v2/clients \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -d 'model={"company_name": "JP Marketing","default_reporting_profile_id": "1","reporting_status": "pending_mapping","iotool_status": "presale"}'
              
 # --------------------- Client's Categories --------------------------  
   
@@ -941,6 +1051,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/clientcategories \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'                
 
 # --------------------- Client Groups --------------------------        
                   
@@ -1063,12 +1179,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/clientgroups/1 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
                 
     post:
       tags:
         - CLIENT GROUPS
       summary: Edit an existing Client Group
-      description: This edits an existing Client Group
+      description: This edits an existing Client Group.
+      
+      
+        Any field that is not provided will be set to *null*. For example, if you need to edit only one field of the specified Client Group, while leaving all other fields unchanged, you would need to pass all the parameters that were previosly set, otherwise they'll be reset to *null*.
       parameters:
         - in: path
           name: /clientgroup_id
@@ -1078,6 +1203,18 @@ paths:
           description: Numeric Id of the Group of Client to edit.
       requestBody:
         content:
+          application/x-www-form-urlencoded:
+            schema: 
+              $ref: "#/components/schemas/createClientGroup"
+            examples:
+              '0':
+                value: |-
+                  model={
+                    "name":"Boston",
+                    "group_type":"group_of_clients",
+                    "cluster_id":"1",
+                    "client_ids":"1,2,34"
+                  }  
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema: 
               $ref: "#/components/schemas/createClientGroup"
@@ -1092,7 +1229,7 @@ paths:
                     "cluster_id":"1",
                     "client_ids":"1,2,34"
                   }
-                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--         
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu-- 
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1124,7 +1261,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_404'       
+                $ref: '#/components/schemas/error_404'  
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X POST \
+            https://api.tapclicks.com/v2/clientgroups/35 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -d 'model={"name":"Boston","group_type":"group_of_clients","cluster_id":"1","client_ids":"1,2,34"}'
                 
     delete:
       tags:
@@ -1163,6 +1308,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404' 
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X DELETE \
+            https://api.tapclicks.com/v2/clientgroups/35 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
           
   /clientgroups:
     post:
@@ -1172,6 +1323,18 @@ paths:
       description: This creates a new Client Group
       requestBody:
         content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/createClientGroup"
+            examples:
+              '0':
+                value: |-
+                  model={
+                    "name":"Boston",
+                    "group_type":"group_of_client_groups",
+                    "cluster_id":"1",
+                    "client_group_ids":"77,81,10"
+                  } 
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
               $ref: "#/components/schemas/createClientGroup"
@@ -1186,7 +1349,7 @@ paths:
                     "cluster_id":"1",
                     "client_group_ids":"77,81,10"
                   }
-                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu--  
+                  ------WebKitFormBoundarySMGbXJtM7VSNs0Nu-- 
       responses:
         '200':
           description: Ok - Successful Operation
@@ -1217,7 +1380,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_404'        
+                $ref: '#/components/schemas/error_404'   
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X POST \
+            https://api.tapclicks.com/v2/clientgroups \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -d 'model={"name":"Boston","group_type":"group_of_client_groups","cluster_id":"1","client_group_ids":"77,81,10"}'
         
 # --------------------- Data Profiles -------------------------- 
 
@@ -1337,6 +1508,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/reportingprofiles/1 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
                 
 # --------------------- Data Types --------------------------                 
   
@@ -1466,6 +1643,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/columns/datatypes \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
                 
 # --------------------- Date Range --------------------------                  
   /daterange:
@@ -1511,6 +1694,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/daterange \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
                 
 # --------------------- Languages --------------------------                 
   /languages:
@@ -1559,6 +1748,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/languages \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
                 
 # --------------------- Leads --------------------------    
   /leads{/lead_id}:
@@ -1684,7 +1879,7 @@ paths:
             
             
             This filters the result between the given date range (YYYY-MM-DD).
-          example: https://api.tapclicks.com/v2/leads?&daterange=2018-12-01|2018-12-31
+          example: https://api.tapclicks.com/v2/leads?daterange=2018-12-01|2018-12-31
         
       responses:
         '200':
@@ -1791,6 +1986,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/leads/3 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
                 
 # --------------------- Role --------------------------  
   /roles{/role_id}:
@@ -1908,6 +2109,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/roles/2 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
 
       
 # --------------------- Services (Data Sources) --------------------------        
@@ -2044,6 +2251,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/services/44 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
                 
   /services{/id}/data{/data_view_id}: #{/field}
     get:
@@ -2247,6 +2460,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/services/44/data/cgn \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
      
 # --------------------- Users --------------------------  
   /users{/user_id}:
@@ -2398,14 +2617,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            https://api.tapclicks.com/v2/users/1 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
 
     post:
       tags:
         - USERS
       summary: Edit an existing user
-      description: This modifies the information of an existing User.
+      description: This edits the information of an existing User.
       
       
+        Any field that is not provided will be set to *null*. For example, if you need to edit only one field of the specified User, while leaving all other fields unchanged, you still need to pass all the parameters that were previosly set, otherwise they'll be reset to *null*.<br><br>
         Note that the payload of this POST is the same as <a href="#tag/USERS/paths/~1users/post">Create a new user</a>.
       parameters:
         - in: path
@@ -2416,6 +2642,23 @@ paths:
           description: Numeric Id of the user that needs to be edited
       requestBody:
         content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/editUser"
+            examples:
+              '0':
+                value: |-
+                  model={
+                  "user_type": "agent",
+                  "email": "user@email.com",
+                  "password": "user1234",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "reporting_profile_id": "1",
+                  "client_group_id": "1",
+                  "role_id": "1",
+                  "status": "active"
+                  }
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
               $ref: "#/components/schemas/editUser"
@@ -2424,7 +2667,6 @@ paths:
                 value: |-
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
                   Content-Disposition: form-data; name="model"
-
                   {
                   "user_type": "agent",
                   "email": "user@email.com",
@@ -2468,6 +2710,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X POST \
+            https://api.tapclicks.com/v2/users/36 \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -d 'model={"user_type": "agent","email": "user@email.com","password": "user1234","first_name": "John","last_name": "Doe","reporting_profile_id": "1","client_group_id": "1","role_id": "1","status": "active"}'
               
   /users:
     post:
@@ -2480,6 +2730,23 @@ paths:
         Note that the payload of this POST is the same as <a href="#tag/USERS/paths/~1users{~1user_id}/post">Edit an existing user</a>.
       requestBody:
         content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/createUser"
+            examples:
+              '0':
+                value: |-
+                  model={
+                  "user_type": "agent",
+                  "email": "user@email.com",
+                  "password": "user1234",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "reporting_profile_id": "1",
+                  "client_group_id": "1",
+                  "role_id": "1",
+                  "status": "active"
+                  }
           'multipart/form-data, boundary=----WebKitFormBoundarySMGbXJtM7VSNs0Nu':
             schema:
               $ref: "#/components/schemas/createUser"
@@ -2488,7 +2755,6 @@ paths:
                 value: |-
                   ------WebKitFormBoundarySMGbXJtM7VSNs0Nu
                   Content-Disposition: form-data; name="model"
-
                   {
                   "user_type": "agent",
                   "email": "user@email.com",
@@ -2532,6 +2798,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X POST \
+            https://api.tapclicks.com/v2/users \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -d 'model={"user_type": "agent","email": "user@email.com","password": "user1234","first_name": "John","last_name": "Doe","reporting_profile_id": "1","client_group_id": "1","role_id": "1","status": "active"}'
                 
   /users/values/set:
     get:
@@ -2584,6 +2858,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_404'
+      x-code-samples:
+        - lang: 'Curl'
+          source: |
+            curl -X GET \
+            'https://api.tapclicks.com/v2/users/values/set?fields=user_type' \
+            -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
 
 # ---------------- QUERY PARAMETERS ------------------------
 components:
@@ -2642,6 +2922,7 @@ components:
       type: object
       required: 
         - name
+        - type
       properties:
         name:
           type: string
@@ -2740,7 +3021,6 @@ components:
       required:
       - company_name
       - reporting_status
-      - iotool_status
       - default_reporting_profile_id
       properties:
         company_name:
@@ -2834,6 +3114,9 @@ components:
           type: string
           enum: [presale,active,inactive,terminated]
           description: TapOrders status
+          
+          
+            **Note&#58;** This field is <font color="red">**required**</font> if the TapOrders module is active
         has_hipaa_data:
           type: boolean
           description: Has HIPAA data
