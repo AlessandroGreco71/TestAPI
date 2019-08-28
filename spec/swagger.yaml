@@ -3370,18 +3370,14 @@ components:
             **Note&#58;** This field is available only if the Multi-language Reports Module is active
           enum: ["en_US","fr_CA","hi_IN","id_ID","es_ES"]          
         client_ids:
-          type: array
-          items: 
-            type: string
-          description: Client Ids - Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain all existing Client Ids.
+          type: string
+          description: Client Ids - Provide a String of ids (i.e. "client_ids":"2,46,71"). Please refer to <a href="#tag/CLIENTS">Clients</a> to obtain all existing Client Ids.
           
           
             **Note&#58;** This field is ONLY to be entered (and <font color="red">**required**</font>) when *group_type* = `group_of_clients`
         client_group_ids:
-          type: array
-          items:
-            type: string
-          description: Client Group Ids - Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Groups Ids.
+          type: string
+          description: Client Group Ids - Provide a String of ids (i.e. "client_group_ids":"2,46,71"). Please refer to <a href="#tag/CLIENT-GROUPS">Client Groups</a> to obtain all existing Client Groups Ids.
             
             
             **Note&#58;** This field is ONLY to be entered (and <font color="red">**required**</font>) when *group_type* = `group_of_client_groups`
