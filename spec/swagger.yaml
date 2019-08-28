@@ -3121,10 +3121,8 @@ components:
           type: boolean
           description: Has HIPAA data
         client_group_ids:
-          type: array
-          description: Client Group Ids - Please refer to <a href="#tag/CLIENT-GROUPS">Client Group</a> to obtain all existing Client Group Ids
-          items: 
-            type: string
+          type: string
+          description: Client Group Ids - Provide a String of ids (i.e. "client_group_ids":"2,46,71"). Please refer to <a href="#tag/CLIENT-GROUPS">Client Group</a> to obtain all existing Client Group Ids
         activate_tapleads:
           type: boolean
           description: Activate TapLeads
