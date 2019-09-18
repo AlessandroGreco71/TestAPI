@@ -2864,6 +2864,91 @@ paths:
             curl -X GET \
             'https://api.tapclicks.com/v2/users/values/set?fields=user_type' \
             -H 'Authorization: Bearer YOUR_ACCESS_TOKEN_HERE'
+            
+# --------------------- Orders --------------------------             
+  /iotool/orderQueries:
+    get:
+      tags:
+        - ORDERS
+      summary: Orders / Line Items
+      description: --- this is the description --- this is probably going to be very long
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 1000
+          required: false
+          description: This will limit the number of returned orders (the example will return 2 orders).
+            If this is omitted, the API will return 1000 orders by default.
+          example: https://api.tapclicks.com/v2/iotool/orderQueries?limit=2
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: This will allow to navigate between the pages of records. A page contains 1000 orders by default, unless it is defined by the page query parameter.
+            The example will return...
+          example: https://api.tapclicks.com/v2/iotool/orderQueries?limit=2&page=2
+        - in: query
+          name: fields
+          schema:
+            type: string 
+          required: false
+          description: This will return the selected fields in the data structure. If one or more of these fields represents a relationship, it's possible to specify the fields in that relationship by including them inside brackets.
+          example: https://api.tapclicks.com/v2/iotool/orderQueries?fields=id,status,client[first_name],attributes[value]
+        - in: query
+          name: updated_between
+          schema:
+            type: string  
+          required: false
+          description: This will return orders that have been updated within a date range.
+            An update is a modification made on an order or a line item in that order.
+            The datetime is based on the user's timezone preferences in the Tap platform.
+          examples:
+            ex1: 
+              summary: Example with a specific "YYYY-MM-DD HH:MM:SS"
+              value: updated_between=2019-03-01 12:00:00|2019-03-02
+            
+        - in: query
+          name: inline
+          schema:
+            type: string
+          required: false
+          description: Inline Query Parameter Description 
+      
+      responses:
+        '200':
+          description: Ok Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response_200_users'
+              example:
+                data:
+                  id: "1"
+                  client_id: null
+                error: false
+                warnings: []
+                status: 200       
+        
+  
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
 # ---------------- QUERY PARAMETERS ------------------------
 components:
